@@ -1,0 +1,23 @@
+{
+  "rows": [
+    {
+      "column1": "column11",
+      "column2": "column12",
+      "column3": "column13",
+      "column4": "column14"
+    },
+    {
+      "column1": "column21",
+      "column2": "column22",
+      "column3": "column23",
+      "column4": "column24"
+    },
+    {
+      "column1": "column31",
+      "column2": "column32",
+      "column3": "column33",
+      "column4": "column34"
+    }
+  ],
+  "total": "3"
+}

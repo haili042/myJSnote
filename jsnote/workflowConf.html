@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+    <title></title>
+
+    <style type="text/css">
+        div {margin: auto;}
+        ul, li {}
+
+    </style>
+</head>
+<body>
+
+<div id="div"></div>
+
+
+
+<script type="text/javascript">
+
+    function Man(obj){
+        this.obj = obj;
+    }
+
+    Man.prototype.sayName = function(){
+        console.log("man say " + this.obj.name);
+    };
+
+    Man.prototype.setOnSuccessFunc = function(func){
+        this.obj.onSuccessFunc = func;
+    };
+
+    Man.prototype.check = function(onSuccessArg){
+        if(this.obj.onSuccessFunc == null){
+            console.log("there is no added function");
+        }else{
+            console.log("added function is running");
+            this.obj.onSuccessFunc(onSuccessArg);
+        }
+    };
+
+    Man.prototype.draw = function (){
+        var that = this;
+        var i1 = document.createElement("input");
+        i1.value = that.obj.name;
+
+        i1.onclick = function(that){
+            return function(){
+                alert(that.obj.name);
+            };
+        }(that);
+//        i1.onclick = function(){
+//            alert(that.obj.name);
+//        };
+        document.getElementById("div").appendChild(i1);
+    };
+
+
+    function Child(obj){
+        Man.call(this, obj);
+    }
+
+    Child.prototype = new Man();
+    Child.prototype.constructor = Child;
+    function inhert(subType, superType){
+        var prototype = Object(superType.prototype);
+        prototype.constructor = subType;
+        subType.prototype = prototype;
+    }
+
+//    inhert(Child, Man);
+
+    Child.prototype.sayName = function (){
+        console.log("child say " + this.obj.name);
+    };
+
+    var name = "manname";
+    var man = new Man({
+        name : name,
+        age :18,
+        fun : function (){
+            alert("ss");
+        }
+    });
+//    var man1 = new Man({
+//        name : "111",
+//        age :18,
+//        fun : function (){
+//            alert("ss");
+//        }
+//    });
+
+    var childName = "childname";
+    var child = new Child({
+        name : childName,
+        age :18,
+        fun : function (){
+            alert("ss");
+        }
+    });
+
+    function addedFunc(arg){
+        console.log("added function's arguments is "+arg)
+    }
+
+    man.setOnSuccessFunc(function (arg){
+        console.log("added function's arguments is "+arg);
+    });
+    man.check();
+
+
+    man.sayName();
+    child.sayName();
+    (man.draw)();
+    (child.draw)();
+
+</script>
+</body>
+</html>

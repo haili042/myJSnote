@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        DIV,UL,LI,SPAN {
+            PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px
+        }
+
+        UL {
+            LIST-STYLE-TYPE: none
+        }
+        .head {
+            OVERFLOW: hidden;WIDTH: 708px;_WIDTH: 701px;/*非ie浏览器下是708,ie是701*/
+        }
+        .head UL {
+            BACKGROUND: #eee; HEIGHT: 24px;border-bottom: #CCC 1px solid;;border-top: #CCC 1px solid;;border-right: #CCC 1px solid
+        }
+        .head UL LI {
+            FONT-WEIGHT: 700; FLOAT: left; WIDTH: 100px; COLOR: #666; LINE-HEIGHT: 24px; HEIGHT: 24px; TEXT-ALIGN: center; font-size:12px;border-left: #CCC 1px solid; overflow:hidden
+        }
+        .body {
+            OVERFLOW: hidden;WIDTH: 708px;_WIDTH: 701px;
+        }
+        .body UL LI {
+            BACKGROUND: #fff; OVERFLOW: hidden;border-bottom: #CCC 1px solid;border-right: #CCC 1px solid;float:left;
+        }
+        .body UL LI span { width:98px;_width:100px; background-color:#F90; font-size:12px; padding-left:2px; border-left: #CCC 1px solid; float:left; height:27px; line-height:27px; overflow:hidden
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="head">
+    <ul>
+        <li>服务器名</li>
+        <li>服务器IP</li>
+        <li>开区时间</li>
+        <li>开区线路</li>
+        <li>特色介绍</li>
+        <li>登陆器下载</li>
+        <li>游戏官方</li></ul>
+</div>
+<div class="body">
+    <ul>
+        <li>
+            <span>服务器名1</span><span>服务器IP1</span><span>开区时间1</span><span>开区线路1</span><span>特色介绍1</span><span>登陆器下载1</span><span>游戏官方1</span>
+        </li>
+        <li>
+            <span>服务器名2</span><span>服务器IP2</span><span>开区时间2</span><span>开区线路2</span><span>特色介绍2</span><span>登陆器下载2</span><span>游戏官方2</span>
+        </li>
+        <li>
+            <span>服务器名2</span><span>服务器IP2</span><span>开区时间2</span><span>开区线路2</span><span>特色介绍2</span><span>登陆器下载2</span><span>游戏官方2</span>
+        </li>
+        <li>
+            <span>服务器名2</span><span>服务器IP2</span><span>开区时间2</span><span>开区线路2</span><span>特色介绍2</span><span>登陆器下载2</span><span>游戏官方2</span>
+        </li>
+    </ul>
+</div>
+
+
+
+<input type="text" id="s" data-myname="aa" value="test"/>
+    <button id="button">ok</button>
+</body>
+<script type="text/javascript">
+    /*DOM 的扩展*/
+
+    /*querySelector 类似jquery 的选择器, 通过css 的选择符来选取dom元素*/
+    var inputEle = document.querySelector("#s");
+
+    // 获得焦点
+    var buttonEle = document.querySelector("#button");
+    buttonEle.focus();
+
+    //html5 新增
+    var activeEle = document.activeElement;// 焦点元素
+
+    // html5自定义属性: data- 开头
+    console.log(inputEle.dataset.myname);// aa
+
+    // innerHtml属性
+    // innerHtml 在除了ie8之前的浏览器中, 不能插入<script>标签
+    // [注意] 在删除 innerHtml 中的节点时, 要先手动删除这些节点所关联的"事件处理程序", 否则会造成内存问题
+    // 最好不要多次调用innerHtml, 效率不高
+
+
+
+
+
+</script>
+</html>

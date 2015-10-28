@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="gbk">
+    <title>政企协议发起</title>
+    <link rel="stylesheet" type="text/css" href="../script/easyui-1.4.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../script/easyui-1.4.3/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="basic.css">
+    <script type="text/javascript" src="../script/easyui-1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../script/easyui-1.4.3/jquery.easyui.min.js"></script>
+
+    <!-- hailiUI -->
+    <script type="text/javascript" src="hailiUI.js"></script>
+    <link rel="stylesheet" type="text/css" href="hailiUI.css">
+
+
+    <link rel="stylesheet" type="text/css" href="zqxyFontPage.css">
+
+</head>
+
+<body>
+<form id="form" method="post" enctype="multipart/form-data">
+
+
+    <div id="header"></div>
+
+    <!-- 条件筛选部分 -->
+    <div id="goods_list">
+        <div id="filter">
+            <div class="fil_title fil-height">
+                <h3>商品筛选:&nbsp;&nbsp;</h3>
+                <div id="condition-wrap">
+
+                </div>
+                <div id="cdt-cancleAll">
+                    <a href="javascript:void(0)" id="rmAllCdtTag">全部撤销</a>
+                </div>
+            </div>
+
+            <!-- 商品类型 -->
+            <div class="fil_type fil-height" id="cdt-gdstype">
+                <div class="f-key">
+                    <span>类型:</span>
+                </div>
+                <div class="f-value">
+                    <ul>
+                        <li><a href="javascript:void(0)">光纤</a></li>
+                        <li><a href="javascript:void(0)">电路</a></li>
+                        <li><a href="javascript:void(0)">手机</a></li>
+                        <li><a href="javascript:void(0)">固话</a></li>
+                        <li><a href="javascript:void(0)">电信电视</a></li>
+                        <li><a href="javascript:void(0)">智能业务</a></li>
+                        <li><a href="javascript:void(0)">融合套餐</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 商品列表 -->
+            <div id="grid">
+                <div class="fil-height">
+                    <div class="f-key">
+                        <span>商品列表:</span>
+                    </div>
+                    <div class="f-value">
+                        <ul>
+                            <li>
+                                <input type="text" value="" id="queryInput"/>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" id="queryBtn" class="f-btn">查询</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dg-left">
+                    <div class="dg-wrap">
+                        <table id="dg"></table>
+                    </div>
+                </div>
+                <!-- 折扣弹出框 -->
+                <div class="dg-right">
+                    <div class="dg-dtl" id="dg-dtl"></div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 购物车部分 -->
+    <div id="shop_cart">
+        <div class="cart-bar" id="cart-title">
+            <div class="cwrap-left">
+                <div class="columns c-ckb">
+                    <input type="checkbox" id="selectAll"/>全选
+                </div>
+                <div class="columns c-gds">已选商品</div>
+            </div>
+            <div class="cwrap-center">
+                <div class="columns c-gds-inf">商品详情</div>
+            </div>
+            <div class="cwrap-right">
+                <div class="columns c-oth">单价</div>
+                <div class="columns c-oth">数量</div>
+                <div class="columns c-oth">小计</div>
+                <div class="columns c-oth">操作</div>
+            </div>
+        </div>
+
+        <div id="cart-order">
+            <div class="cwrap-right">
+                <div class="columns c-oth count">总共<em>5</em>&nbsp;件</div>
+                <div class="columns c-oth total">总价:<em>1002</em></div>
+                <div class="columns c-oth orderButton" id="gotoOrder">去结算</div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+
+
+    /**
+     * 通用部分
+     * */
+    // 添加点击事件公用, 兼容ie, 参数2是click事件的动作
+    function addCilckEvent(domEle, func) {
+        if (document.all) {//IE
+            domEle.attachEvent("onclick", func);
+        }
+        else {//FF,Chrome，Safari
+            domEle.addEventListener("click", func, false);
+        }
+    }
+    var _data = {};
+
+
+    /**
+     * 查询条件部分
+     * */
+    $(function() {
+
+        // 大类查询条件点击添加到标签
+        var gdstypes = $('#cdt-gdstype').find('a');//大类下的所有a标签
+        $('#cdt-gdstype').find('a').each(function (index, domEle) {
+            var url = '';
+            if($(domEle).text() == '手机'){
+                url = 'cdt_cellphone.json';
+            } else if ($(domEle).text() == '光纤'){
+                url = 'cdt_light.json';
+            }
+
+            // 添加大类的增加标签事件
+            addCilckEvent(domEle, addCdtTagHandler(domEle, rmAllCdtTagHandler));
+
+            // 添加点击大类后, 载入子类型事件
+            addCilckEvent(domEle, loadSubCdtHandler(url));
+
+
+            /** 载入子类型
+             *  点击了之后会读取属于该大类的条件, 并显示出来
+             * */
+            function loadSubCdtHandler (url) {
+                return function(){
+                    // 删掉之前已经选择的条件
+                    $('.cdt-other').remove();
+                    // 发请求去拿新的条件
+                    $.ajax({
+                        url: url,
+                        async: false,
+                        success: function (data) {
+                            for(var i in data) {
+                                loadSubCondition(data[i]);
+                            }
+
+                            // 选择条件过滤注册点击事件
+                            $('.cdt-other').find('.f-value').find('a').each(function(index, domEle) {
+                                addCilckEvent(domEle, addCdtTagHandler(domEle));
+                            });//end of each
+                        }
+                    });// end of ajax
+                };// end of return
+            }// end of function selectType()
+        });
+
+        // 添加其他按钮的事件动作
+        addHandlers();
+
+
+        //加载datagrid数据表格
+        $('#dg').datagrid({
+            url : 'test.json',
+            columns : [ [
+// 				{field : 'ck', checkbox: true},//定义多选框 checkbox
+                //sortable: true,允许点击表头排序,hidden:true,隐藏id列
+                {field : 'id', title : 'id', width : 80, sortable : true, hidden: true},
+                {field : 'projectName', title : '商品类型', width : 150, sortable : true},
+                {field : 'businessType', title : '品牌', width : 80, sortable : true},
+                {field : 'department', title : '型号', width : 80, sortable : true},
+                {field : 'state',title : '单价', width :60,sortable : true},
+                {field : 'user', title : '具体参数', width : 200, sortable : true},
+                {field : 'creatDate', title : '售后', width : 60, sortable : true},
+//                {field : 'oper',title : '操作', width :60, formatter: function (value,row,index) {
+//                    return '<a href="javascript:void(0)" onclick="addToCart('+row.id+')">加入购物车</a>';
+//                }},
+                {field : 'onsale',title : '套餐折扣', width :200, align: 'center', formatter: function (value,row,index) {
+
+                    var str = '';
+//                    str += '<div>';
+//                    str +=  '<div class="">';
+                    str +=      '<a href="javascript:void(0)" class="discount"  onclick="openDetail('+row.id+')">套餐选项</a><i class="arrow-down"><i>';
+//                    str +=  '</div>';
+//                    str +=  '<div class="discount-detail" onmouseover="layerShow(\'dtLayer'+index+'\')" onmouseout="layerHide(\'dtLayer'+index+'\')" id="dtLayer'+index+'">';
+//                    str +=  '</div>';
+//                    str += '</div>';
+                    return str;
+                }}
+
+            ] ],
+// 			toolbar : toolbar,
+            border: false,
+            resizeable : true,//宽度可调整
+            fitColumns : true,//自适应表格宽度
+            pageSize : 20,//默认选择的分页是每页5行数据
+            pageList : [ 10, 20, 40, 60 ],//可以选择的分页集合
+            striped : true,//设置为true将交替显示行背景
+            collapsible : true,//显示可折叠按钮
+            sortable : true,//可以对列排序
+            sortName : 'id',//当数据表格初始化时以哪一列来排序
+            sortOrder : 'asc',//定义排序顺序，可以是'asc'或者'desc'（正序或者倒序）。
+            pagination : true,//分页
+            singleSelect: true,//只能选中单行
+            rownumbers : true,//显示行号
+            onLoadSuccess: function() {
+                _data = $('#dg').datagrid('getData');//初始化全局变量
+
+                /**
+                 * 折扣弹出框
+                 * */
+                $('.discount').each(function (index, domEle) {
+                    $(this).mouseenter(function () {
+                        if(!$('#dg-dtl').is(':hidden')) {
+                            return;
+                        }
+
+                        $('.datagrid-body').find('td[field=onsale]').eq(index).addClass('dg-cell');
+                        $('.datagrid-body').find('.arrow-down').eq(index).addClass('arrow-up-red');
+
+
+                        // 关闭叉叉
+                        var header = '';
+                        header += '<div class="discount-header">';
+                        header += '<div class="dsct-title dsct-title-inbar">套餐类型</div>';
+                        header += '<div class="dsct-value dsct-value-inbar">套餐选项</div>';
+                        header += '<div class="dsct-q-btn" onclick="discountCancle('+index+')">X</div>';
+                        header += '</div>';
+                        $('#dg-dtl').append(header);
+
+
+                        // loading 菊花
+                        var loadGif = '<div class="loading-wrap"><img src="loading2.gif" class="loading-gif"><span>loading......</span></div>';
+                        $('#dg-dtl').append(loadGif);
+
+                        var data = $('#dg').datagrid('getData');// 取得最新数据
+
+                        var options = '';
+                        options += '<div class="discount-options" id="discount-options">';
+                        options += '</div>';
+                        $('#dg-dtl').append(options);
+
+                        $.ajax({
+                            url: 'discount.json',
+                            success: function(discountData) {
+
+                                $('#dg-dtl').find('.loading-wrap').remove();
+
+                                var id = data.rows[index].id;
+                                var text = data.rows[index].projectName;
+                                var str = '';
+                                str += '<ul>';
+                                for(var i in discountData){
+                                    str += '<li><div class="dsct-title">'+discountData[i].title+':</div><div class="dsct-value"><input type="text" class="dsct-cbbx" id="'+discountData[i].id+'"/></div></li>';
+                                }
+                                str += '</ul>';
+
+                                $('#discount-options').append(str);
+
+                                /**
+                                 * 算总价值
+                                 * */
+                                for(var i in discountData){
+                                    $('#'+discountData[i].id)[0].price = 0.0;
+                                    $('#'+discountData[i].id)[0].msg = '';
+                                    $('#'+discountData[i].id).combobox({
+                                        valueField: 'text',
+                                        textField: 'text',
+                                        data: discountData[i].data,
+                                        onSelect: function(record) {
+                                            this.price = parseFloat(record.price);
+                                            this.msg = record.text + '套餐; ';
+                                            var totalPrice = 0.0;// 记录套餐总价
+                                            var discountMsg = '';// 记录套餐信息
+
+                                            $('.dsct-cbbx').each(function(index, domEle) {
+                                                totalPrice += parseFloat(domEle.price);
+                                                discountMsg += domEle.msg;
+                                            });
+                                            $('#totalPrice').text(totalPrice);
+                                            $('#totalPrice').attr('msg',discountMsg);
+                                        }
+                                    });
+                                }// end of for(var i in discountData)
+
+                            }// end of ajax success
+                        });// end of ajax
+
+                        var bottomBar = '';
+                        bottomBar += '<div class="discount-bar">';
+                        bottomBar += '<div class="discount-btn-wrap">';
+//                                str += '<div class="dsct-msg">总共<em>5</em>&nbsp;件</div>';
+                        bottomBar += '<div class="dsct-msg">套餐总价:<em id="totalPrice">0</em></div>';
+                        bottomBar += '<div class="dsct-msg dsct-btn" id="addToCart" >加入购物车</div>';
+                        bottomBar += '</div>';
+                        bottomBar += '</div>';
+                        $('#dg-dtl').append(bottomBar);
+
+                        $('#addToCart').click(function () {
+                            addToCart(index, $('#totalPrice').attr('msg') || '您没有选择套餐');
+                        });
+
+
+                        $('#dg-dtl').css('top',(index+1)*25+25);// 偏移一定长度
+                        $('#dg-dtl').animate({height: 'show'}, 150);// 显示动画
+//                        $('#dg-dtl').show(150);// 显示动画
+                        $('#dg-dtl')[0].index = index;// 记录打开了哪层
+
+                    });// end of mouseenter
+                });// end of each
+            }// end of datagrid onloadsuccess
+        });
+
+
+        /**
+         * 离开套餐框事件
+         * */
+//        $('#dg-dtl').mouseleave(function () {
+//            var index = $('#dg-dtl')[0].index;
+//            $('.datagrid-body').find('td[field=onsale]').eq(index).removeClass('dg-cell');
+//            $('.datagrid-body').find('.arrow-down').eq(index).removeClass('arrow-up-red');
+//            $('#dg-dtl').empty();
+//            $('#dg-dtl').hide();
+//            $('#dg-dtl')[0].index = undefined;
+//        });
+    });
+
+    // 关闭弹出面板
+    function discountCancle (){
+        var index = $('#dg-dtl')[0].index;
+        $('.datagrid-body').find('td[field=onsale]').eq(index).removeClass('dg-cell');
+        $('.datagrid-body').find('.arrow-down').eq(index).removeClass('arrow-up-red');
+        $('#dg-dtl').empty();
+        $('#dg-dtl').hide();
+        $('#dg-dtl')[0].index = undefined;
+    }
+
+    /**
+     * 事件动作
+     * */
+    // 载入查询子条件
+    function loadSubCondition(data) {
+        var str = '';
+        str +=  '<div class="cdt-other fil-height" id="'+data.id+'">';
+        str +=      '<div class="f-key">';
+        str +=          '<span>'+data.cnName+':</span>';
+        str +=      '</div>';
+        str +=      '<div class="f-value">';
+        str +=          '<ul>';
+        for(var i in data.list) {
+            str +=          '<li><a href="javascript:void(0)">'+data.list[i]+'</a></li>';
+        }
+        // 价格的要单独处理
+        if(data.detailSearch) {
+            str +=  '<li>';
+            str +=  '<div>';
+            str +=      '<input id="prise_min" class="input-txt"/>';
+            str +=      '<em>-</em>';
+            str +=      '<input id="prise_max" class="input-txt"/>';
+            str +=      '<a id="priseBtn" href="javascript:void(0)" class="f-btn">确定</a>';
+            str +=  '</div>';
+            str +=  '</li>';
+        }
+        str +=          '</ul>';
+        str +=      '</div>';
+        str +=  '</div>';
+        $('#cdt-gdstype').after(str);
+    }
+
+    // 添加到条件标签事件动作,参数是条件里的dom元素, 第二个参数 otherRmHandler 是其他的删除事件
+    function addCdtTagHandler(domEle, otherRmHandler) {
+
+        return function() {
+            // 查询块的根元素
+            var superJqObj = $(domEle).parents('.fil-height');
+            // 查找类型
+            var type = superJqObj.find(".f-key span").text();
+            var superId = superJqObj.attr('id');//类型的英文, 也就是这块的id
+
+            var str = '';
+            str +=  '<div class="cdt-arrow-wrap">';
+            str +=      '<div class="cdt-arrow">&gt;</div>';
+            str +=      '<div class="condition">';
+            str +=          '<div gdType="'+superId+'" class="cdt cdt-type">' + type + '</div>';
+            str +=          '<div class="cdt cdt-txt">' + $(domEle).text() + '</div>';
+            str +=          '<div class="cdt cdt-rm-btn">X</div>';
+            str +=      '</div>';
+            str +=  '</div>';
+
+            // 插入标签
+            $('#condition-wrap').append(str);
+
+            // 刷新列表
+            $('#dg').datagrid('reload');
+
+            // 隐藏该层查询条件
+            superJqObj.hide();
+
+            // 删除按钮注册事件动作
+            var deleteTagBtn = $('[gdType='+superId+']').siblings('.cdt-rm-btn');
+            var tagParentDiv = $('[gdType='+superId+']').parents('.cdt-arrow-wrap');
+            addCilckEvent(deleteTagBtn[0], deleteCdtTagHandler(superJqObj, tagParentDiv));
+
+            // 查询标签删除按钮事件动作
+            function deleteCdtTagHandler(superJqObj, tagJqObj) {
+                return function () {
+                    // 显示该层的父div
+                    superJqObj.show();
+                    // 删除之..
+                    tagJqObj.remove();
+                };// end of return
+            }
+
+            if(otherRmHandler){
+                addCilckEvent(deleteTagBtn[0], otherRmHandler());
+            }
+
+//                    $('.cdt-rm-btn')[0].onclick = function (superJqObj, cdtJqObj) {
+//                        return function () {
+//                            // 显示该层
+//                            superJqObj.show();
+//                            // 删除之..
+//                            cdtJqObj.remove();
+//                        };// end of return
+//                    }(superJqObj, $('.cdt-rm-btn').parents('.cdt-arrow-wrap'));// end of onclick funciton
+
+        };//end of return
+
+    }// end of function
+
+
+    // 删除全部查询标签
+    function rmAllCdtTagHandler () {
+        return function() {
+            $('#condition-wrap').find('.cdt-arrow-wrap').remove();// 删除已经选择的条件标签
+            $('.cdt-other').remove();// 删除子条件
+            $('#cdt-gdstype').show();// 大类展示出来
+            $('#dg').datagrid('reload');// 刷新列表
+        };
+    }
+
+    // 添加其他事件动作
+    function addHandlers() {
+
+        // 点击搜索框将值清空
+//        $('#queryInput').on('focus', function (){
+//            $(this).val('');
+//        });
+
+        // 全部撤销
+        $('#rmAllCdtTag').on("click", function(){
+            rmAllCdtTagHandler()();
+        });
+
+        // 全选
+        $('#selectAll')[0].onclick = function() {
+            if(this.checked == true) {
+                $('.cart_list input[type=checkbox]').each(function(index, domEle){
+                    if(domEle.checked == false) {
+                        $(domEle).click();
+                    }
+                });
+            } else {
+                $('.cart_list input[type=checkbox]').each(function(index, domEle){
+                    if(domEle.checked == true) {
+                        $(domEle).click();
+                    }
+                });
+            }
+        };
+
+        // 结算事件
+        $('#gotoOrder')[0].onclick = function () {
+            alert('去结算');
+        };
+    }
+
+
+    /**
+     * 折扣选择
+     * */
+    function openDetail(rowId) {
+
+    }
+
+    /**
+     * 购物车部分
+     * */
+    // 添加到购物车
+    function addToCart (id, discountMsg) {
+        /**若已经加入了下拉框则加1*/
+        if($('#goods-'+id).length > 0) {
+            addOne($('#goods-'+id+' .gds-amount-val')[0]);
+            return;
+        }
+        var str = '';
+        str +=  '<div class="cart_list" id="goods-'+id+'">';
+        str +=      '<div class="cwrap-left">';
+        str +=          '<div class="columns c-ckb">';
+        str +=              '<input type="checkbox"/>';
+        str +=          '</div>';
+        str +=          '<div class="columns c-gds c-cart">'+'商品1'+'</div>';
+        str +=      '</div>';
+
+        str +=      '<div class="cwrap-center">';
+        str +=          '<div class="columns c-gds-inf c-cart">';
+        str +=              '<div class="gds-detail">套餐详情:&nbsp;&nbsp;'+discountMsg+'<br/>';
+        str +=              '</div>';
+        str +=          '</div>';
+        str +=      '</div>';
+
+        str +=      '<div class="cwrap-right">';
+        str +=          '<div class="columns c-oth prise">'+100+'</div>';
+        str +=          '<div class="columns c-oth gds-amount-pos">';
+        str +=              '<div class="gds-amount rmOne">-</div>';
+        str +=              '<input type="text" value="1" class="gds-amount-val count"/>';
+        str +=              '<div class="gds-amount addOne">+</div>';
+        str +=          '</div>';
+        str +=          '<div class="columns c-oth total">'+200+'</div>';
+        str +=          '<div class="columns c-oth">';
+        str +=              '<a href="javascript:void(0)" class="rm">删除</a>';
+        str +=          '</div>';
+        str +=      '</div>';
+        str +=  '</div>';
+
+        $('#cart-order').before(str);//添加到body
+
+        // checkbox按钮点击事件
+        $('#goods-'+id+' input[type=checkbox]')[0].onclick = function () {
+            //添加选中样式
+            if(this.checked == true) {
+                $(this).parents('.cart_list').addClass('cart-selected');
+            } else {
+                $(this).parents('.cart_list').removeClass('cart-selected');
+                $('#selectAll')[0].checked = false;//去掉全选的勾
+            }
+        };
+
+        $('#goods-'+id+' input[type=checkbox]').click();//点击他
+
+        // +号注册事件
+        $('#goods-'+id+' .addOne')[0].onclick = function () {
+            addOne($(this).prev()[0]);
+        };
+
+        // 值注册事件,
+        $('#goods-'+id+' .gds-amount-val')[0].onkeyup = function () {
+            if(!isNum(this.value)){
+                $(this).focus();
+                return;
+            } else {
+                // 设置总价
+                var prise = $(this).parent().prev().text();
+                var total = parseFloat(prise) * parseInt(this.value);
+                $(this).parent().next().text(total);
+            }
+        };
+
+        // -号注册事件
+        $('#goods-'+id+' .rmOne')[0].onclick = function () {
+            if($(this).next()[0].value >= 2) {
+                rmOne($(this).next()[0]);
+            }
+        };
+
+        // 删除注册事件
+        $('#goods-'+id+' .rm')[0].onclick = function () {
+            $('#goods-'+id).remove();
+        };
+
+        // 隐藏折扣选项
+        discountCancle(id);
+
+    }
+
+    // +1操作
+    function addOne (domEle) {
+        var c = parseInt(domEle.value);
+        if(!isNaN(c)) {
+            domEle.value = ++c;
+        } else {
+            alert('必须是整数');
+            return;
+        }
+    }
+
+    // -1操作
+    function rmOne (domEle) {
+        var c = parseInt(domEle.value);
+        if (!isNaN(c)){
+            domEle.value = --c;
+        } else {
+            alert('必须是整数');
+            return;
+        }
+    }
+
+    // 检查数字
+    function isNum(num) {
+        if(isNaN(parseInt(num))) {
+            alert('必须是整数');
+            return false;
+        }
+        return true;
+    }
+
+
+</script>
+
+</body>
+</html>

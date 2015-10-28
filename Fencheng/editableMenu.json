@@ -1,0 +1,123 @@
+[
+  {
+    "id": 9,
+    "name": "发起流程",
+    "description": "树根",
+    "other": "other",
+    "state": "open",
+    "children": [
+      {
+        "id": 9001,
+        "_parentId": 9,
+        "state": "open",
+        "name": "发起立项流程",
+        "description": "发起立项",
+        "other": "dfh",
+        "children": [
+          {
+            "id": 9001001,
+            "_parentId": 9001,
+            "state": "open",
+            "name": "政企",
+            "description": "发起政企立项流程",
+            "other": "sd",
+            "children": [
+              {
+                "id": 9001001001,
+                "_parentId": 9001001,
+                "state": "open",
+                "name": "尊享保底",
+                "description": "发起政企尊享保底立项",
+                "other": "s"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 9002,
+        "_parentId": 9,
+        "state": "open",
+        "name": "发起分成流程",
+        "description": "发起分成",
+        "other": "df",
+        "children": [
+          {
+            "id": 9002001,
+            "_parentId": 9002,
+            "state": "open",
+            "name": "政企",
+            "description": "发起政企分成流程",
+            "other": "sd",
+            "children": [
+              {
+                "id": 9002001001,
+                "_parentId": 9002001,
+                "state": "open",
+                "name": "尊享保底",
+                "description": "发起政企尊享保底分成",
+                "other": "s"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 9003,
+        "_parentId": 9,
+        "state": "open",
+        "name": "发起变更流程",
+        "description": "发起变更",
+        "other": "dd",
+        "children": [
+          {
+            "id": 9003001,
+            "_parentId": 9003,
+            "state": "open",
+            "name": "政企",
+            "description": "发起政企变更流程",
+            "other": "sd",
+            "children": [
+              {
+                "id": 9003001001,
+                "_parentId": 9003001,
+                "state": "open",
+                "name": "尊享保底",
+                "description": "发起政企尊享保底变更",
+                "other": "s"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 9004,
+        "_parentId": 9,
+        "state": "open",
+        "name": "发起终止流程",
+        "description": "发起终止",
+        "other": "s",
+        "children": [
+          {
+            "id": 9004001,
+            "_parentId": 9004,
+            "state": "open",
+            "name": "政企",
+            "description": "发起政企终止流程",
+            "other": "s",
+            "children": [
+              {
+                "id": 9004001001,
+                "_parentId": 9004001,
+                "state": "open",
+                "name": "尊享保底",
+                "description": "发起走起尊享保底终止",
+                "other": "d"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

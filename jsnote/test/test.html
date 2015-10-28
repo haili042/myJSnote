@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div{background-color: #eee;width: 300px;height: auto;}
+        .div1{background-color: #aaa;width: auto;height: 30px;margin: 5px;}
+
+    </style>
+</head>
+<body>
+    <input type="button" value="add" onclick="add()" />
+    <div id="myDiv" class="div"></div>
+
+<script type="text/javascript">
+    var dv = document.getElementById("myDiv");
+    var _index = 0;
+    function add(){
+        var fDiv = document.createElement("div");
+        fDiv.className = "div1";
+        fDiv.id = "fDiv"+_index;
+        dv.appendChild(fDiv);
+
+        // 文件名
+        var fileName = document.createElement("span");// 新建元素
+        fileName.innerHTML= "<u>file" + _index + "</u>&nbsp;";// 名称
+        fDiv.appendChild(fileName);							// 加入父dv
+
+
+        // 删除
+        var deleteButton = document.createElement("input");// 新建元素
+        deleteButton.type = "button";
+        deleteButton.id = "button"+_index;
+        deleteButton.value = "delete";
+        deleteButton.onclick = function(){
+            deleteD(dv,this.parentNode);
+        };
+        fDiv.appendChild(deleteButton);							// 加入父dv
+        _index++;
+    }
+
+    function deleteD(dv,parentNode){
+        dv.removeChild(parentNode);
+    }
+
+    console.log(location.href);
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../script/jquery.min.js"></script>
+    <script src="../script/utilTools.js"></script>
+    <script src="copyFormatter.js"></script>
+
+    <style>
+        body, div {margin: 0; padding: 0;}
+        .clear {clear: both;}
+        #header, #toolbar, #expression, #before, #after {
+            margin: 2px 0;
+
+            background: #cccccc;
+        }
+        #header, #toolbar, #expression {width: 80%;}
+        #header {height: 40px;}
+        #before, #after {width: 40%;height: 400px;float: left;}
+        textarea {width: 100%;height: 100%;}
+        #expression {height: 100px;}
+        #toolbar {height: 40px;}
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+    <div id="before">
+        <textarea id="beforeContent"></textarea>
+    </div>
+    <div id="after">
+        <textarea id="afterContent"></textarea>
+    </div>
+    <div class="clear"></div>
+    <div id="expression">
+        <textarea id="expressionContent"></textarea>
+    </div>
+    <div id="toolbar">
+        <input type="button" onclick="transform()" value="transform"/>
+        <input type="button" onclick="getData()" value="getdata"/>
+        <input type="button" onclick="clearIt()" value="clear"/>
+        <span>左分隔符</span>
+        <input type="text" value="<-" id="range_l"/>
+        <span>右分隔符</span>
+        <input type="text" value="->" id="range_r"/>
+        分隔符之间的内容会重复
+
+    </div>
+<script>
+    $.log('asgwgawefg');
+    var exp1 = "String str = {\n"+
+        "<-\"{0}\",->\n"+
+    "};";
+
+    $(function() {
+        $('#expressionContent').text(exp1);
+    });
+
+    function transform() {
+        var val1 = $('#before textarea').val();
+        var ss = lengthFormatter(toArrayString("String[]", "keys", val1, "\n"), 80, ',');
+        console.log($('#afterContent').val(ss));
+    }
+
+
+    function getData() {
+
+        var data = $('#beforeContent').val();
+        var expression = $('#expressionContent').val();
+        data = getDataArray(data, '\t');
+
+        var range_l = $("#range_l").val();
+        var range_r = $("#range_r").val();
+        var result = toExpression(data, expression, data.length, range_l, range_r);
+
+        console.log($('#afterContent').val(result));
+
+    }
+
+
+    function clearIt() {
+    }
+</script>
+</body>
+</html>

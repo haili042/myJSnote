@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="gbk">
+    <title>Editable TreeGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="../script/easyui-1.4.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../script/easyui-1.4.3/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../script/easyui-1.4.3/demo/demo.css">
+    <script type="text/javascript" src="../script/easyui-1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../script/easyui-1.4.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../Fencheng/gridConfOperation.js"></script>
+
+    <style type="text/css">
+        body, div {margin: 0; padding: 0;font-family: Microsoft YaHei, SimHei, serif;}
+
+        #header, #content, #footer {margin: 0 auto;width: 60%;
+            background: #eeeeee;
+            background: -moz-linear-gradient(top,  #eeeeee 0%, #cccccc 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#cccccc));
+            background: -webkit-linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
+            background: -o-linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
+            background: -ms-linear-gradient(top,  #eeeeee 0%,#cccccc 100%);
+            background: linear-gradient(to bottom,  #eeeeee 0%,#cccccc 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 );
+        }
+        #header {height: 30px; border-radius: 4px 4px 0 0;text-align: center;}
+        #header h2 {line-height: 30px;}
+        #content {border-right: 1px solid #95b8e7;}
+        #footer {height: 40px;border-radius: 0 0 4px 4px;text-align: center;}
+        #footer a {display: inline-block; padding: 0 10px;width: 50px;margin-top: 8px;margin-right: 20px;}
+
+    </style>
+</head>
+
+<body>
+    <form id="auditForm" method="post" enctype="multipart/form-data">
+        <input id="resultConfString" type="hidden" value=""/>
+        <div id="header">
+            <h2>菜单配置页面</h2>
+        </div>
+        <div id="content">
+            <div id="editableTree"></div>
+        </div>
+        <div id="footer">
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">确定</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">取消</a>
+        </div>
+    </form>
+
+
+
+<script type="text/javascript">
+
+    var _treeGrid = $('#editableTree');
+    var treeId = 'id';//规定这个treeId为唯一标识符
+    var _toolbar = [
+        {text : '添加', iconCls : 'icon-add', handler : function(){
+            _treeGrid.preIndex = treeGrid_appendRow(_treeGrid, treeId);//添加行 , 返回当前添加的行的index
+        }},//添加用户
+        {text : '删除', iconCls : 'icon-remove', handler : function(){
+            var index = treeGrid_removeRow(_treeGrid, treeId);
+        }},//删除用户，支持批量删除
+        {text : '保存', iconCls : 'icon-save', handler : function(){
+            if(!treeGrid_acceptRow(_treeGrid, treeId)){return;}
+        }}//修改用户，只能单个修改
+    ];
+    var _resultConf = {};
+
+    _treeGrid.treegrid({
+        iconCls: 'icon-ok',
+        rownumbers: true,
+        height: 400,
+        border: true,
+        toolbar: _toolbar,
+        animate: true,
+        collapsible: true,
+        fitColumns: true,
+        url: 'editableMenu.json',
+        method: 'get',
+        pagination: true,
+        pageSize: 20,
+        pageList: [10,20,30,40,50],
+        idField: treeId,//必填的
+        treeField: 'name',//必填的
+        columns:[[
+            {field:'name',title:'菜单名',width:180, editor:{type:'validatebox',options:{required:true}}},
+            {field:'description',title:'项目名称',width:60, editor:{type:'validatebox',options:{required:false}}},
+            {field:'other',title:'保留字段',width:80, editor:{type:'validatebox',options:{required:false}}}
+        ]],
+        onClickRow: function(row){
+            _treeGrid.preIndex = onClickRow(_treeGrid, row[treeId]);
+        }
+    });
+
+
+    // 整合所以信息到一个json中
+    function intergrateData(resultConf){
+        // 表单配置
+        var data = _treeGrid.treegrid('getData');
+        resultConf.menuData = data;// 字段配置信息
+        return resultConf;
+    }
+
+    function getChild(data, res){
+        if(data.children == undefined){
+            return [];
+        } else {
+            res.push(data.children);
+            getChild(data.children, res);
+        }
+    }
+    // 提交
+    function submitForm(){
+        if(!saveEdit()){return;};
+
+        _resultConf = intergrateData(_resultConf);
+        // 提交的数据是json字符串
+        var resultConfString = JSON.stringify(_resultConf);
+        $("#resultConfString").val(resultConfString);
+        console.log(resultConfString);
+
+
+        //确认之前，先要block住当前页面，不让用户操作，并给出提示信息
+        $.blockUI({
+            message : "正在处理，请稍候……"
+        });
+
+        $('#auditForm').form('submit', {
+            url: _urlPath+"/configurableWorkflowAction_workflowConf"+actionExtension,//指定提交的url
+            onSubmit : function() {
+                if($(this).form('enableValidation').form('validate')){
+                    return true;
+                } else{
+                    $.unblockUI();
+                    return false;
+                }
+            },
+            success:function(data){
+                //后台处理完成后，需要unblock当前页面
+                $.unblockUI();
+                if(data == 'success'){
+                    $.messager.alert("流程配置页面",'办理成功！','info',function(){
+                        window.parent.closeTab("环节配置页面");
+                    });
+                }else{
+                    $.messager.alert("流程配置页面",'系统异常， 办理失败，请重试或联系系统管理员！','info',function(){
+                        window.parent.closeTab("环节配置页面");
+                    });
+                }
+            }
+        });
+    }
+
+    // 提交前先保存编辑
+    function saveEdit(){
+        if (!treeGrid_acceptRow(_treeGrid)){// 确认编辑表单
+            return false;
+        }
+        return true;
+    }
+
+    // 取消
+    function clearForm() {
+        window.parent.closeTab("环节配置页面");
+    }
+
+</script>
+
+</body>
+</html>

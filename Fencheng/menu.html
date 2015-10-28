@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="gbk">
+    <title>Editable TreeGrid - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" href="../script/easyui-1.4.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../script/easyui-1.4.3/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../script/easyui-1.4.3/demo/demo.css">
+    <script type="text/javascript" src="../script/easyui-1.4.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../script/easyui-1.4.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../Fencheng/gridConfOperation.js"></script>
+
+</head>
+<body>
+<!-- ========查询条件========== -->
+<div class="easyui-panel" title="查询条件" style="width:900px;padding:5px;">
+    <table id="searchTable">
+        <tr>
+
+            <td>项目名称:</td>
+            <td ><input name="projectName" id="projectName" class="searchinput easyui-textbox" /></td>
+            <td>项目ID:</td>
+            <td ><input name="projectId" id="projectId" class="searchinput easyui-textbox" /></td>
+            <td>业务类型:</td>
+            <td >
+                <select  name="businessType" id="businessType" class="searchinput easyui-combobox" >
+                    <option value=null>全部</option>
+                    <option value="网络支撑">网络支撑</option>
+                    <option value="内容运营">内容运营</option>
+                    <option value="渠道代理">渠道代理</option>
+                    <option value="终端提供">终端提供</option>
+                    <option value="系统平台建设">系统平台建设</option>
+                    <option value="产品开发">产品开发</option>
+                </select></td>
+
+        <tr>
+            <td></td><!-- 空填充，保持格式对齐，不要删除 -->
+            <td>
+                <a href="javascript:void(0)" onclick="doSearch()" class="easyui-linkbutton"
+                   data-options="iconCls:'icon-search'" style="width:80px">查询</a>
+                <a href="javascript:void(0)" onclick="doReset()" class="easyui-linkbutton"
+                   data-options="iconCls:'icon-remove'" style="width:80px">重置</a>
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+<div style="height: 6px;bbackground-color:#BBD2E9;"></div>
+<div class="easyui-panel" title="test" style="width:900px;padding:0px;"></div>
+
+<!-- =========显示数据表格列表======== -->
+<div id="content">
+
+    <table id="datagrid"></table>
+
+</div>
+<!-- =========显示弹窗======== -->
+<div id="dialog"></div>
+
+<script type="text/javascript">
+    $(function() {
+
+        //加载datagrid数据表格
+        $('#datagrid').datagrid({
+            url : 'test.json',
+            columns : [ [
+// 				{field : 'ck', checkbox: true},//定义多选框 checkbox
+                //sortable: true,允许点击表头排序,hidden:true,隐藏id列
+                {field : 'id', title : 'id', width : 80, sortable : true,hidden:true},
+// 				{field : 'projectId', title : '项目类型ID', width : 80, sortable : true, hidden:true}, 
+// 				{field : 'workFlowKey', title : '流程key', width : 80, sortable : true, hidden:true}, 
+                {field : 'projectName', title : '项目类型', width : 150, sortable : true},
+                {field : 'businessType', title : '业务类型', width : 80, sortable : true},
+                {field : 'department', title : '提交部门', width : 80, sortable : true},
+                {field : 'state',title : '地州', width :60,sortable : true},
+                {field : 'user', title : '提交人员', width : 60, sortable : true},
+                {field : 'creatDate', title : '创建时间', width : 130, sortable : true},
+                {field : 'operation', title : '操作', width : 130, align : 'center' ,formatter : formatOper},
+                {field : 'workFlowId',title : '工作流ID', width :20,hidden:true}
+
+            ] ],
+// 			toolbar : toolbar,
+            resizeable : true,//宽度可调整
+            fitColumns : true,//自适应表格宽度
+            pageSize : 10,//默认选择的分页是每页5行数据
+            pageList : [ 5, 10, 15, 20 ],//可以选择的分页集合
+            striped : true,//设置为true将交替显示行背景
+            collapsible : true,//显示可折叠按钮
+            sortable : true,//可以对列排序
+            sortName : 'projectId',//当数据表格初始化时以哪一列来排序
+            sortOrder : 'asc',//定义排序顺序，可以是'asc'或者'desc'（正序或者倒序）。
+            pagination : true,//分页
+            singleSelect: true,//只能选中单行
+            showFooter: true,
+            rownumbers : true//显示行号
+        });
+    });
+
+    //表格的查询
+    function doSearch() {
+        //根据查询条件，重新加载表格
+        $('#datagrid').datagrid('insertRow', {
+            index: 1,	// 索引从0开始
+            row: {
+                id: '1.1'
+            }
+
+        });
+        $("#datagrid-row-r1-2-0").append();
+    }
+
+    //重置查询条件
+    function doReset() {
+        var data = $('#datagrid').datagrid('getData');
+        console.log(JSON.stringify(data));
+    }
+
+    /**操作函数*/
+    function formatOper(val,row,index){
+        return '<a href="javascript:void(0)" onclick="checkRulesConfUI(\''+row.projectName+'\',\''+row.state+'\')">稽核计算规则配置</a>';
+    }
+
+    //稽核配置界面encodeURI(encodeURI(projectName))
+    function checkRulesConfUI(projectName,state) {
+        var title = '稽核规则配置';
+        var url = 'checkRules_checkRulesConfUI'+actionExtension + "?projectName="+encodeURI(encodeURI(projectName))+"&status="+encodeURI(encodeURI(state));
+        //iframe里面的页面调用父窗口的方法
+        window.parent.addTab(title,url, "pencil");
+    }
+
+</script>
+
+</body>
+</html>

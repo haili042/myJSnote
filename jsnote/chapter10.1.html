@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        div, ul, li, span {margin: 0;padding: 0px 0px 0px 0px;}
+        ul, li {list-style: none;}
+        .title {overflow: hidden;width: 608px;height: 30px;}
+        .title ul {background-color: #eee;}
+        .title ul li {width: 150px;float: left;text-align: center;font-size: 14px;border: 1px solid;}
+
+        .body {overflow: hidden;width: 608px;height: 68px;}
+        .body ul {background-color: #222;}
+        .body ul li {width: 150px;float: left;text-align: center;font-size: 14px;border: 1px solid;}
+        .body ul li span { width:100%; background-color:#F90; font-size:12px;float:left; height:100%; overflow:hidden;border: 1px solid;}
+    </style>
+</head>
+<body>
+    <div class="title">
+        <ul>
+            <li>aaa</li>
+            <li>bbb</li>
+            <li>ccc</li>
+            <li>ddd</li>
+        </ul>
+
+    </div>
+
+    <div class="body" id="body">
+    </div>
+
+    <input type="hidden" id="s"value="test"/>
+</body>
+<script type="text/javascript">
+    /*DOM */
+
+    console.log("---------1----------");
+    var s = document.getElementById("s");
+    console.log("element type is "+s.nodeType);
+    console.log("element nodename is "+ s.nodeName);
+
+    console.log("element nodevalue is "+ s.nodeValue);//always be null
+    var arr = ["a","bb"];
+    var arrSl = arr.slice();
+    for(var x in arrSl){
+        /**
+         *
+         * readyState 5 种状态
+         0 － （未初始化）还没有调用send()方法
+         1 － （载入）已调用send()方法，正在发送请求
+         2 － （载入完成）send()方法执行完成，已经接收到全部响应内容
+         3 － （交互）正在解析响应内容
+         4 － （完成）响应内容解析完成，可以在客户端调用了
+         * */
+        console.log(arrSl[x]);
+    }
+    /**
+     * 节点类型      值       nodeName       nodeValue      parentNode      childNode
+     * document     9       #document       null            无
+     * element      1       标签名           null          document/element
+     * text         3       #text           所包含的文本      element              无
+     * comment      8       #comment        注释的内容       document/element    无
+     * documenttype 10      #doctype        null            document            无
+     * attr         2       属性名           null              null               无
+     *
+     * document 围绕这9种基本类型提供方法,
+     * 比如 document.createElement();
+     * document.setAttribute(); document.createTextNode();
+     *
+     * [document] // 根节点
+     *  [html]
+     *      [head]
+     *      [body]
+     *
+     * */
+
+    console.log(document.baseURI);
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = loadData;
+    xhr.open("get","ulTest.json", false);
+    xhr.send(null);
+
+
+
+    function loadData(){
+        if(xhr.readyState == 4){
+            if(xhr.status == 200){// 200:成功, //404: 未找到 500: 服务器错误
+                var resText = xhr.responseText;
+
+                var resData = eval("("+resText+")");// 加括号是为了转成对象
+
+                var body = document.getElementById("body");
+                var ul = document.createElement("ul");
+                for(var i = 0; i < resData.total; i++){
+                    var li = document.createElement("li");
+
+                    for(var j in resData.rows[i]){
+                        var span = document.createElement("span");
+                        var text = document.createTextNode(resData.rows[i][j]);
+                        span.appendChild(text);
+                        li.appendChild(span);
+                    }
+                    ul.appendChild(li);
+                }
+                body.appendChild(ul);
+
+
+            }else{
+                alert("error");
+            }
+        }
+    }
+
+
+</script>
+</html>

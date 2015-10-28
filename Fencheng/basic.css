@@ -1,0 +1,41 @@
+/* 
+ Copyright @ JD.COM 
+ Date: 2015-04-02 3:56:30 [PM] 
+ */
+html, body, div, span, iframe, h1, h2, h3, h4, h5, h6, p,
+blockquote, pre, a, address, big, cite, code, del, em, font,
+img, ins, small, strong, var, b, u, i, center, dl, dt, dd,
+ol, ul, li, fieldset, form, label, legend {
+    margin: 0;
+    padding: 0;
+    font-family: Microsoft YaHei, SimHei, serif;
+}
+
+ol, ul {
+    list-style: none
+}
+
+:focus {
+    outline: 0
+}
+
+a img {
+    border: 0
+}
+
+img {
+    vertical-align: middle
+}
+
+table {
+    empty-cells: show
+}
+
+button::-moz-focus-inner,
+input[type=reset]::-moz-focus-inner,
+input[type=button]::-moz-focus-inner,
+input[type=submit]::-moz-focus-inner,
+input[type=file] > input[type=button]::-moz-focus-inner {
+    border: 0;
+    padding: 0
+}

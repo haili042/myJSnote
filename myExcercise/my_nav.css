@@ -1,0 +1,50 @@
+body, div, ul, li{
+    margin: 0;
+    padding: 0;
+}
+/*颜色从上到下渐变*/
+.gradient(@startColor, @endColor) {
+    background: #eeeeee;
+    background: -moz-linear-gradient(top,@startColor,@endColor);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(100%,@startColor), color-stop(100%,@endColor));
+    background: -webkit-linear-gradient(top,@startColor,@endColor);
+    background: -o-linear-gradient(top,@startColor,@endColor);
+    background: -ms-linear-gradient(top,@startColor,@endColor);
+    background: linear-gradient(to bottom,@startColor,@endColor);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@startColor, endColorstr=@endColor,GradientType=0);
+}
+:root .gradient{
+    filter:none;
+}
+
+#nav {width: 960px;
+    height: 35px;
+    margin: 0 auto;
+    margin-top: 30px;
+    border-radius: 4px 4px 4px 4px;
+    .gradient(#eeeeee 0%, #cccccc 100%);
+}
+
+#nav ul li {
+    float: left;
+    list-style: none;
+}
+#nav ul li a, #nav ul li a:hover {
+    display: block;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    font-family: Microsoft YaHei, serif;
+    text-align: center;
+    padding: 0 10px;
+    text-decoration: none;
+    margin-right: 1px;
+    border-radius: 4px 4px 4px 4px;}
+#nav ul li a {
+    color: #000;
+}
+#nav ul li a:hover {
+    border-radius: 4px 4px 4px 4px;
+    color: #fff;
+    .gradient(#00eeff 0%, #00aacc 100%);
+}
