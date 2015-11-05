@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>chapter 15 canvas</title>
+    <style>
+        * {padding:  0; margin: 0;}
+        #drawing {width: 200px;height: 200px;background: #ddd;}
+    </style>
+</head>
+<body>
+    <canvas id="drawing">your browser does not support canvas</canvas>
+</body>
+<script>
+    (function () {
+        var drawing = document.getElementById('drawing');
+        if(drawing.getContext) { // 检测是否支持
+            var context = drawing.getContext('2d');// 把2d 传入上下文
+            /**
+             * 2d 绘图上下文的起始坐标是 canvas 元素的左上角
+             * */
+
+//            context.fillStyle = 'rgba(0, 0, 255, 1)';// rgba 最后一个参数是透明度
+            context.strokeRect(30 ,30, 50, 50);
+            context.strokeRect(10 ,10, 50, 50);
+
+//            context.clearRect(40, 40, 10, 10);
+        }
+    })();
+</script>
+</html>
