@@ -15,26 +15,39 @@
 </body>
 <script>
     (function () {
-        var canvas = document.getElementById('canvas');
-        var oldX = 0, oldY = 0;
-        if(canvas.getContext) { // 检测是否支持
-            var context = canvas.getContext('2d');// 把2d 传入上下文
+        if(!checkCanvas()) {
+            return;
+        }
+        init();
+
+        /****** 初始化 **********/
+        function init() {
             /**
              * 2d 绘图上下文的起始坐标是 canvas 元素的左上角
              * */
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');// 把2d 传入上下文
 
-            context.strokeStyle = 'rgba(0, 0, 0, 1)';// rgba 最后一个参数是透明度
-
+            context.strokeStyle = '#222';// rgba 最后一个参数是透明度
             context.arc(40 ,30, 10, 0, 2*Math.PI, false);
             context.rect(20 ,60, 40, 40);
+            context.moveTo(100, 0);
+            context.lineTo(100, 400);
             context.stroke();
-            context.arc(40 ,30, 10, 0, 2*Math.PI, false);
 
-            var image = context.getImageData(20 ,60, 40, 40);
-            context.putImageData(image, 100, 100);
+            EventUtil.addHandler(canvas, 'mousedown', mouseDownHandler);
+            EventUtil.addHandler(canvas, 'mouseup', mouseUpHandler);
         }
-        EventUtil.addHandler(canvas, 'mousedown', mouseDownHandler);
-        EventUtil.addHandler(canvas, 'mouseup', mouseUpHandler);
+
+        function checkCanvas() {
+            var canvas = document.getElementById('canvas');
+            if (canvas.getContext) { // 检测是否支持
+                return true;
+            } else {
+                alert ('your browser does not support canvas') ;
+                return false;
+            }
+        }
 
         /****** drawing **********/
         function drawing (oldX, oldY, x, y) {
@@ -47,9 +60,6 @@
         function mouseDownHandler (event) {
             var x = event.pageX;
             var y = event.pageY;
-            var context = canvas.getContext('2d');
-            context.fillStyle = 'rgba(0,0,88,1)';
-            context.fillRect(x, y, 50, 50);
             console.log('position is x:'+x+',y:'+y);
             EventUtil.addHandler(canvas, 'mousemove', mouseMoveHandler(x, y));
             context = null;
@@ -57,7 +67,6 @@
         function mouseMoveHandler (event) {
             var x = event.pageX;
             var y = event.pageY;
-            context.moveTo(x, y);
             console.log('position is x:'+x+',y:'+y);
         }
         function mouseUpHandler (event) {
