@@ -3,29 +3,71 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>chapter 15 canvas</title>
+    <script src="../script/common.js"></script>
     <style>
         * {padding:  0; margin: 0;}
-        #drawing {background: #ddd;}
+        body {padding: 40px;}
+        #canvas {border: 1px solid #222;}
     </style>
 </head>
 <body>
-    <canvas id="drawing" width="800" height="400">your browser does not support canvas</canvas>
+    <canvas id="canvas" width="800" height="400">your browser does not support canvas</canvas>
 </body>
 <script>
     (function () {
-        var drawing = document.getElementById('drawing');
-        if(drawing.getContext) { // 检测是否支持
-            var context = drawing.getContext('2d');// 把2d 传入上下文
+        var canvas = document.getElementById('canvas');
+        var oldX = 0, oldY = 0;
+        if(canvas.getContext) { // 检测是否支持
+            var context = canvas.getContext('2d');// 把2d 传入上下文
             /**
              * 2d 绘图上下文的起始坐标是 canvas 元素的左上角
              * */
 
-            context.fillStyle = 'rgba(0, 0, 255, 1)';// rgba 最后一个参数是透明度
-            context.fillRect(30 ,30, 50, 50);
-            context.strokeRect(10 ,10, 50, 50);
+            context.strokeStyle = 'rgba(0, 0, 0, 1)';// rgba 最后一个参数是透明度
 
-            context.clearRect(40, 40, 10, 10);
+            context.arc(40 ,30, 10, 0, 2*Math.PI, false);
+            context.rect(20 ,60, 40, 40);
+            context.stroke();
+            context.arc(40 ,30, 10, 0, 2*Math.PI, false);
+
+            var image = context.getImageData(20 ,60, 40, 40);
+            context.putImageData(image, 100, 100);
         }
+        EventUtil.addHandler(canvas, 'mousedown', mouseDownHandler);
+        EventUtil.addHandler(canvas, 'mouseup', mouseUpHandler);
+
+        /****** drawing **********/
+        function drawing (oldX, oldY, x, y) {
+            context.lineTo(oldX, oldY);
+            context.stroke();
+        }
+
+
+        /****** handers **********/
+        function mouseDownHandler (event) {
+            var x = event.pageX;
+            var y = event.pageY;
+            var context = canvas.getContext('2d');
+            context.fillStyle = 'rgba(0,0,88,1)';
+            context.fillRect(x, y, 50, 50);
+            console.log('position is x:'+x+',y:'+y);
+            EventUtil.addHandler(canvas, 'mousemove', mouseMoveHandler(x, y));
+            context = null;
+        }
+        function mouseMoveHandler (event) {
+            var x = event.pageX;
+            var y = event.pageY;
+            context.moveTo(x, y);
+            console.log('position is x:'+x+',y:'+y);
+        }
+        function mouseUpHandler (event) {
+            var x = event.pageX;
+            var y = event.pageY;
+            console.log('position is x:'+x+',y:'+y);
+            EventUtil.removeHandler(canvas, 'mousemove', mouseMoveHandler);// 消除闭包
+        }
+
+
     })();
 </script>
 </html>
