@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {padding: 0;margin: 0;}
+        div {display: inline-block;padding: 10px;}
+        span {display: block;text-align: center;}
+        textarea {display: block;width: 400px; min-height: 400px;}
+    </style>
+</head>
+<body>
+    <div>
+        <span>code</span>
+        <textarea id="left"></textarea>
+    </div>
+    <div>
+        <span>result1</span>
+        <textarea id="r1"></textarea>
+    </div>
+    <div>
+        <span>result2</span>
+        <textarea id="r2"></textarea>
+    </div>
+</body>
+<script>
+    var lTxt = 'Of zit kggd zitkt qkt ygxk ortfzoeqs wqlat zwqssl qfr zvg ortfzoeqs yggzwqssl. Fgv og ngx vqfz zg hxz zitd of gft soft.piv dgfn lgsxzogfl qkt zitkt?Zohl:hstqlt eiqfut zit ygkd gy zit fxdwtk ngx utz.zit hkgukqddtkl!';
+    document.getElementById('left').value = lTxt;
+    var rTxt = '';
+    for (var j = 1; j <= 26; j++) {
+
+        for(var i = 0, len = lTxt.length; i < len; i ++) {
+            if(lTxt[i] >= 'a' && lTxt[i] <= 'z' ) {
+                var s = String.fromCharCode(lTxt.charCodeAt(i) + j);
+                if(s > 'z') {
+                    s = String.fromCharCode(s.charCodeAt(0) - 26);
+                }
+                rTxt += s;
+            } else if(lTxt[i] >= 'A' && lTxt[i] <= 'Z' ){
+                var s = String.fromCharCode(lTxt.charCodeAt(i) + j);
+                if(s > 'Z') {
+                    s = String.fromCharCode(s.charCodeAt(0) - 26);
+                }
+                rTxt += s;
+
+            } else {
+                rTxt += lTxt.charAt(i);
+            }
+        }
+        rTxt += '\n\n\n\n\n';
+    }
+    document.getElementById('r1').value = rTxt;
+    var pos = ['k','e','a','r','y','o','d','d'];
+    var r2Txt = '';
+    for(var i = 0, len = pos.length; i < len; i++){
+        r2Txt += pos[i];
+    }
+    document.getElementById('r2').value = r2Txt;
+</script>
+</html>
