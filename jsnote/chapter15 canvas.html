@@ -28,12 +28,15 @@
             var canvas = document.getElementById('canvas');
             var context = canvas.getContext('2d');// 把2d 传入上下文
 
+            context.translate(0.5, 0.5);
             context.strokeStyle = '#222';// rgba 最后一个参数是透明度
             context.arc(40 ,30, 10, 0, 2*Math.PI, false);
             context.rect(20 ,60, 40, 40);
             context.moveTo(100, 0);
             context.lineTo(100, 400);
             context.stroke();
+
+
 
             EventUtil.addHandler(canvas, 'mousedown', mouseDownHandler);
             EventUtil.addHandler(canvas, 'mouseup', mouseUpHandler);
