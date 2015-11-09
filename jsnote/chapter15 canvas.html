@@ -27,16 +27,29 @@
              * */
             var canvas = document.getElementById('canvas');
             var context = canvas.getContext('2d');// 把2d 传入上下文
-
             context.translate(0.5, 0.5);
+
             context.strokeStyle = '#222';// rgba 最后一个参数是透明度
-            context.arc(40 ,30, 10, 0, 2*Math.PI, false);
+            context.fillStyle = 'rgba(60,20,30,0.5)';
+            context.fillRect(0,0,10,10);
+
+            context.arc(40 ,30, 10, 0, 2*Math.PI, false);       // false 顺时针
             context.rect(20 ,60, 40, 40);
             context.moveTo(100, 0);
             context.lineTo(100, 400);
+            context.save();// 上下文入栈
+
+            context.rotate(20*Math.PI/180);// 注意单位
+            context.moveTo(200, 200);
+            context.bezierCurveTo(200,240,240,160, 240, 200);
+            context.save();
             context.stroke();
 
 
+            context.restore();// 上下文出栈
+            var imagedate = context.getImageData(0, 0, 800, 400);
+            for(var i = 0, len = imagedate.data.length; i < len; i += 4) {
+            }
 
             EventUtil.addHandler(canvas, 'mousedown', mouseDownHandler);
             EventUtil.addHandler(canvas, 'mouseup', mouseUpHandler);

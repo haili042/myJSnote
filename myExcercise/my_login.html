@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>my login</title>
+    <style>
+        * {padding: 0; margin: 0;}
+        body {font-family:  "Microsoft YaHei", arial;}
+        div {display: block;}
+        dl,dt,dd,ul,ol,li, {display: block;}
+        a {text-decoration: none;color: #333;}
+        a:hover {cursor: pointer;text-decoration: underline;}
+
+        #mainPage {min-width: 900px;}
+
+        #header {height: 100px;}
+
+        #content {text-align: center;}
+        #content .content-l {display: inline-block;width: 420px;}
+        #content .content-r {display: inline-block;width: 300px;}
+
+        #footer {}
+        #footer dl {display: inline-block;width: 200px;}
+        #footer dt {font-size: 24px;}
+        #footer dd {font-size: 18px;}
+        #footer .footer-layout {margin: 0 auto;width: 720px;}
+
+        #footer .footer-copyright {font-size: 16px;}
+
+        .clr {clear: both;}
+    </style>
+</head>
+<body>
+    <div id="mainPage">
+        <div id="header">
+            <div>
+                <img src="" class="logo"/>
+            </div>
+        </div>
+        <div id="content">
+            <div class="content-l">
+                <div class="media-img-wrap">
+                    <a href="#">
+                        <img src="" class="media-img"/>
+                    </a>
+                </div>
+            </div>
+            <div class="content-r">
+                <div class="login">
+                    <div class="login-type">
+                        <div class="">登录</div>
+                        <div class="">注册</div>
+                    </div>
+                    <div class="login-wrap">
+                        <div class="login-usr ligin-txt">
+                            <label for="userName">
+                                <i class="icon" title="用户名"></i>
+                            </label>
+                            <span class="usr-df-msg">手机号/会员名/邮箱</span>
+                            <input id="userName" name="userName" type="text" />
+                            <span class="rm-input">
+                                <i class="icon"></i>
+                            </span>
+                        </div>
+                        <div class="login-psw login-txt">
+                            <label for="password">
+                                <i class="icon" title="密码"></i>
+                            </label>
+                            <input id="password" name="password" type="text" />
+                            <span class="rm-input">
+                                <i class="icon"></i>
+                            </span>
+                        </div>
+                        <div class="login-forget">
+                            <a href="#">忘记密码</a>
+                        </div>
+                        <div class="login-btn">
+                            <a href="#">登录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clr"></div>
+        <div id="footer">
+            <div class="footer-layout footer-info">
+                <dl>
+                    <dt>指南</dt>
+                    <dd>
+                        <a href="#">注册</a>
+                    </dd>
+                    <dd>
+                        <a href="#">开通账户</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>服务</dt>
+                    <dd>
+                        <a href="#">运营服务</a>
+                    </dd>
+                    <dd>
+                        <a href="#">物流服务</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>保障</dt>
+                    <dd>
+                        <a href="#">发票</a>
+                    </dd>
+                    <dd>
+                        <a href="#">售后</a>
+                    </dd>
+                </dl>
+            </div>
+            <div class="footer-layout footer-copyright">
+                <p class="footer-copyright">
+                    <a href="#">关于</a>
+                    <a href="#">帮助</a>
+                    <a href="#">合作伙伴</a>
+                </p>
+                <p class="footer-other">
+                    <a href="#">aa</a>&nbsp;|
+                    <a href="#">bb</a>&nbsp;|
+                    <a href="#">cc</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script></script>
+</body>
+</html>
