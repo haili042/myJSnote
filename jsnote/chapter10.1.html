@@ -76,7 +76,11 @@
      * */
 
     console.log(document.baseURI);
-
+    window.addEventListener('message', function (e) {
+        if(e.source != window.parent) {return;}// 保证是父页面发来的
+        // ... 处理
+        e.source.postMessage('received', 'http://localhost:63342');
+    }, false);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = loadData;

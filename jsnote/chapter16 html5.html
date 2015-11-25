@@ -3,13 +3,142 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>html5脚本编程</title>
+    <style>
+        div {margin: 20px;}
+        .a {width: 60px;height: 60px;background: #00eeff;}
+        .a:hover {cursor: move;}
+        .b {width: 120px;height: 120px;background: #888;}
+        .clr {clear: both;}
+    </style>
 </head>
 <body>
+    <div>
+
+        <iframe id="iframe" src="chapter10.1.html"></iframe>
+    </div>
+    <div>
+        <div class="a" id="a"></div>
+        <div class="b" id="b"></div>
+    </div>
 
 </body>
 <script>
     /**
+     * part 1   XDM 跨文本消息传递
+     *
+     * [概念]
+     *      来自不同域的页面实现传递消息, 例如iframe
+     * */
+
+    window.onload=function(){
+
+        // [发送方]: postMessage() 方法
+        var iframe = window.frames[0];
+        iframe.postMessage('this is message', 'http://localhost:63342');
+            // 后一个参数规定必须发到这个'http://localhost:63342' 域, 保证安全
+
+
+        // [接收方]:  window.onmessage 事件
+        window.addEventListener('message', function (e) {
+            if(e.source != window.parent) {return;}// 保证是父页面发来的
+            // ... 处理
+            e.source.postMessage('received', 'http://localhost:63342');
+        }, false);
+    };
+
+
+    /**
+     * part 2   拖放事件
+     *
+     * [api]
+     *      拖动的元素拖动时会依次触发以下事件:
+     *      dragstart
+     *      drag
+     *      dragend
+     *
+     *      当拖到某个元素上方时, 会依次触发以下事件:
+     *      dragenter
+     *      dragover
+     *      dragleave 或者 drop
+     *
+     * [注意]
+     *      1. 当元素拖动的时候, dom元素其实并未改变, 而是创建了一个半透明的副本随着鼠标移动
+     *      2. 对于某些元素默认不能拖到其上面, 可以在dragenter 或 dragover 的事件中
+     *          添加 preventDefault(event) 方法, 阻止默认行为
+     *      3. 对于firefox , 还要对其 drop 进行阻止默认行为
+     * */
+
+    /**
+     * part 3   dataTransfer 对象 (数据传输)
+     *
+     * [概念]
+     *      事件中传递数据的对象
+     *
+     * [注意]
+     *      1. dataTransfer对象只能在event中获取, 也就说如果没及时取到数据就会被销毁
+     *      2. setData() 和 getData() 方法分别对应setter and getter
+     *      3. 放在dataTransfer 的数据只能在 drop 事件中获取!!!!!!!!
      *
      * */
+    var aEle = document.getElementById('a');
+    var bEle = document.getElementById('b');
+    aEle.addEventListener('dragstart',function(e) {
+        var dt = e.dataTransfer;
+        dt.effectAllowed = 'copy';// 箭头形状
+        dt.setData('id', e.target.id);
+
+    },false);
+
+
+    bEle.addEventListener('dragover',function(e) {
+        e.preventDefault(e);//阻止默认行为, 不然会阻止拖动放置....
+    },false);
+
+    bEle.addEventListener('drop',function(e) {
+        e.preventDefault(e);//阻止默认行为, 不然会默认把箭头的复制图标给去了....
+        var dt = e.dataTransfer;
+        dt.dropEffect = 'copy';// 箭头形状
+        var id = dt.getData('id');
+        var ele = document.getElementById(id).cloneNode(true);//克隆节点
+        ele.id = ele.id + 1;
+        e.target.appendChild(ele);
+    },false);
+
+
+    /***
+     * part 4   draggable 对象
+     *
+     * [概念]
+     *  draggable
+     *      1. 默认只有图像 连接和文本能拖动, 其他元素得设置 draggable属性
+     *
+     *
+     *  [问题]
+     *      发现上面一段代码不能拖动, 为啥? 因为 div没设置 draggable
+     * */
+    aEle.draggable = true;
+
+
+    /**
+     *  part 5  dropEffect; effectAllowed
+     *  [概念]
+     *      是 dataTransfer 的两个属性
+     *        dropEffect : 被放置的元素能够执行的行为
+     *        effectAllowed :　配合　dropEffect 设置鼠标放落的形状
+     *      简单来说就是规定鼠标拖动时的形状
+     *
+     *  [注意]
+     *      dropEffect:
+     *      1. 取值有4 个: a. "none"; b. "move"--移动, 小框,; c. "copy"--复制, 加号; d. "link"--打开, 小箭头
+     *
+     *      effectAllowed:
+     *      2. 取值有6 个: a. "uninitalized"; b. "move"--移动, 小框,; c. "copy"--复制, 加号; d. "link"--打开, 小箭头 e. "copyMove"; f. "linkMove"
+     *
+     *      3. effectAllowed 依赖 dropEffect 的取值, 成对出现
+     *
+     *  [例子]
+     *      参考上例
+     * */
+
 </script>
 </html>
