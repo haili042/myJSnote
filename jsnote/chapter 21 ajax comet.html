@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>ajax comet</title>
+</head>
+<body>
+ <img src="http://mhfm2.tel.cdndm5.com/1/432/432_b.jpg">
+<script>
+    /**
+     * Ajax : async javascript and xml
+     * [概念]
+     *      1 XMLHttpRequest 创建
+     *
+     * */
+
+    function createXHR() {
+        if (typeof XMLHttpRequest != 'undefined') {
+            return new XMLHttpRequest();
+        } else if (typeof ActiveXObject != 'undefined') { // ie 7以下
+            if (typeof arguments.callee.activeXString != 'String') {
+                var versions = ['MSXML2.XMLHttp.6.0', 'MSXML2.XMLHttp.3.0',
+                'MSXML2.XMLHttp'], i, len;
+                for (i=0,len=versions.length; i < len; i++) {
+                    try {
+                        new ActiveXObject(versions[i]);
+                        arguments.callee.activeXString = versions[i];
+                        break;// 找到对应的版本就退出
+                    } catch (e) {
+
+                    }
+                }
+            }
+            return new ActiveXObject(arguments.callee.activeXString);
+        } else {
+            return new Error('xhr error');
+        }
+    }
+
+    /**
+     * [概念]
+     *      1 open(方法, 路径, 是否异步)
+     *      2 send 发送, 如果不需要发送数据, 比如get 请求, 一定要填null
+     *      3 xhr 收到响应数据后的属性:
+     *          - responseText : 响应正文
+     *          - responseXML : 响应类型是text/xml, application/xml
+     *          - status : 200, 304(读缓存), 404, 500 等
+     *          - statusText : 状态说明
+     *      4 xhr 的readyState 属性 (异步请求用到多)
+     *          - 0 未调用 open()
+     *          - 1 已调用 open(), 未调用 send()
+     *          - 2 已调用 send(). 未收到 响应
+     *          - 3 收到部分响应数据
+     *          - 4 收到全部相应数据
+     *      5 xhr 的onreadystatechange 事件
+     *          - 注意, 并非所有浏览器支持dom2 级方法, 应该用dom0 级方法
+     *      6 setRequestHeader 发送请求头信息, 可能有些浏览器没 Content-Type 这些信息 getResponseHeader 获取
+     *      7 get 请求要对参数进行加密: url + '?' + encodeURIComponent(name) + encodeURIComponent(value)
+     *      8 post 请求的参数可以用 FormDate() 函数来构造
+     *
+     * */
+
+    /**
+     * [题外话]
+     *      1 get vs post
+     *      2 get
+     *          - 一般用来请求数据, 比如想查询某个东西, 可以把查询的参数get 请求过去
+     *          - 参数在url 中
+     *      3 post
+     *          - 一般用来保存数据, 比如我想把客户填的表单写到数据库, 可以 post 请求过去
+     *          - 参数在http header 的 Content-Disposition 里
+     *
+     * */
+    var xhr = createXHR();
+    xhr.onreadystatechange = function (e) {// 回调函数
+        if (xhr.readyState == 4) {
+            if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+                console.log('success');
+            } else {
+                alert('error code : ' + xhr.status);
+            }
+        }
+    };
+    xhr.open('post', 'ulTest.json', true);// 没发送, 进入就绪状态
+    xhr.setRequestHeader('aa','bb');// 可以放在 http 请求头里发送
+    var data = new FormData();
+    data.append('name', 'haili');// 用append方法
+    data.append('sex', 'man');
+    xhr.send(data); // 发送 [注意] 这里不发送数据一定要填 null
+
+
+
+    /**
+     * CORS (cross origin resource sharing) 跨源资源共享
+     * [概念]
+     *      类似与跨域请求 XDR
+     * [具体]
+     *      IE 的 xdr
+     *          - 实现了xdr 对象: new XDomainRequest, 由xdr 来实现跨域请求
+     *      其他浏览器 的 xhr
+     *          - xhr 即实现了CORS
+     *      图像 ping
+     *          - 图片的话是默认是跨域的, 因此我们可以利用<img> 来实现跨域请求
+     *          - 常用于图片点击次数的收集
+     *          - 只能get请求
+     *          - 无法访问相应文本
+     *      comet 技术, "服务器推送技术", 两种方法 长轮询和流
+     *          - 长轮询
+     *          - 流
+     *
+     * */
+
+    /**
+     * comet 技术
+     * */
+</script>
+</body>
+</html>
