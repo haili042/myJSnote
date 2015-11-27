@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>javascript 高级技巧</title>
+</head>
+<body>
+
+<script>
+
+    /**
+     * 安全的类型检测
+     *      - 不同的frame 时, instanceof 可能会失效
+     * */
+    var arr = [];
+    console.log(Object.prototype.toString.call(arr));
+
+    /**
+     * 作用域安全的构造函数
+     *      - 如果没用new 来创建实例, 就有可能出错
+     * */
+    function Human (name) {
+        if (this instanceof Man) {
+            this.name = name;
+        } else {
+            return new Human(name);
+        }
+    }
+    var p = Human('haili');
+    console.log(window.name);// 这样就不会 输出 'haili'
+
+    /**
+     * 惰性载入函数
+     *      - 很多if 语句  * */
+
+</script>
+</body>
+</html>
