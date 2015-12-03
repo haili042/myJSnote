@@ -20,7 +20,7 @@
      *      - 如果没用new 来创建实例, 就有可能出错
      * */
     function Human (name) {
-        if (this instanceof Man) {
+        if (this instanceof Human) {
             this.name = name;
         } else {
             return new Human(name);
@@ -31,8 +31,65 @@
 
     /**
      * 惰性载入函数
-     *      - 很多if 语句  * */
+     *      - 很多if 语句, 如果多次调用了, 每次调用都需要判断, 性能会下降
+     *          - 每次调用的时候就改变其构造方式
+     *          - 适合只需要判断一次调用的函数, 比如创建 xhr
+     **/
+    var createXHR = (function () {
+        if (typeof XMLHttpRequest != 'undefined') {
+            return function () {
+                return new XMLHttpRequest();
+            };
+        } else if (typeof ActiveXObject != 'undefined') {
+            return function () {
+                // ... 略
+            };
+        } else {
+            return function () {
+                throw new Error('error');
+            };
+        }
+    })();
 
+    /**
+     * 函数绑定
+     *      - 为了解决this 指向, 例如 ie8 事件中 this 指向window,
+     *      - bind函数, 可以绑定 this 的指向, ECMAScript 已经实现了bind()
+     *
+     * */
+    function bind (fn, context) {
+        console.log(arguments);// arguments 是 fn, context
+        return function (s) {// 闭包返回调用了之后才会执行里面的内容 因此 arguments 是 's'
+            console.log(arguments);// argument 是执行后传回的参数 's'
+            return fn.apply(context, arguments);
+        };
+    }
+    var mm = bind(Human, Human)('s');
+    console.log(mm.name);
+
+    /**
+     * 函数柯里化
+     *      - 柯里化的bind, ECMAScript 已经实现了bind()
+     * */
+    function bind2 (fn, context) {
+        var outerArgs = Array.prototype.slice.call(arguments, 2);// 数组中去除 fn, context 这两个参数
+        console.log(arguments);// arguments 是 fn, context
+        console.log(outerArgs);
+        return function () {
+            var innerArgs = Array.prototype.slice.call(arguments);// 若没参数即 arguments 本身
+            var finalArgs = outerArgs.concat(innerArgs);// 拼接数组
+            console.log(innerArgs);
+            console.log(finalArgs);
+            return fn.apply(context, finalArgs);
+        };
+    }
+
+    /**
+     * 防止修改对象(ECMAScript 5 方法)
+     *      - Object.preventExtensions(obj) 防止扩展
+     *      - Object.seal(obj) 密封对象
+     *      - Object.freeze(obj) 冻结对象
+     * */
 </script>
 </body>
 </html>
