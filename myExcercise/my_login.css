@@ -1,0 +1,48 @@
+/*public style*/
+* {padding: 0; margin: 0;}
+body {font-family: "Microsoft YaHei", arial;}
+div,dl,dt,dd,ul,ol,li, {display: block;}
+a {text-decoration: none;color: #333;}
+a:hover {text-decoration: underline;}
+/*public style end*/
+
+#mainPage {min-width: 900px;}
+
+#header {height: 100px;}
+
+#content {width: 840px;margin: 0 auto;}
+#content .content-l {width: 380px;float: left;padding: 24px 60px 20px 30px;}
+#content .content-l .media-img-wrap {float: right;}
+#content .content-l .media-img {width: 320px;height: 260px;}
+
+#content .content-r {width: 280px;float: left;padding: 24px;}
+#content .content-r .login {border: 1px solid #aaa;background: #f9f9f9;}
+#content .content-r .login .login-wrap {padding: 24px;border-top: 1px solid #ccc;}
+#content .content-r .login .login-type-wrap .login-type {width: 98px;float: left;
+    padding: 10px 20px;text-align: center;}
+
+#content .content-r .login .login-wrap .login-txt{position: relative;margin: 10px 0;height: 40px;}
+#content .content-r .login .login-wrap .login-label {position: absolute;left: 1px;top: 1px;width: 40px;height: 40px;display: block;float: left;background: #999;}
+#content .content-r .login .login-wrap .login-input {display: block;width: 188px;height: 40px;padding-left: 40px;float: left;border: 1px solid #777;}
+#content .content-r .login .login-wrap .usr-df-msg {position: absolute;left: 40px;top: 10px;color: #999;}
+
+#content .content-r .login .login-wrap .login-forget {padding: 10px;}
+#content .content-r .login .login-wrap .login-forget a {font-size: 10px;}
+#content .content-r .login .login-wrap .login-btn input {display: block;width: 100%;height: 24px;
+    border-radius: 2px;background: #0099FF;color: #fff;border-top: none;border-left: none;
+    border-bottom: 1px outset;border-right: 1px outset;text-align: center;}
+#content .content-r .login .login-wrap .login-btn input:hover {cursor: pointer;}
+
+#footer {border-top: 1px solid #D1D7DC;}
+#footer .footer-layout {width: 720px;margin: 0 auto;padding-top: 20px;}
+#footer .footer-info {height: 100px;border-top: 1px solid #ededed;}
+#footer .footer-info dl {width: 170px;display: inline-block;}
+#footer .footer-info dt {font-size: 18px;}
+#footer .footer-info dd {font-size: 14px;}
+#footer .footer-info dd a{color: #777;}
+#footer .footer-else {border-top: 1px solid #D1D7DC;font-size: 12px;}
+#footer .footer-else a {margin-right: 4px;line-height: 22px;color: #000;}
+
+/*common*/
+.clr {clear: both;}
+/*common end*/

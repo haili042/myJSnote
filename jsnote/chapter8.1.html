@@ -5,7 +5,7 @@
     <title></title>
 </head>
 <body>
-
+<span>page2</span>
 </body>
 <script type="text/javascript">
     /*BOM */
@@ -20,5 +20,14 @@
     console.log(location.href);
     console.log(location.search);
     console.log(location.hostname);
+
+    window.addEventListener('aa',function (e) {
+        if(e.source != window.parent) {
+            return;
+        }
+        alert(e.data);
+        e.source.postMessage('receive','*');
+
+    });
 </script>
 </html>
