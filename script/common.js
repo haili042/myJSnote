@@ -74,7 +74,8 @@ Date.prototype.format = function (fmt) {
         fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
     }
     if(/(E+)/.test(fmt)){
-        fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+week[this.getDay()+""]);
+        fmt=fmt.replace(RegExp.$1, ((RegExp.$1.length>1) ? (RegExp.$1.length>2 ? "/u661f/u671f" : "/u5468") : "")+
+                week[this.getDay()+""]);
     }
     for(var k in o){
         if(new RegExp("("+ k +")").test(fmt)){
@@ -83,3 +84,32 @@ Date.prototype.format = function (fmt) {
     }
     return fmt;
 };
+
+var createXHR = (function () {
+    if (typeof XMLHttpRequest != 'undefined') {
+        return function () {
+            return new XMLHttpRequest();
+        };
+    } else if (typeof ActiveXObject != 'undefined') {
+        return function () {
+            if (typeof arguments.callee.activeXString != 'string') {
+                var version = ['MSXML2.XHMHttp.6.0','MSXML2.XHMHttp.3.0','MSXML2.XHMHttp'],
+                    i, len;
+                for (i=0, len=version.length; i < len; i++) {
+                    try {
+                        new ActiveXObject();
+                        arguments.callee.activeXString = version[i];
+                        break;
+                    } catch (e) {
+                        // skip
+                    }
+                }
+            }
+            return new ActiveXObject(arguments.callee.activeXString);
+        };
+    } else {
+        return function () {
+            throw new Error('no XHR object available.');
+        };
+    }
+})();

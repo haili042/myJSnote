@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>javascript and xml</title>
+</head>
+<body>
+
+<script>
+    /**
+     * ----------------未看完-------------
+     * 解析xml文档, 下一章讲的E4X是js对xml的一个扩展, 貌似只有ff支持
+     * [概念]
+     *      1 DOMParser : 解析xml文档为 document对象
+     *      2 XMLSerializer : 解析document 对象为 xml
+     *
+     * [注意]
+     *      1 DOMParser 只能解析 格式良好 的xml文档, 想html就不行, 会生成 parsererror 节点
+     *
+     * */
+    // DOMParser
+    var parser = new DOMParser(), xmlDom, errors;
+    try {
+        xmlDom = parser.parseFromString('<root><child /></root>', 'text/xml');
+        errors = xmlDom.documentElement.getElementsByTagName('parsererror'); // 获取 parsererror 节点
+        if(errors.length > 0) {
+            throw new Error('parse error');
+        }
+        console.log(xmlDom.documentElement.tagName);//root
+        console.log(xmlDom.documentElement.getElementsByTagName('child'));//child
+    } catch (e) {
+        console.log('An error occurred:\n'
+        +'error code: '+xmlDom.parseError.errorCode
+        +'\nline: '+xmlDom.parseError.line
+        +'\nline Pos: '+xmlDom.parseError.linepos
+        +'\nReason: '+xmlDom.parseError.reason
+        );
+
+    }
+
+
+    // XMLSerializer
+    var serializer = new XMLSerializer();
+    var xml = serializer.serializeToString(xmlDom);
+    console.log(xml);
+
+</script>
+</body>
+</html>

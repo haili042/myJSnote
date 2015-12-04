@@ -8,44 +8,51 @@
     <script src="copyFormatter.js"></script>
 
     <style>
-        body, div {margin: 0; padding: 0;}
-        .clear {clear: both;}
-        #header, #toolbar, #expression, #before, #after {
-            margin: 2px 0;
+        * {margin: 0; padding: 0;}
+        ul, li, dl, dd, dt {display: block;list-style: none;}
+        body {min-width: 1000px;height: 100%;font-family: "Microsoft YaHei", arial;}
+        a {text-decoration: none;color: #222;}
+        a:hover {text-decoration: underline;cursor: pointer;}
+        textarea {overflow: auto;resize: none;}
 
-            background: #cccccc;
-        }
-        #header, #toolbar, #expression {width: 80%;}
-        #header {height: 40px;}
-        #before, #after {width: 40%;height: 400px;float: left;}
-        textarea {width: 100%;height: 100%;}
-        #expression {height: 100px;}
-        #toolbar {height: 40px;}
+        div {;border: 1px solid #222;}
+
+        #sideBar {width: 100px;height: 100%;float: left;}
+        #mainPanel {width: auto;margin-left: 120px;}
+
+        .clr {clear: both;}
     </style>
 </head>
 <body>
-    <div id="header"></div>
-    <div id="before">
-        <textarea id="beforeContent"></textarea>
+<div style="height: 100%;">
+    <div id="sideBar"></div>
+    <div id="mainPanel">
+        <div id="header"></div>
+        <div id="content">
+            <div id="sourcePanel">
+                <textarea id="source"></textarea>
+            </div>
+            <div id="resultPanel">
+                <textarea id="result" readonly="readonly"></textarea>
+            </div>
+            <div id="expressionPanel">
+                <textarea id="expression"></textarea>
+            </div>
+        </div>
     </div>
-    <div id="after">
-        <textarea id="afterContent"></textarea>
-    </div>
-    <div class="clear"></div>
-    <div id="expression">
-        <textarea id="expressionContent"></textarea>
-    </div>
+</div>
+<!--    <div class="clr"></div>
     <div id="toolbar">
         <input type="button" onclick="transform()" value="transform"/>
         <input type="button" onclick="getData()" value="getdata"/>
         <input type="button" onclick="clearIt()" value="clear"/>
         <span>左分隔符</span>
-        <input type="text" value="<-" id="range_l"/>
+        <input type="text" value="<-" id="rangeL"/>
         <span>右分隔符</span>
-        <input type="text" value="->" id="range_r"/>
+        <input type="text" value="->" id="rangeR"/>
         分隔符之间的内容会重复
 
-    </div>
+    </div>-->
 <script>
     $.log('asgwgawefg');
     var exp1 = "String str = {\n"+
@@ -53,27 +60,27 @@
     "};";
 
     $(function() {
-        $('#expressionContent').text(exp1);
+        $('#expression').text(exp1);
     });
 
     function transform() {
         var val1 = $('#before textarea').val();
         var ss = lengthFormatter(toArrayString("String[]", "keys", val1, "\n"), 80, ',');
-        console.log($('#afterContent').val(ss));
+        console.log($('#result').val(ss));
     }
 
 
     function getData() {
 
-        var data = $('#beforeContent').val();
-        var expression = $('#expressionContent').val();
+        var data = $('#source').val();
+        var expression = $('#expression').val();
         data = getDataArray(data, '\t');
 
-        var range_l = $("#range_l").val();
-        var range_r = $("#range_r").val();
-        var result = toExpression(data, expression, data.length, range_l, range_r);
+        var rangeL = $("#rangeL").val();
+        var rangeR = $("#rangeR").val();
+        var result = toExpression(data, expression, data.length, rangeL, rangeR);
 
-        console.log($('#afterContent').val(result));
+        console.log($('#result').val(result));
 
     }
 
