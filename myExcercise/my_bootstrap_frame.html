@@ -75,7 +75,26 @@
                     </div>
                 </div>
 
+                <div class="panel panel-default">
 
+                    <div class="panel-heading" role="tab" id="heading0">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion"
+                               href="#collapse0"
+                               aria-expanded="true" aria-controls="collapse0">
+                                <i class="fa fa-bar-chart-o"></i>$name$
+                                <i class="pull-right fa fa-caret-down"></i>
+                            </a>
+                        </h4>
+                    </div>
+
+                    <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
+                        <div>
+                            <a href="" class="list-group-item">123</a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </aside>
@@ -97,7 +116,7 @@
 
         <div id="collapse$index$" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading$index$">
             <div>
-                $$<a href="$menus.url$" class="list-group-item">$menus.name$</a>$$
+                {<a href="$menus.url$" class="list-group-item">${menus.name}$</a>}
             </div>
         </div>
 
@@ -105,17 +124,35 @@
 </script>
 
 <script>
+    function replaceTemplate(template, obj) {
+        return template.replace(/^\$\w+\$$|^\{\w+\}$/gi, function(matchs) {
+            debugger;
+            var key = matchs.replace(/\$/g, ""),
+                i, len;
+            if (typeof obj[key] === "string") {
+                return obj[key] + "";
+            } else if (typeof obj[key] === "array") {
+                len = obj[key].length;
+                for(i = 0; i < len; i++) {
+                    obj[key];
+                }
+            } else {
+                return matchs;
+            }
+        });
+    }
 
     $.ajax({
         url: "my_menu_data.json",
         success: function(data) {
-            debugger;
             var i, len = data.length,
-                index = 0,
-                template = $("menuTemplate").text();
+                index = 1,
+                template = $("#menuTemplate").text();
 
             for(i = 0; i < len; i++) {
 
+                data[i].index = index;
+                $("#accordion").append( replaceTemplate(template, data[i]) );
                 index++;
             }
 
