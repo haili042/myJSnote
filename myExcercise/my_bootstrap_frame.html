@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+
+    <!-- META -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- END META -->
+
+    <title>my bootstrap frame</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/design.css">
+    <!-- END CSS -->
+
+    <!-- SCRIPT -->
+    <script src="../script/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.js"></script>
+    <script src="../script/utilTools.js"></script>
+    <!-- END SCRIPT -->
+
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <div class="brand">
+                    <a class="navbar-brand" href="http://www.solutiisoft.com/bootstrap-sidebar/index.php"><span>bootstrap sidebar</span></a>
+                    <a class="toogle pull-right"><i class="fa fa-chevron-left"></i></a>
+                </div>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <select class="form-control solsoThemeEvent">
+                            <option value="" selected="">choose</option>
+                            <option value="blue">blue theme</option>
+                            <option value="orange">orange theme</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="body slide">
+    <aside class="sidebar show perfectScrollbar">
+        <div id="solso-sidebar">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
+                <div class="panel panel-default">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="heading1">
+                            <h4 class="panel-title">
+                                <a href="" class="single-item">
+                                    <i class="fa fa-dashboard"></i> home
+                                </a>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </aside>
+</div>
+
+<script type="text/html" id="menuTemplate">
+    <div class="panel panel-default">
+
+        <div class="panel-heading" role="tab" id="heading2">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion"
+                   href="#collapse2"
+                   aria-expanded="true" aria-controls="collapse2">
+                    <i class="fa fa-bar-chart-o"></i> Charts
+                    <i class="pull-right fa fa-caret-down"></i>
+                </a>
+            </h4>
+        </div>
+
+        <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+            <div>
+                <a href="" class="list-group-item">bar Chart</a>
+                <a href="" class="list-group-item">pie Chart</a>
+                <a href="" class="list-group-item">google Chart</a>
+            </div>
+        </div>
+
+    </div>
+</script>
+
+<script>
+
+    $.ajax({
+        url: "my_menu_data.json",
+        success: function(data) {
+            debugger;
+            var i, len = data.length,
+                index = 0,
+                template = $("menuTemplate").text();
+
+            for(i = 0; i < len; i++) {
+
+                index++;
+            }
+
+        }
+    });
+</script>
+
+</body>
+</html>

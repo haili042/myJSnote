@@ -1,0 +1,28 @@
+[
+  {
+    "id": "04",
+    "icon": "new-list",
+    "name": "m1",
+    "url": "#",
+    "menus": [
+      {
+        "id": "0401",
+        "icon": "new-in",
+        "name": "m11",
+        "url": "workflow_toListMyUndo"
+      },
+      {
+        "id": "0402",
+        "icon": "new-store",
+        "name": "m12",
+        "url": "workflow_toListMyDone"
+      },
+      {
+        "id": "0409",
+        "icon": "new-list",
+        "name": "m13",
+        "url": "workflow_allFlowListUI"
+      }
+    ]
+  }
+]

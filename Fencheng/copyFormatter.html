@@ -3,7 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
     <script src="../script/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.js"></script>
     <script src="../script/utilTools.js"></script>
     <script src="copyFormatter.js"></script>
 
@@ -15,7 +17,6 @@
         a:hover {text-decoration: underline;cursor: pointer;}
         textarea {overflow: auto;resize: none;}
 
-        div {;border: 1px solid #222;}
 
         #sideBar {width: 100px;height: 100%;float: left;}
         #mainPanel {width: auto;margin-left: 120px;}
@@ -24,6 +25,8 @@
     </style>
 </head>
 <body>
+
+
 <div style="height: 100%;">
     <div id="sideBar"></div>
     <div id="mainPanel">
@@ -41,6 +44,9 @@
         </div>
     </div>
 </div>
+
+
+
 <!--    <div class="clr"></div>
     <div id="toolbar">
         <input type="button" onclick="transform()" value="transform"/>
@@ -81,7 +87,6 @@
         var result = toExpression(data, expression, data.length, rangeL, rangeR);
 
         console.log($('#result').val(result));
-
     }
 
 
