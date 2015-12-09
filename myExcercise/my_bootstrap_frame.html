@@ -84,22 +84,20 @@
 <script type="text/html" id="menuTemplate">
     <div class="panel panel-default">
 
-        <div class="panel-heading" role="tab" id="heading2">
+        <div class="panel-heading" role="tab" id="heading$index$">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion"
-                   href="#collapse2"
-                   aria-expanded="true" aria-controls="collapse2">
-                    <i class="fa fa-bar-chart-o"></i> Charts
+                   href="$url$#collapse$index$"
+                   aria-expanded="true" aria-controls="collapse$index$">
+                    <i class="fa fa-bar-chart-o"></i>$name$
                     <i class="pull-right fa fa-caret-down"></i>
                 </a>
             </h4>
         </div>
 
-        <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
+        <div id="collapse$index$" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading$index$">
             <div>
-                <a href="" class="list-group-item">bar Chart</a>
-                <a href="" class="list-group-item">pie Chart</a>
-                <a href="" class="list-group-item">google Chart</a>
+                $$<a href="$menus.url$" class="list-group-item">$menus.name$</a>$$
             </div>
         </div>
 
