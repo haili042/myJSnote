@@ -12,6 +12,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../bootstrap/css/design.css">
     <!-- END CSS -->
 
@@ -91,6 +92,7 @@
                     <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
                         <div>
                             <a href="" class="list-group-item">123</a>
+                            <a href="" class="list-group-item">123</a>
                         </div>
                     </div>
 
@@ -100,6 +102,7 @@
     </aside>
 </div>
 
+<!-- 模版<i class="fa fa-bar-chart-o"></i>with($name$){for($name.sex$){$name.sex.name$}} -->
 <script type="text/html" id="menuTemplate">
     <div class="panel panel-default">
 
@@ -108,38 +111,147 @@
                 <a data-toggle="collapse" data-parent="#accordion"
                    href="$url$#collapse$index$"
                    aria-expanded="true" aria-controls="collapse$index$">
-                    <i class="fa fa-bar-chart-o"></i>$name$
+                    <i class="fa fa-bar-chart-o"></i>with
                     <i class="pull-right fa fa-caret-down"></i>
                 </a>
             </h4>
         </div>
 
+        for($menus$){
         <div id="collapse$index$" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading$index$">
             <div>
-                {<a href="$menus.url$" class="list-group-item">${menus.name}$</a>}
+                for($menus.menus$){<a href="$menus.menus.url$" class="list-group-item">$menus.menus.url$</a>}
             </div>
         </div>
+        }
 
     </div>
 </script>
-
+<!-- END 模版 -->
 <script>
-    function replaceTemplate(template, obj) {
-        return template.replace(/^\$\w+\$$|^\{\w+\}$/gi, function(matchs) {
-            debugger;
-            var key = matchs.replace(/\$/g, ""),
-                i, len;
-            if (typeof obj[key] === "string") {
-                return obj[key] + "";
-            } else if (typeof obj[key] === "array") {
-                len = obj[key].length;
-                for(i = 0; i < len; i++) {
-                    obj[key];
+
+
+    // 模版替换
+    function replaceTemplate1(template, obj) {
+        var bracketStack = [];
+        return template.replace(/\$\w+\$|for\s*\(\s*\$.+\$\s*\)\s*\{[^{}]*\}|with\s*\(\s*\$.+\$\s*\)\s*\{[^{}]*\}/gi, function(matchs) {
+            var key, keyArr = [],
+                i, len, temp = obj,
+                newTemplate = "",result = "";
+
+            if (matchs.charAt(0) == "$") {
+                key = matchs.replace(/\$/gi, "");
+                return (obj[key] || "") + "";
+            } else if (matchs.substr(0, 3) === "for") {
+                key = matchs.match(/for\(\$\w+\$\)/i)[0].replace(/for|\(|\)|\$/gi, "");
+                newTemplate = matchs.match(/\{.+\}/gi)[0].replace(/\{|\}/gi, "");
+
+                if (typeof obj[key] === "undefined") {
+                    return "";
                 }
-            } else {
-                return matchs;
+                for(i = 0, len = obj[key].length; i < len; i++) {
+                    result += replaceTemplate(newTemplate, obj[key][i]) + "\n";
+                }
+                return result;
+            } else if (matchs.substr(0, 4) === "with") {
+                key = matchs.match(/with\(\$\w+\$\)/i)[0].replace(/with|\(|\)|\$/gi, "");
+                keyArr = key.split(".");
+                newTemplate = matchs.match(/\{.+\}/gi)[0].replace(/\{|\}/gi, "");
+
+                for (i = 0, len = keyArr.length; i < len; i++) {
+                    result = temp[keyArr[i]];
+                    temp = result;
+                    if (typeof result === "undefined") {
+                        return "";
+                    }
+                }
+                return result;
             }
         });
+    }
+
+    function replaceTemplate2(template, obj) {
+        return template.replace(/\$\w+\$/gi, function(matchs) {
+            var key = matchs.replace(/\$/gi, "");
+            return (obj[key] || "") + "";
+        });
+    }
+
+    function replaceTemplate(template, obj, index) {
+        var parttern = /\$[.\w]+\$|for\s*\(\s*\$[.\w]+\$\s*\)\s*\{[^{}]*\}|with\s*\(\s*\$[.\w]+\$\s*\)\s*\{[^{}]*\}/gi;
+
+
+        do {
+
+            template = template.replace(parttern,
+                    function (matchs) {
+                        var key, keyArr = [], objArr = [],
+                                i, len, temp = obj,
+                                newTemplate = "", result = "";
+
+                        if (matchs.charAt(0) == "$") {
+                            key = matchs.replace(/\$/gi, "");
+                            return (obj[key] || "") + "";
+                        } else if (matchs.substr(0, 3) === "for") {
+                            key = matchs.match(/for\s*\(\s*\$[.\w]+\$\s*\)/i)[0].replace(/for|\(|\)|\$|\s/gi, "");
+                            keyArr = key.split(".");
+                            newTemplate = matchs.match(/\{.+\}/gi)[0].replace(/\{|\}/gi, "").replace(key + ".", "");
+
+                            for (i = 0, len = keyArr.length; i < len; i++) {
+                                try {
+                                    objArr = temp[keyArr[i]];
+                                    temp = objArr;
+                                    if (objArr instanceof Array) {
+                                        for (i = 0, len = objArr.length; i < len; i++) {
+                                            result += replaceTemplate(newTemplate, objArr[i]) + "\n";
+                                        }
+                                    }
+                                } catch (e) {
+                                    console.log(e);
+                                    return "";
+                                }
+                            }
+
+                            return result;
+
+                        } else if (matchs.substr(0, 4) === "with") {
+                            key = matchs.match(/with\s*\(\s*\$[.\w]+\$\s*\)/i)[0].replace(/with|\(|\)|\$|\s/gi, "");
+                            keyArr = key.split(".");
+                            newTemplate = matchs.match(/\{.+\}/gi)[0].replace(/\{|\}/gi, "");
+
+                            for (i = 0, len = keyArr.length; i < len; i++) {
+                                try {
+                                    result = temp[keyArr[i]];
+                                    temp = result;
+                                } catch (e) {
+                                    console.log(e);
+                                    return "";
+                                }
+                            }
+                            if (result instanceof Array) {
+
+                            }
+                            return result;
+                        }
+                    } // end function(matchs)
+            ); // end return
+
+        } while(parttern.test(template));
+        return template;
+    }
+
+    function getKey(keyStr, obj) {
+        var i, len, temp = obj, keyArr = keyStr.split(".");
+        for (i = 0, len = keyArr.length; i < len; i++) {
+            try {
+                objArr = obj[keyArr[i]];
+                obj = objArr;
+            } catch (e) {
+                console.log(e);
+                return "";
+            }
+        }
+        return result;
     }
 
     $.ajax({
@@ -150,7 +262,6 @@
                 template = $("#menuTemplate").text();
 
             for(i = 0; i < len; i++) {
-
                 data[i].index = index;
                 $("#accordion").append( replaceTemplate(template, data[i]) );
                 index++;
