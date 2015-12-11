@@ -12,13 +12,14 @@
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../bootstrap/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../fontAwesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../bootstrap/css/design.css">
     <!-- END CSS -->
 
     <!-- SCRIPT -->
     <script src="../script/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.js"></script>
+    <script src="../script/handlebars-v4.0.5.js"></script>
     <script src="../script/utilTools.js"></script>
     <!-- END SCRIPT -->
 
@@ -39,7 +40,7 @@
                 </button>
 
                 <div class="brand">
-                    <a class="navbar-brand" href="http://www.solutiisoft.com/bootstrap-sidebar/index.php"><span>bootstrap sidebar</span></a>
+                    <a class="navbar-brand" href="http://www.solutiisoft.com/bootstrap-sidebar/index.php"><span>1233211234567</span></a>
                     <a class="toogle pull-right"><i class="fa fa-chevron-left"></i></a>
                 </div>
             </div>
@@ -69,62 +70,57 @@
                         <div class="panel-heading" role="tab" id="heading1">
                             <h4 class="panel-title">
                                 <a href="" class="single-item">
-                                    <i class="fa fa-dashboard"></i> home
+                                    <i class="glyphicon glyphicon-home"></i> home
                                 </a>
                             </h4>
                         </div>
                     </div>
                 </div>
 
-                <div class="panel panel-default">
-
-                    <div class="panel-heading" role="tab" id="heading0">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion"
-                               href="#collapse0"
-                               aria-expanded="true" aria-controls="collapse0">
-                                <i class="fa fa-bar-chart-o"></i>$name$
-                                <i class="pull-right fa fa-caret-down"></i>
-                            </a>
-                        </h4>
-                    </div>
-
-                    <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
-                        <div>
-                            <a href="" class="list-group-item">123</a>
-                            <a href="" class="list-group-item">123</a>
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
     </aside>
+
+    <div class="container-fluid left-border">
+        <div class="row">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-user"></span> User
+                </button>
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-user"></span> User
+                </button>
+            </div>
+
+
+        </div>
+
+    </div>
 </div>
 
-<!-- 模版<i class="fa fa-bar-chart-o"></i>with($name$){for($name.sex$){$name.sex.name$}} -->
+<!-- 模版 -->
 <script type="text/html" id="menuTemplate">
     <div class="panel panel-default">
-
-        <div class="panel-heading" role="tab" id="heading$index$">
+        <div class="panel-heading" role="tab" id="heading{{index}}">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion"
-                   href="$url$#collapse$index$"
-                   aria-expanded="true" aria-controls="collapse$index$">
-                    <i class="fa fa-bar-chart-o"></i>with
+                   href="{{url}}#collapse{{index}}"
+                   aria-expanded="true" aria-controls="collapse{{index}}">
+                    <i class="fa fa-bar-chart-o"></i>{{name}}
                     <i class="pull-right fa fa-caret-down"></i>
                 </a>
             </h4>
         </div>
 
-        for($menus$){
-        <div id="collapse$index$" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading$index$">
+        <div id="collapse{{index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{index}}">
             <div>
-                for($menus.menus$){<a href="$menus.menus.url$" class="list-group-item">$menus.menus.url$</a>}
+                {{#each menus}}
+                <a href="{{url}}" class="list-group-item">{{name}}</a>
+                {{/each}}
             </div>
         </div>
-        }
-
     </div>
 </script>
 <!-- END 模版 -->
@@ -132,6 +128,8 @@
 
 
     // 模版替换
+    //        var parttern = /\$[.\w]+\$|for\s*\(\s*\$[.\w]+\$\s*\)\s*\{[^{}]*\}|with\s*\(\s*\$[.\w]+\$\s*\)\s*\{[^{}]*\}/gi;
+
     function replaceTemplate1(template, obj) {
         var bracketStack = [];
         return template.replace(/\$\w+\$|for\s*\(\s*\$.+\$\s*\)\s*\{[^{}]*\}|with\s*\(\s*\$.+\$\s*\)\s*\{[^{}]*\}/gi, function(matchs) {
@@ -170,16 +168,93 @@
         });
     }
 
-    function replaceTemplate2(template, obj) {
-        return template.replace(/\$\w+\$/gi, function(matchs) {
+    function replaceTemplate(template, obj) {
+        var bracketStack = [];
+        var wordReg = /\$\w+\$/gi;
+        var loopReg = /for\s*\(\s*\$[.\w]+\$\s*\)\s*\{|\}/gi;
+        var objReg = /\$[.\w]+\$/gi;
+        var match;
+
+        // 处理字符串类型
+        template = template.replace(wordReg, function(matchs) {
             var key = matchs.replace(/\$/gi, "");
-            return (obj[key] || "") + "";
+            if (obj[key] instanceof Array) {
+                return matchs;
+            } else {
+                return (obj[key] || "") + "";
+            }
         });
+
+        var loops = loopReg.exec(template);
+        var templateStack = [];
+
+        // 处理循环
+        while ((match = loopReg.exec(template)) != null)  {
+            var result = ""
+            var i, len;
+            var templ = "";
+
+            if (match[0].substr(0, 3) === "for") {
+                bracketStack.push({
+                    index: match.index,
+                    match: match[0],
+                    key: match[0].replace(/for|\$|\(|\)|\s/gi, "")
+                });
+            } else if (match[0] === "}") {
+                var oldMatch = bracketStack.pop();
+                var newTemplate = template.substr(oldMatch.index, match.index).match(/\{[\s\S]+\}/gi)[0].replace(/\{|\}/gi, "");
+
+                templateStack.push({
+                    key: oldMatch.key,
+                    template: newTemplate
+                });
+
+            }
+
+            if (bracketStack.length === 0) {
+                while (templateStack.length !== 0) {
+                    var tt = templateStack.pop();
+                    var oo = tt.key;
+                    var tm = tt.template;
+                    for(i = 0, len = oo.length; i < len; i++) {
+                        templ += tm;
+                    }
+                }
+            }
+            function loop(template, obj) {
+
+            }
+            template = template.replace(newTemplate, result);
+
+        }
+
+        // 处理对象类型
+        template = template.replace(objReg, function(matchs) {
+            var key = matchs.replace(/\$/gi, "");
+            var i, len, result = "";
+            var keyArr = key.split(".");
+            var temp = obj;
+
+            for (i = 0, len = keyArr.length; i < len; i++) {
+                result = temp[keyArr[i]];
+                temp = result;
+                if (typeof result === "undefined") {
+                    return "";
+                }
+            }
+            return result;
+        });
+
+        return template;
+
     }
 
-    function replaceTemplate(template, obj, index) {
-        var parttern = /\$[.\w]+\$|for\s*\(\s*\$[.\w]+\$\s*\)\s*\{[^{}]*\}|with\s*\(\s*\$[.\w]+\$\s*\)\s*\{[^{}]*\}/gi;
 
+
+    function replaceTemplate3(template, obj) {
+        var parttern = /\$[.\w]+\$|for\s*\(\s*\$[.\w]+\$\s*\)\s*\{[^{}]*\}/gi,
+            reg = /\$[.\w]+\$|for\s*\(\s*\$[.\w]+\$\s*\)\s*\{|\}/gi,
+            bracketStack = [];
 
         do {
 
@@ -195,7 +270,10 @@
                         } else if (matchs.substr(0, 3) === "for") {
                             key = matchs.match(/for\s*\(\s*\$[.\w]+\$\s*\)/i)[0].replace(/for|\(|\)|\$|\s/gi, "");
                             keyArr = key.split(".");
-                            newTemplate = matchs.match(/\{.+\}/gi)[0].replace(/\{|\}/gi, "").replace(key + ".", "");
+                            newTemplate = matchs.match(/\{.+\}/gi)[0].replace(/\{|\}/gi, "").
+                                    replace(new RegExp(key + ".", "g"), "");
+
+                            bracketStack.push("");
 
                             for (i = 0, len = keyArr.length; i < len; i++) {
                                 try {
@@ -214,24 +292,6 @@
 
                             return result;
 
-                        } else if (matchs.substr(0, 4) === "with") {
-                            key = matchs.match(/with\s*\(\s*\$[.\w]+\$\s*\)/i)[0].replace(/with|\(|\)|\$|\s/gi, "");
-                            keyArr = key.split(".");
-                            newTemplate = matchs.match(/\{.+\}/gi)[0].replace(/\{|\}/gi, "");
-
-                            for (i = 0, len = keyArr.length; i < len; i++) {
-                                try {
-                                    result = temp[keyArr[i]];
-                                    temp = result;
-                                } catch (e) {
-                                    console.log(e);
-                                    return "";
-                                }
-                            }
-                            if (result instanceof Array) {
-
-                            }
-                            return result;
                         }
                     } // end function(matchs)
             ); // end return
@@ -258,12 +318,13 @@
         url: "my_menu_data.json",
         success: function(data) {
             var i, len = data.length,
-                index = 1,
+                index = 0,
                 template = $("#menuTemplate").text();
 
             for(i = 0; i < len; i++) {
                 data[i].index = index;
-                $("#accordion").append( replaceTemplate(template, data[i]) );
+                var tem = Handlebars.compile(template)
+                $("#accordion").append( tem(data[i]) );
                 index++;
             }
 

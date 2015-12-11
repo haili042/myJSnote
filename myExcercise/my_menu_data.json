@@ -1,43 +1,319 @@
 [
   {
+    "id": "03",
+    "icon": "new-book",
+    "name": "åŸºç¡€ä¿¡æ¯ç®¡ç†",
+    "url": "#",
+    "menus": [
+      {
+        "id": "0303",
+        "icon": "new-structure",
+        "name": "åˆ†å…¬å¸ç»„ç»‡æž¶æž„",
+        "url": "#",
+        "menus": [
+          {
+            "id": "030301",
+            "icon": "new-house",
+            "name": "éƒ¨é—¨ç®¡ç†",
+            "url": "department_toListBranch"
+          },
+          {
+            "id": "030302",
+            "icon": "new-user_m",
+            "name": "è§’è‰²ç»„ç®¡ç†",
+            "url": "role_toListBranch"
+          },
+          {
+            "id": "030303",
+            "icon": "new-man",
+            "name": "ç”¨æˆ·ç®¡ç†",
+            "url": "user_toBranchList"
+          }
+        ]
+      },
+      {
+        "id": "0304",
+        "icon": "user_m",
+        "name": "å‘é€é‚®ä»¶",
+        "url": "emailSend_sendUI"
+      }
+    ]
+  },
+  {
+    "id": "07",
+    "icon": "new-005b_28",
+    "name": "æ¨¡ç‰ˆç®¡ç†",
+    "url": "#",
+    "menus": [
+      {
+        "id": "0701",
+        "icon": "new-rss",
+        "name": "æµç¨‹ç±»åž‹æ¨¡ç‰ˆç®¡ç†",
+        "url": "#",
+        "menus": [
+          {
+            "id": "070101",
+            "icon": "new-005b_71",
+            "name": "æµç¨‹ç±»åž‹ä¿¡æ¯é…ç½®",
+            "url": "projectconf_toList"
+          }
+        ]
+      },
+      {
+        "id": "0703",
+        "icon": "new-mission",
+        "name": "æ¡†æž¶åè®®ç®¡ç†",
+        "url": "agreementmag_toList"
+      }
+    ]
+  },
+  {
     "id": "04",
     "icon": "new-list",
-    "name": {
-      "sex": [{
-        "id": "23",
-        "name": "23"
-      },{
-        "id": "24",
-        "name": "24"
-      }]
-    },
+    "name": "æˆ‘çš„æµç¨‹",
     "url": "#",
     "menus": [
       {
         "id": "0401",
         "icon": "new-in",
-        "name": "m11",
-        "url": "workflow_toListMyUndo",
-        "menus": [
-          {
-            "id": "0401",
-            "icon": "new-in",
-            "name": "m11",
-            "url": "workflow_toListMyUndo"
-          }
-        ]
+        "name": "å¾…å¤„ç†",
+        "url": "workflow_toListMyUndo"
       },
       {
         "id": "0402",
         "icon": "new-store",
-        "name": "m12",
+        "name": "å·²å¤„ç†",
         "url": "workflow_toListMyDone"
       },
       {
         "id": "0409",
         "icon": "new-list",
-        "name": "m13",
+        "name": "æ‰€æœ‰æµç¨‹",
         "url": "workflow_allFlowListUI"
+      }
+    ]
+  },
+  {
+    "id": "05",
+    "icon": "new-out",
+    "name": "å‘èµ·æµç¨‹",
+    "url": "#",
+    "menus": [
+      {
+        "id": "0502",
+        "icon": "new-005b_49",
+        "name": "é¡¹ç›®ç”³æŠ¥",
+        "url": "sysMenu_selectWorkflowMenuUI.action?menuId=0502"
+      },
+      {
+        "id": "0503",
+        "icon": "new-005b_62",
+        "name": "åˆ†æˆç”³è¯·",
+        "url": "sysMenu_selectWorkflowMenuUI.action?menuId=0503"
+      },
+      {
+        "id": "0505",
+        "icon": "new-redo",
+        "name": "å¼‚å¸¸ç»ˆæ­¢æµç¨‹",
+        "url": "sysMenu_selectWorkflowMenuUI.action?menuId=0505"
+      },
+      {
+        "id": "0506",
+        "icon": "new-redo",
+        "name": "å‘èµ·å˜æ›´æµç¨‹",
+        "url": "sysMenu_selectWorkflowMenuUI.action?menuId=0506"
+      }
+    ]
+  },
+  {
+    "id": "06",
+    "icon": "new-show",
+    "name": "é¡¹ç›®è§†å›¾",
+    "url": "#",
+    "menus": [
+      {
+        "id": "0601",
+        "icon": "new-list",
+        "name": "ä¸šåŠ¡ç±»åž‹è§†å›¾",
+        "url": "viewOnProject_businessTypeBTUI.action?businessTypeGradeBT=1"
+      },
+      {
+        "id": "0602",
+        "icon": "new-book",
+        "name": "é¡¹ç›®è§†å›¾",
+        "url": "viewOnProject_projectPJUI"
+      },
+      {
+        "id": "0603",
+        "icon": "new-calendar",
+        "name": "ä»£ç†å•†è§†å›¾",
+        "url": "viewOnProject_providerPVUI"
+      },
+      {
+        "id": "0604",
+        "icon": "new-count",
+        "name": "æŸ¥è¯¢å·ç åˆ†æˆåŽ†å²",
+        "url": "#"
+      },
+      {
+        "id": "0607",
+        "icon": "new-nail",
+        "name": "è§†å›¾é…ç½®",
+        "url": "#",
+        "menus": [
+          {
+            "id": "060701",
+            "icon": "new-unlock",
+            "name": "ä¸šåŠ¡ç»´åº¦-ä¸šåŠ¡ç±»åž‹è§†å›¾é…ç½®",
+            "url": "viewConfigAction_viewConfUI.action?viewType=businessTypeConfBT&viewTypeName=ä¸šåŠ¡ç»´åº¦-ä¸šåŠ¡ç±»åž‹è§†å›¾é…ç½®&table=wxw_view_onproject"
+          },
+          {
+            "id": "060702",
+            "icon": "new-unlock",
+            "name": "ä¸šåŠ¡ç»´åº¦-ä¸šåŠ¡è§†å›¾é…ç½®",
+            "url": "viewConfigAction_viewConfUI.action?viewType=businessConfBT&viewTypeName=ä¸šåŠ¡ç»´åº¦-ä¸šåŠ¡è§†å›¾é…ç½®&table=wxw_view_onproject"
+          },
+          {
+            "id": "060703",
+            "icon": "new-unlock",
+            "name": "ä¸šåŠ¡ç»´åº¦-é¡¹ç›®å‡ºè´¦è§†å›¾é…ç½®",
+            "url": "viewConfigAction_viewConfUI.action?viewType=projectConfBT&viewTypeName=ä¸šåŠ¡ç»´åº¦-é¡¹ç›®å‡ºè´¦è§†å›¾é…ç½®&table=wxw_view_onproject"
+          },
+          {
+            "id": "060704",
+            "icon": "new-unlock",
+            "name": "ä¸šåŠ¡ç»´åº¦-æ¸…å•å‡ºè´¦è§†å›¾é…ç½®",
+            "url": "viewConfigAction_viewConfUI.action?viewType=listConfBT&viewTypeName=ä¸šåŠ¡ç»´åº¦-æ¸…å•å‡ºè´¦è§†å›¾é…ç½®&table=wxw_view_onlist"
+          },
+          {
+            "id": "060705",
+            "icon": "new-phone",
+            "name": "é¡¹ç›®ç»´åº¦-é¡¹ç›®è§†å›¾é…ç½®",
+            "url": "viewConfigAction_viewConfUI.action?viewType=projectConfPJ&viewTypeName=é¡¹ç›®ç»´åº¦-é¡¹ç›®è§†å›¾é…ç½®&table=wxw_view_onproject"
+          },
+          {
+            "id": "060706",
+            "icon": "new-phone",
+            "name": "é¡¹ç›®ç»´åº¦-æ¸…å•å‡ºè´¦è§†å›¾é…ç½®",
+            "url": "viewConfigAction_viewConfUI.action?viewType=listConfPJ&viewTypeName=é¡¹ç›®ç»´åº¦-æ¸…å•å‡ºè´¦è§†å›¾é…ç½®&table=wxw_view_onlist"
+          },
+          {
+            "id": "060707",
+            "icon": "new-out",
+            "name": "ä»£ç†å•†ç»´åº¦-ä»£ç†å•†è§†å›¾é…ç½®",
+            "url": "viewConfigAction_viewConfUI.action?viewType=providerConfPV&viewTypeName=ä»£ç†å•†ç»´åº¦-ä»£ç†å•†è§†å›¾é…ç½®&table=wxw_view_onproject"
+          },
+          {
+            "id": "060708",
+            "icon": "new-out",
+            "name": "ä»£ç†å•†ç»´åº¦-é¡¹ç›®å‡ºè´¦è§†å›¾é…ç½®",
+            "url": "viewConfigAction_viewConfUI.action?viewType=projectConfPV&viewTypeName=ä»£ç†å•†ç»´åº¦-é¡¹ç›®å‡ºè´¦è§†å›¾é…ç½®&table=wxw_view_onproject"
+          },
+          {
+            "id": "060709",
+            "icon": "new-out",
+            "name": "ä»£ç†å•†ç»´åº¦-æ¸…å•å‡ºè´¦è§†å›¾é…ç½®",
+            "url": "viewConfigAction_viewConfUI.action?viewType=listConfPV&viewTypeName=ä»£ç†å•†ç»´åº¦-æ¸…å•å‡ºè´¦è§†å›¾é…ç½®&table=wxw_view_onlist"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "08",
+    "icon": "new-count",
+    "name": "æŠ¥è¡¨æ¨¡å—",
+    "url": "#",
+    "menus": [
+      {
+        "id": "0801",
+        "icon": "new-list",
+        "name": "é¡¹ç›®åˆ†æˆç¡®è®¤ä¹¦åˆ—è¡¨",
+        "url": "enterpriseTerminalVerify_toAddVerifyList"
+      },
+      {
+        "id": "0802",
+        "icon": "new-book",
+        "name": "ä¾›åº”å•†ç´¯è®¡åˆ†æˆç¡®è®¤ä¹¦",
+        "url": "enterpriseTerminalVerifyAccumulative_toVerifyAccumulativeList"
+      }
+    ]
+  },
+  {
+    "id": "09",
+    "icon": "search",
+    "name": "ç¨½æ ¸ç®¡ç†",
+    "url": "#",
+    "menus": [
+      {
+        "id": "0901",
+        "icon": "search",
+        "name": "ç¨½æ ¸é…ç½®",
+        "url": "checkRules_toProjectListUI"
+      },
+      {
+        "id": "0902",
+        "icon": "search",
+        "name": "å¤–å›´æ•°æ®åº“è¿žæŽ¥",
+        "url": "otherDBs_toList"
+      },
+      {
+        "id": "0903",
+        "icon": "new-search",
+        "name": "çº¿ä¸‹ç¨½æ ¸",
+        "url": "checkRules_offLineCheckUI"
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "icon": "new-book",
+    "name": "å…¶ä»–ç±»åˆ†æˆå­˜é‡æ•°æ®",
+    "url": "#",
+    "menus": [
+      {
+        "id": "1001",
+        "icon": "user_m",
+        "name": "å­˜é‡æ•°æ®åˆ—è¡¨",
+        "url": "historyOfOtherFC_toList"
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "icon": "new-rss",
+    "name": "å‘Šè­¦æŠ¥è¡¨",
+    "url": "#",
+    "menus": [
+      {
+        "id": "1101",
+        "icon": "new-calendar",
+        "name": "äº‹ä¸­ç¨½æ ¸æŠ¥å‘Š",
+        "url": "middleCheckErrorReport_inPeriodBriefUI"
+      },
+      {
+        "id": "1102",
+        "icon": "new-calendar",
+        "name": "äº‹åŽç¨½æ ¸æŠ¥å‘Š",
+        "url": "#"
+      },
+      {
+        "id": "1103",
+        "icon": "new-good",
+        "name": "ç¨½æ ¸å¤„ç†é…ç½®",
+        "url": "alarmReportConf_providerConfBriefUI"
+      },
+      {
+        "id": "1104",
+        "icon": "new-nail",
+        "name": "äº‹ä¸­ç¨½æ ¸æŠ¥å‘Šé…ç½®",
+        "url": "alarmReportConf_inPeriodReportConfUI"
+      },
+      {
+        "id": "1105",
+        "icon": "new-nail",
+        "name": "äº‹åŽç¨½æ ¸æŠ¥å‘Šé…ç½®",
+        "url": "#"
       }
     ]
   }
