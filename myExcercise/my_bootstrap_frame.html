@@ -84,8 +84,8 @@
     <div class="container-fluid left-border">
         <div class="row">
             <div class="col-md-6">
-                <button type="button" class="btn btn-default btn-xs">
-                    <span class="glyphicon glyphicon-user"></span> User
+                <button type="button" id="block" class="btn btn-default btn-xs">
+                    <span class="glyphicon glyphicon-user"></span> block
                 </button>
             </div>
             <div class="col-md-6">
@@ -99,7 +99,71 @@
 
     </div>
 </div>
+<style type="text/css" rel="stylesheet">
+    #block-wrap {
+        width: 100%;
+    }
+    #block-wrap .block {
+        position: fixed;
+        width: 100%;
+        height: 800px;
+        z-index: 10000;
+        background: #888;
+        opacity: 0.6;
+    }
+    #block-wrap .shadow {
+        border: 1px solid #666;
+        -moz-box-shadow:0px 4px 18px #333333;
+        -webkit-box-shadow:0px 4px 18px #333333;
+        box-shadow:0px 4px 18px #333333;
+    }
 
+    #block-wrap .content {
+        position: fixed;
+        margin: 0 auto;
+        width: 400px;
+        height: 200px;
+        z-index: 10001;
+        left: 0;
+        right: 0;
+        top: 200px;
+        bottom: 0;
+        background: #fff;
+    }
+    #block-wrap .header {
+        height: 40px;
+        border-bottom: 1px solid #aaa;
+    }
+    #block-wrap .msg {
+        height: 120px;
+        border-bottom: 1px solid #aaa;
+    }
+    #block-wrap .footer {
+        height: 40px;
+    }
+    #block-wrap .confirm {
+        float: right;
+        line-height: 40px;
+        margin: 0 20px;
+    }
+    #block-wrap .content .msg-panel {
+        width: 100%;
+    }
+
+</style>
+<script type="text/html" id="blockTemp">
+    <div id="block-wrap" class="block-wrap">
+        <div class="block">
+        </div>
+        <div class="content shadow">
+            <div class="msg-panel header"></div>
+            <div class="msg-panel msg"></div>
+            <div class="msg-panel footer">
+                <a href="javascript:void(0)" class="confirm" id="closeBtn"><strong>close</strong></a>
+            </div>
+        </div>
+    </div>
+</script>
 <!-- 模版 -->
 <script type="text/html" id="menuTemplate">
     <div class="panel panel-default">
@@ -125,6 +189,19 @@
 </script>
 <!-- END 模版 -->
 <script>
+
+    aaa();
+    $("#block").click(function(e) {
+        aaa();
+    });
+    function aaa() {
+        var block = $("#blockTemp").html();
+        $("body").prepend(block);
+        $("#closeBtn").click(function(e) {
+            e.preventDefault();
+            $("#block-wrap").remove();
+        });
+    }
 
 
     // 模版替换
