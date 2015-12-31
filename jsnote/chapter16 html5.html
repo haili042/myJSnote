@@ -9,6 +9,40 @@
         .a:hover {cursor: move;}
         .b {width: 120px;height: 120px;background: #888;}
         .clr {clear: both;}
+
+        iframe {
+            overflow: scroll;
+            height: 100px;
+        }
+        /*整个scrollBar*/
+        iframe::-webkit-scrollbar {
+            width: 17px;
+            height: 17px;
+            background-color: transparent;
+            border-radius: 9px;
+        }
+        /*上下左右按钮*/
+        iframe::-webkit-scrollbar-button    {
+        }
+        /*整个轨道*/
+        iframe::-webkit-scrollbar-track     {
+        }
+        /*没被挡住的轨道*/
+        iframe::-webkit-scrollbar-track-piece {
+        }
+        /*滑块*/
+        iframe::-webkit-scrollbar-thumb{
+            background: #dbdbdb;
+            border-radius: 9px;
+            background-clip: content-box;
+            border: 5px solid transparent;
+        }
+        /*右下角正方形区域*/
+        iframe::-webkit-scrollbar-corner {
+            background-color: transparent;
+        }
+
+        
     </style>
 </head>
 <body>
