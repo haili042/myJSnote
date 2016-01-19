@@ -115,10 +115,17 @@
         </div>
     </div>
 
+    <input id="ss" required="required" style="width:80px;"/>
 </form>
-
 <script type="text/javascript">
 
+    $('#ss').numberspinner({
+        min: 10,
+        max: 100,
+        increment: 0.5,
+        precision: 1,
+        editable: false
+    });
 
     /**
      * 通用部分

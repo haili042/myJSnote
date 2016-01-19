@@ -5,25 +5,49 @@
     <title></title>
 </head>
 <body>
-
+<button id="btn">copy</button>
 <script>
     /***
      * 本文件专为笔记软件帖代码用
      * */
 
+    document.getElementById("btn").onclick = function(e) {
+        window.clipboardData.setData("text", "asdf");
+    };
 
 
+/*    var Person = { // 这是原来的别人的对象
+            name: "",
+            age: "",
+            sayName: function() {
+                console.log("my name is " + this.name + ", i'm " + this.age);
+            }
+        };
 
-    testObj=new Object();
-    testObj.greetingMorn="Good Morning!";
-    testObj.greetingEve="Good Evening!";
-    $("div").data(testObj); // 赋值
-    $("div").data("greetingEve")); // 取值
+    // 对Person 进行原型继承, 创建haili这个新对象, 属于我, 可以随意修改
+    // 第二个参数对原来对象的属性进行覆盖
+    var haili = Object.create(Person, {
+         name: {
+             value: "xiaoming"
+         }
+    });
+    haili.sayName();*/
 
+    function Person(name) { // 别人家的对象
+        this.name = name;
+    }
 
+    function MyPerson(name, age) { // 我的对象
+        this.age =age;
+        Person.call(this, name, age);
+    }
 
+    MyPerson.prototype.sayName = function() { // 我给我的对象加了个方法, 不影响别人的对象
+        console.log("my name is " + this.name + ", i'm " + this.age);
+    };
 
-
+    var haili = new MyPerson("haili", 10); // 成功
+    haili.sayName();
 </script>
 </body>
 </html>
