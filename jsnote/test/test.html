@@ -47,6 +47,25 @@
     console.log(location.href);
 
 
+    // 原本的 dom 元素会保留下来
+    function DOMWrapper(domEle) {
+        this.domEle = domEle;
+    }
+
+    // 新增新的方法给dom元素
+    DOMWrapper.prototype.addClass = function(className) {
+        this.domEle.className += " " + className;
+    };
+
+    // 新增新的方法给dom元素
+    DOMWrapper.prototype.remove = function() {
+        this.domEle.parentNode.removeChild(this.domEle);
+    };
+
+    var wrapper = new DOMWrapper(document.getElementById("test"));
+    warpper.addClass("class1"); // 调用自定义的方法而不会影响dom的原生方法
+    wrapper.remove(); // 调用自定义的方法而不会影响dom的原生方法
+
 </script>
 </body>
 </html>
