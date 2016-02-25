@@ -17,7 +17,7 @@ function SuperType(name,object){
 }
 
 SuperType.prototype.sayName = function (operation){
-    that = operation;
+    var that = operation;
     sayObjcet({
         name : "objName 2",
         func : function(data){

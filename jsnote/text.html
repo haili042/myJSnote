@@ -4,50 +4,198 @@
     <meta charset="UTF-8">
     <title></title>
 </head>
+<style>
+    .wrap {}
+    .aside {background: #00eeff; width: 200px; height: 100px;float: left;}
+    .main {background: #00ee00;height: 300px;overflow: hidden; zoom: 1;} /*zoom:1用于兼容IE6。*/
+</style>
 <body>
+<div class="wrap">
+    <div class="aside"></div>
+    <div class="main"></div>
+</div>
+
 <button id="btn">copy</button>
 <script>
     /***
      * 本文件专为笔记软件帖代码用
      * */
 
+    var o1 = {};
+    var o2 = new Object({});
+
+    function f1(){}
+    var f2 = function(){};
+    var f3 = new Function('str','console.log(str)');
+
+    f3('aabb');   // aabb
+    console.log('typeof Object:'+typeof Object);            //function
+    console.log('typeof Function:'+typeof Function);        //function
+    console.log('typeof o1:'+typeof o1);   //object
+    console.log('typeof o2:'+typeof o2);   //object
+    console.log('typeof f1:'+typeof f1);   //function
+    console.log('typeof f2:'+typeof f2);   //function
+    console.log('typeof f3:'+typeof f3);   //function
+
+    console.log(Object instanceof Object);   //function
+
+
+    var object = new Object({});
+
+
+    Object.O1 = ""; // Object对象添加属性O1
+    Object.prototype.Op1 = ""; // Object原型对象添加属性Op1
+
+    Function.F1 = "";
+    Function.prototype.Fp1 = "";
+
+    function Cat() {}
+    Cat.sayName = function() {
+        console.log("Cat.sayName");
+    };
+    Cat.C1 = "";
+    Cat.prototype.Cp1 = "";
+
+    var cat = new Cat(); // cat.__proto__ = Cat.prototype
+    var o = {};
+
+    console.log(cat); // Cat {Cp1: "", Op1: ""} text.html:49
+    console.log(o); // Object {Op1: ""}
+
+
+
+    console.log(Object.prototype === Function.prototype.__proto__); // true
+    console.log(Object.prototype.constructor === Object); // true
+    console.log(Object.prototype.__proto__); // null
+    console.log(Object.__proto__ === Function.prototype); // true
+
+    console.log(Cat.__proto__ === Function.prototype); // true
+    console.log(cat.__proto__ === Cat.prototype); // true
+    console.log(o.__proto__ === Object.prototype); // true
+    console.log(object.__proto__ === Object.prototype); // true
+
+    console.log(Object.__proto__.__proto__ === Object.prototype); // true
+    console.log(Function.__proto__ === Object.__proto__); // true
+
+
+    function Sub() {
+        Cat.call(this);
+    }
+
+    Sub.prototype = new Cat();
+    Sub.prototype.constructor = Sub;
+
+    var sub = new Sub();
+//    sub.sayName(); // 无此方法
+
+    console.log(sub.C1); // 不能访问
+
+    console.log(Object.prototype === Sub.prototype.__proto__); // false
+    console.log(Object instanceof Function); // true
+
+
     document.getElementById("btn").onclick = function(e) {
-        window.clipboardData.setData("text", "asdf");
+        var span = document.createElement("span"),
+            parent = this.parentNode;
+        span.innerText = "loading...";
+        parent.appendChild(span);
+//        long(span);
+
+        setTimeout(function() {
+            long(span);
+        }, 1000);
     };
 
+    function long(span) {
+        var i, j, k, l = 2000;
+        for(i = 0; i < l; i++) {
+            for(j = 0; j < l; j++) {
 
-/*    var Person = { // 这是原来的别人的对象
-            name: "",
-            age: "",
-            sayName: function() {
-                console.log("my name is " + this.name + ", i'm " + this.age);
             }
+        }
+
+        span.innerText = "done!";
+    }
+
+
+/*
+    // 方法调用模式
+    var myObject = {
+        value: 0,
+        add: function() { // 方法是myObject对象的一个属性 "add"
+            this.value += 1; // so this 可以直接访问 myObject 的属性
+        }
+    };
+    myObject.add();
+    console.log(myObject.value);
+*/
+
+    // 函数调用模式
+    var myObject = {
+        value: 0
+    };
+    myObject.add = function() {
+        var that = this; // 为了防止与helper函数中的this 冲突, 改名that
+        var helper = function() {
+            that.value += 1; // 这里 this 会指向 helper
         };
+        helper();
+    };
+    myObject.add();
+    console.log(myObject.value); // 1
 
-    // 对Person 进行原型继承, 创建haili这个新对象, 属于我, 可以随意修改
-    // 第二个参数对原来对象的属性进行覆盖
-    var haili = Object.create(Person, {
-         name: {
-             value: "xiaoming"
-         }
-    });
-    haili.sayName();*/
-
-    function Person(name) { // 别人家的对象
+    // 构造函数
+    var Man = function(name) {
         this.name = name;
-    }
+    };
+    Man.prototype.sayName = function() {
+        console.log(this.name);
+    };
+    var man = new Man("gauku"); // new 调用
+    man.sayName();
 
-    function MyPerson(name, age) { // 我的对象
-        this.age =age;
-        Person.call(this, name, age);
-    }
+    var woman = {
+        name: "woman"
+    };
+    Man.prototype.sayName.apply(woman); // 改变 Man 中 this 的指向
 
-    MyPerson.prototype.sayName = function() { // 我给我的对象加了个方法, 不影响别人的对象
-        console.log("my name is " + this.name + ", i'm " + this.age);
+    Function.prototype.addMethod = function(name, func) {
+        this.prototype[name] = func;
+        return this;
     };
 
-    var haili = new MyPerson("haili", 10); // 成功
-    haili.sayName();
+    Man.addMethod("sayHi", function() {
+        console.log("hi");
+    });
+    man.sayHi();
+
+    var n1 = 1;
+    var n2 = Number(1); // Number 当做一个普通的函数, 返回 数值
+    var n3 = new Number(1); // Number 当作一个构造函数, 返回 数对象
+    var n4 = Object(1); // 类似2
+    var n5 = new Object(1); // 类似 4
+    console.log(typeof Number); // function
+    console.log(typeof Object); // function
+    console.log(typeof Function); // function
+    console.log(typeof Cat); // function
+    console.log(typeof n1); // number
+    console.log(typeof n2); // number
+    console.log(typeof n3); // object
+    console.log(typeof n4); // object
+    console.log(typeof n5); // object
+    console.log(typeof cat); // object
+
+    Function.prototype.method = function(name, func) {
+        this.prototype[name] = func;
+        return this;
+    };
+    String.method('test', function() {
+        return function() {
+            alert(this);
+        };
+    }());
+    "aa".test();
+
 </script>
 </body>
 </html>

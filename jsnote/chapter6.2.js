@@ -5,7 +5,9 @@
  * 创建对象的几种模式
  * */
 /*1 工厂模式*/
+
 function objFactory(name, age, job){
+    "use strict";
     var o = new Object();
     o.name = name;
     o.age = age;
@@ -40,7 +42,7 @@ console.log(p2.prototype == Person.prototype);
 
 
 /*3 原型模式*/
-function ProtoPerson(){};
+function ProtoPerson(){}
 ProtoPerson.prototype.name = "protoName";
 ProtoPerson.prototype.age = 24;
 ProtoPerson.prototype.job = "protoJob";
