@@ -1,2 +1,5 @@
 # 忽略 .idea 下所有文件
-.idea/workspace.xml
+.idea
+
+# 忽略 node_modules 目录
+node_modules
