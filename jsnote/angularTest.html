@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="fristAngularApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>angular test</title>
+    <script src="../test/node_modules/angular/angular.min.js"></script>
+    <script src="angularDataTest.js"></script>
+</head>
+<body>
+    your name : <input type="text" ng-model="yourname" placeholder="World1">
+    <hr/>
+
+    hello {{yourname || 'World'}} !
+    <p>1 + 2 = {{ 1 + 2 }}</p>
+    <ul ng-controller="PhoneListCtrl">
+        <li ng-repeat="phone in phones">
+            {{phone.name}}
+            <p>{{phone.snippet}} {{phones.length}}</p>
+        </li>
+    </ul>
+</body>
+</html>

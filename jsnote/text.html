@@ -5,17 +5,20 @@
     <title></title>
 </head>
 <style>
-    .wrap {}
-    .aside {background: #00eeff; width: 200px; height: 100px;float: left;}
+    .header {background: #245345;height: 60px;}
+    .aside {background: #00eeff; width: 200px; height: 300px;float: left;}
     .main {background: #00ee00;height: 300px;overflow: hidden; zoom: 1;} /*zoom:1用于兼容IE6。*/
+    .footer {background: #698985;height: 60px;}
+
 </style>
 <body>
-<div class="wrap">
+    <div class="header"></div>
     <div class="aside"></div>
-    <div class="main"></div>
-</div>
+    <div class="main">
+        <button id="btn">copy</button>
+    </div>
+    <div class="footer"></div>
 
-<button id="btn">copy</button>
 <script>
     /***
      * 本文件专为笔记软件帖代码用
@@ -94,7 +97,11 @@
     console.log(Object instanceof Function); // true
 
 
+
+
+
     document.getElementById("btn").onclick = function(e) {
+        e.preventDefault();
         var span = document.createElement("span"),
             parent = this.parentNode;
         span.innerText = "loading...";
@@ -104,15 +111,38 @@
         setTimeout(function() {
             long(span);
         }, 1000);
+
+
+        var data = new FormData();
+        data.append("aaa", "test");
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function(e) {
+            if (xhr.readyState == 4) {
+                if (xhr.status >= 200 & xhr.status < 300 || xhr.status == 304) {
+                    var res = xhr.responseText;
+                    var data = JSON.parse(res);
+                    console.log(data);
+                }
+            }
+        };
+        xhr.open("get", "ulTest.json", true);
+        xhr.setRequestHeader("cache-control", "max-age=30");
+//        xhr.setRequestHeader("pragma", "max-age=1000000");
+        xhr.send(null);
+
+
     };
+
 
     function long(span) {
         var i, j, k, l = 2000;
-        for(i = 0; i < l; i++) {
-            for(j = 0; j < l; j++) {
-
-            }
-        }
+//        for(i = 0; i < l; i++) {
+//            for(j = 0; j < l; j++) {
+//
+//            }
+//        }
 
         span.innerText = "done!";
     }
@@ -218,6 +248,7 @@
         console.log(arguments);
     }
     applyTest(0); // [0]
+
 
 </script>
 </body>
