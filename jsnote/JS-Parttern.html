@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    /**
+     * js 设计模式
+     * 三大法则
+     * 1 适合性
+     * 2 使用性
+     * 3 适用性
+     *
+     */
+    /**
+     * 反模式
+     *  一些值得记录的不良设计
+     *  全局变量
+     *  setTimeout setInteval 使用字符串, eval
+     *  修改 Object 的原型
+     *  内联形式使用 JavaScript
+     *  使用 document.write 会打开文档流和关闭文档流, 因而重绘整个页面, 应该用innerHtml 代替
+     */
+
+    /**
+     * 设计模式类型
+     *  创建型
+     *      constructor(构造器), factory(工厂), abstract(抽象), prototype(原型), singletton(单例), builder(生成器)
+     *  结构型
+     *      decorator(装饰者), facade(外观), flywight(享元), adapter(适配器), proxy(代理)
+     *  行为设计模式
+     *      iterator(迭代器), mediator(中介), observer(观察者), visitor(访问者)
+     */
+
+
+    /**
+     * 属性类型: 内部才使用的属性
+     * [[value]] : 值
+     * [[enumerable]] : 能否通过 for-in 来访问 默认true
+     * [[writable]] : 是否可写, true
+     * [[configurable]] : 能否通过 delete 删除, true
+     * [[get]] : 在读取时调用的函数 默认undefined
+     * [[set]] : 在写入时调用的函数 默认undefined
+     */
+    var o = {
+        name: "haili",
+        age: 25
+    };
+    Object.defineProperty(o, "name", {
+        writable: false
+    });
+    o.name = 'aa';
+    console.log(o.name); // haili
+
+    /* constructor */
+    /* end of constructor */
+
+    // module
+
+
+
+
+</script>
+</body>
+</html>

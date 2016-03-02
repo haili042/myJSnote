@@ -14,7 +14,8 @@
 <body>
     <div class="header"></div>
     <div class="aside"></div>
-    <div class="main">
+    <div class="main" id="main">
+        <input type="text" value=""/>
         <button id="btn">copy</button>
     </div>
     <div class="footer"></div>
@@ -300,16 +301,19 @@
     // 运行主函数
     main();
 
-    function aaaa() {
-        console.log(this);
-        this.bbbb = function bbbb() {
-            console.log(this);
-            this.cccc = function cccc() {
-                console.log(this);
-            }
-        }
+    function move(msg) {
+        console.log(msg);
     }
-    var aaaa();
+
+
+    document.getElementById("main").onmousemove = function(e) {
+        clearTimeout(move.tid);
+        move.tid = setTimeout(function() {
+            move('x:' + e.pageX + ', y:' + e.pageY);
+        }, 500);
+    };
+
+
 </script>
 </body>
 </html>
