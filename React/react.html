@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>react test</title>
+
+    <!-- 这3个一定要引 -->
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
+    <script src="browser.min.js"></script>
+    <style>
+        .alert-text {color: red;}
+    </style>
+</head>
+<body>
+<div id="example"></div>
+
+<script type="text/babel">
+
+    // 创建一个虚拟节点
+    var Hello = React.createClass({
+        render: function() {
+
+            // 注意这里的样式是驼峰写法
+            var styleObj = {
+                background: '#ddd',
+                fontSize: '44px'
+            };
+
+            // ES6 中 class 是关键字, 因此得改成 classNamed
+            return ( // 多行要加 ()
+                <span style={styleObj} className="alert-text">
+                    hello {this.props.name}
+                </span>
+            );
+            // return <span> hello {this.props.name}</span>; // 单行可以这么写
+        }
+    });
+
+    ReactDOM.render(
+        <Hello name="world" />, // Hello 对应上面定义的变量 Hello
+        document.getElementById('example')
+    );
+
+</script>
+</body>
+</html>

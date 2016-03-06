@@ -54,12 +54,231 @@
     o.name = 'aa';
     console.log(o.name); // haili
 
-    /* constructor */
-    /* end of constructor */
-
-    // module
+    /******** constructor *********/
+    /******** end of constructor *********/
 
 
+
+    /******** module *********/
+    // 字面量模块
+    var mymod1 = {
+        config: {
+
+        },
+        method1: function() {
+
+        },
+        method2: function() {
+
+        }
+    };
+
+    // 模块模式
+    // 立即执行函数, 返回一个对象(不是函数)
+    // 优点: 直观
+    // 缺点: 复杂, 难以测试
+    var mymod2 = (function(window) {
+        var config = {};
+
+        // 返回一个对象
+        return {
+            getConfig: function() {
+                return config;
+            }
+        };
+    })(window); // 用来关联其他模块
+
+    mymod2.getConfig();
+
+    /******** end of module *********/
+
+
+
+    /******** singleton *********/
+    // 只能被实例化一次
+    // 优点: 解耦, 用来协调其他对象(全局变量)
+    var mysgl = (function() {
+        var instance; // 内存保持一个实例
+
+        function init() {
+            var randId = Math.random(); // 用来测试
+
+            function getId() {
+                return randId;
+            }
+
+            return {
+                name: "singleton",
+                getId: getId
+            };
+        }
+
+        // 返回一个对象
+        return {
+            getInstance: function() {
+
+                // 判断是否存在, 由于闭包instance一直保存在内存中
+                if (!instance) {
+                    instance = init();
+                }
+                return instance;
+            }
+        };
+    })();
+
+    var sgl1 = mysgl.getInstance(),
+        sgl2 = mysgl.getInstance();
+    console.log(sgl1 === sgl2); // true
+    console.log(sgl1.getId() === sgl2.getId()); // true
+    /******** end of singleton *********/
+
+
+
+    /******** observer *********/
+    // 一个目标(subject), 将自己某些变动向观察者(observer)广播通知, 然后自己执行回执函数, 观察者如果发现目标有变动, 观察者将会执行一些操作
+    // 四人组: subject, observer, concreateSuject(具体目标), concreteObserver(具体观察者)
+    // 优点: 可以解耦分为更小的模块
+    // 缺点: 订阅者无视彼此存在, 可能会导致冲突
+    // 例子: jquery 的 on 用的也是这个模式
+
+    // 观察者对象
+    function Observer1() {
+        this.update = function(subject, data) {
+            console.log("observer1 showing " + data[0]);
+            subject.callback(this); // 执行回执
+        };
+    }
+
+    function Observer2() {
+        this.update = function(subject, data) {
+            console.log("observer2 showing " +data);
+            subject.callback(this);
+        };
+    }
+
+    // 目标对象
+    function Subject() {
+        var observer = []; // 观察者可能是多个
+
+        // 广播消息
+        this.broadcast = function() {
+            console.log("broadcast begin");
+            var msg = "subjetMsg";
+            this.fire(msg);
+
+            console.log("broadcast end");
+        };
+
+        // 增加观察者
+        this.addObserver = function(obs) {
+            observer[observer.length] = obs;
+        };
+
+        // 执行广播
+        this.fire = function() {
+            var i = 0, len = observer.length;
+
+            if (len > 0) {
+
+                while (i < len) {
+                    observer[i++].update(this, arguments); // 每个观察者执行操作
+                }
+            }
+        };
+
+        // 观察者执行后的回执
+        this.callback = function(msg) {
+            console.log("subject callback on " + msg);
+        }
+    }
+
+    var subj = new Subject(); // concreateSuject(具体目标)
+    var obs1 = new Observer1(); // concreateObserver(具体目标)
+    var obs2 = new Observer2();
+
+    subj.addObserver(obs1); // 添加观察者
+    subj.addObserver(obs2);
+    subj.broadcast(); // 执行广播
+
+    // 与 observer 类似的是 publish/subscribe 订阅/发布模式
+    var pubSub = {}; // 事件管理器
+
+    (function(pubSub) {
+        var topics = {}, // 多个事件名, 每个主题是个长度为2的数组, [0]是事件id(防止重名了都执行同一个), [1]是事件处理函数
+            subUid = -1; // 用于为每个事件绑定唯一id
+
+        // 广播事件, 包含特定的 topic 名称和参数
+        pubSub.publish = function(topic, args) {
+
+            // 如果没这类型的topic 就返回
+            if (!topics[topic]) {
+                return false;
+            }
+
+            var subscribers = topics[topic],
+                len = subscribers ? subscribers.length : 0;
+
+            // 观察者依次执行回调函数
+            while (len--) {
+                subscribers[len].func(topic, args);
+            }
+        };
+
+        // 回到函数订阅事件, topic/event 触发时执行事件
+        pubSub.subscribe = function(topic, func) {
+            if (!topics[topic]) {
+                topics[topic] = [];
+            }
+
+            var token = (++subUid).toString();
+
+            // topics 插入一个对象
+            topics[topic].push({
+                token: token,
+                func: func
+            });
+            return token; // 返回的是一个id
+        };
+
+        // 通过 token 取消订阅
+        pubSub.unsubscribe = function(token) {
+            var j, jLen;
+
+            // 遍历 topics 二维数组, 删掉对应 token 的项
+            for (var i in topics) {
+
+                if (topics[i]) {
+                    for (j = 0, jLen = topics[i].length; j < jLen; j++) {
+
+                        if (topics[i][j].token === token) {
+                            topics[i].splice(j, 1); // 删掉第i位置后的1个元素
+                            return token;
+                        }
+                    }
+                }
+            }
+            return this;
+        };
+    })(pubSub);
+
+
+    // 日志器作为回调函数
+    var messageLogger = function(topic, data) {
+        console.log("logging: " + topic + ": " + data);
+    };
+
+    // subscription 订阅了 "newMessage" 事件, 然后执行 messageLogger 回调函数
+    var subscription = pubSub.subscribe("newMessage", messageLogger);
+    var subscription2 = pubSub.subscribe("newMessage2", messageLogger);
+
+    pubSub.publish("newMessage", "hello world"); // 推送消息, subscription 执行 messagelogger
+    pubSub.publish("newMessage2", "hello world2");
+
+    pubSub.unsubscribe(subscription); // 停止订阅
+    pubSub.publish("newMessage", "hello world3");
+
+    // 总结: 其实就是定义一个数组在内部, 写好添加观察者的方法, 然后在事件发布的时候遍历执行
+    /******** end of observer *********/
 
 
 </script>
