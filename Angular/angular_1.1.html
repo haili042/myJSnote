@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="fristAngularApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Hello World</title>
+    <script src="lib/angular.min.js"></script>
+    <script src="angular_1.1.js"></script>
+    <script src="angular_wrong.js"></script>
+</head>
+<body>
+    your name : <input type="text" ng-model="yourname" placeholder="World1">
+    <hr/>
+
+    hello {{yourname || 'World'}} !
+
+    <p>1 + 2 = {{ 1 + 2 }}</p>
+    <ul ng-controller="PhoneListCtrl">
+        <li ng-repeat="phone in phones">
+            {{phone.name}}
+            <p>{{phone.snippet}} {{phones.length}}</p>
+        </li>
+    </ul>
+
+    <!-- 基于继承, 错误的例子, ng 要用service -->
+    <div ng-controller="CommonController">
+        <div ng-controller="Conroller1">
+            <p>{{greeting.text}}, angluar</p>
+            <button ng-click="show1()">test1</button>
+            <button ng-click="commonfn()">common</button>
+        </div>
+        <div ng-controller="Conroller2">
+            <p>{{greeting.text}}, angluar</p>
+            <button ng-click="show2()">test2</button>
+            <button ng-click="commonfn()">common</button>
+        </div>
+    </div>
+    <!-- end 基于继承, 错误的例子, ng 要用service -->
+
+    <span ng-controller="Test">{{test.test}}</span>
+
+    <hello>
+        <div>assdfsd</div>
+    </hello>
+
+</body>
+</html>

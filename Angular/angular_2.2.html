@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="UserInfoMudule">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>双向绑定</title>
+    <script src="lib/angular.min.js"></script>
+    <script src="angular_2.2.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <style>
+        .red {background: red;}
+        .blue {background: blue;}
+    </style>
+</head>
+<body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">双向数据绑定</div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="form-horizontal" role="form" ng-controller="UserInfoCtrl">
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label">
+                                邮箱:
+                            </label>
+                            <div class="col-md-10 col-sm-10 ">
+                                <input type="email" class="form-control" placeholder="填入邮箱"
+                                       ng-model="userInfo.email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 col-sm-2 control-label">
+                                密码:
+                            </label>
+                            <div class="col-md-10 col-sm-10 ">
+                                <input type="password" class="form-control" placeholder="填入密码"
+                                       ng-model="userInfo.password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10 col-sm-offset-2 col-sm-10">
+                                <input type="checkbox" ng-model="userInfo.autoLogin"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row" ng-controller="Toggle">
+                <div class="col-md-12 col-sm-12">
+                    <button class="btn-primary" ng-click="toggle()">{{isHidden}}</button>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <span class="{{color}}">
+                        not use ng-class
+                    </span>
+                </div>
+                <div class="col-md-6 col-sm-6" ng-hide="isHidden">
+                   <span ng-class="{red: isRed, blue: isBlue}">
+                        use ng-class
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
