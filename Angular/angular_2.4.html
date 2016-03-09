@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html ng-app="Directive">
+<html ng-app="myngApp">
 <head lang="en">
     <meta charset="UTF-8">
-    <title>指令</title>
+    <title>指令和指令之间, 指令和控制器之间的交互</title>
     <script src="lib/angular.min.js"></script>
     <script src="angular_2.4.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -10,6 +10,75 @@
     </style>
 </head>
 <body>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>指令之间交互</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <superman strength>力量</superman>
+                </div>
+                <div class="col-sm-4">
+                    <superman strength speed>力量, 速度</superman>
+                </div>
+                <div class="col-sm-4">
+                    <superman strength speed light>力量, 速度, 闪光</superman>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>指令和控制器交互</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-6" ng-controller="MyCtrl">
+                    <loader myMethod="loadData()">滑动就加载</loader>
+                </div>
+                <div class="col-sm-6" ng-controller="MyCtrl2">
+                    <loader myMethod="loadData2()">滑动就加载</loader>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>独立scope 的作用, 为每一个相同的指令创建作用域</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <hello></hello>
+                </div>
+                <div class="col-sm-4">
+                    <hello></hello>
+                </div>
+                <div class="col-sm-4">
+                    <hello></hello>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3>scope的绑定</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row" ng-controller="Drink">
+                <div class="col-sm-4">
+                    <input ng-model="text" />
+                </div>
+                <div class="col-sm-4">
+                    <drink flavor="{{ctrlFlavor}}" text="text"></drink>
+                </div>
+                <div class="col-sm-4">
+                    <drink sayHello="sayHello(text)" text="text"></drink>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

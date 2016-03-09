@@ -12,5 +12,17 @@ console.log(typeof Object);
 console.log(foo instanceof foo);
 console.log("*********");
 
-
 console.log(Object);
+
+setTimeout(function() {
+    console.log(this); // 这个this 是 window 对象, 由于这是 node 环境, 所以木有 window 对象
+}, 1000);
+
+var a = {
+    run: function(){
+        return  function runFast(){
+            console.log(this);
+        };
+    }
+};
+a.run()(); // global

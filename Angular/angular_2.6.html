@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="myngApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Service Provider</title>
+    <script src="lib/angular.min.js"></script>
+    <script src="angular_2.6.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <style>
+    </style>
+</head>
+<body>
+    <div ng-controller="LoadDataCtrl">
+        <ul>
+            <li ng-repeat="user in users">
+                {{user.name}}
+            </li>
+        </ul>
+    </div>
+
+    <div>{{ 'hello  ' | myFilter1}}</div>
+</body>
+</html>
