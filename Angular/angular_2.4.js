@@ -122,26 +122,53 @@ myModule.directive('hello', function() {
 myModule.controller('Drink', ['$scope', function($scope) {
     $scope.ctrlFlavor = '百威';
     $scope.text = '可口可乐';
+	
     $scope.sayHello = function(name) {
         console.log('hello' + name);
     };
+	
+	$scope.data = function() { // 有返回值的似乎不起作用
+		return {
+			data: 'adfsd'
+		};
+	}
+	
+	$scope.sayHi = function() {
+		console.log('hi ');
+	};
 }]);
 
 myModule.directive('drink', function() {
     return {
         scope: { // 定义一个独立scope, 防止定义了相同的指令之后相互影响
-            flavor: '@',    // 传递父scope传递的字符串, 作用和下面的link 一样
-            text: '=',      // 与父scope的属性双向绑定
-            sayHello: '&'   // 传递父scope的函数
+  //          flavor: '@'    // 传递父scope传递的字符串(准确来说是表达式 {{}}), 作用和下面的link 一样, @前面的是模版里的属性 @后面的是html里的属性(注意驼峰变横杠)
+  //          text: '=',      // 与父scope的属性双向绑定, (=是针对某个对象的引用)
+            sayHello1: '&',   // 对父级作用域 $sopce 进行绑定，并将其中的属性包装成一个函数，注意，是属性，意即，任何类型的属性都会被包装成一个函数，比如一个单纯的字符串，或是一个对象数组，或是一个函数方法。
+			getData: '&'// 按照书写顺序匹配的, 
         },
+		controller: function($scope, $http) { // 这里的 $sopce 是内部的scope
+
+			console.log($scope.text); // undefined
+			
+			$scope.sayHello1 = function(name) { // 重写了 sayHello 方法
+				console.log('hello 111 ' + name);
+			};
+			
+			$scope.text = 'textasd';
+			$scope.data1 = $scope.getData; // 相当于把父scope 的 data  传递给当前scope中, 起了别名
+						
+			$scope.sayData = function(data) { 
+				console.log('hello data  ' + data);
+			};
+		},
         restrict: 'AE',
         template: '<div><input type="text" ng-model="text">{{flavor}}' +
-                '<button class="btn btn-default" ng-click="sayHello({name:text})">函数绑定</button></div>' // 这里替换的是scope.flavor
-        /*,
+                '<button class="btn btn-default" ng-click="sayHello1(text)" ng-mouseover="data1()">函数绑定</button></div>' // 这里替换的是scope.flavor
+        ,
         link: function(scope, element, attrs) {
-               scope.flavor = attrs.flavor; // <drink>属性中的flavor 赋值给scope
+
         }
-        */
+        
     };
 });
 

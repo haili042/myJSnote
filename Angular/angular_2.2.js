@@ -1,13 +1,17 @@
 // UserInfoMudule 是页面中 ng-app 的名字, 只能调用一次, 也就是一个入口
 var userInfoModule = angular.module('UserInfoMudule', []);
 
-userInfoModule.controller('UserInfoCtrl', ['$scope', function($scope) {
+userInfoModule.controller('UserInfoCtrl', ['$scope', '$http' , function($scope, $http) {
     $scope.userInfo = {
         email: 'haili@042.com',
         password: 'haili@042.com',
         autoLogin: true
     };
     $scope.show = function() {
+		$http({
+			url:'',
+			method: 'post'
+		});
         console.log($scope.userInfo.email);
     };
 }]);

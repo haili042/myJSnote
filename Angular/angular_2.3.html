@@ -1,15 +1,39 @@
 <!DOCTYPE html>
-<html ng-app="UserInfoMudule">
+<html ng-app="SelectApp">
 <head lang="en">
     <meta charset="UTF-8">
-    <title>路由</title>
+    <title>ng select 和 ng-option</title>
     <script src="lib/angular.min.js"></script>
     <script src="lib/angular-route.min.js"></script>
-    <script src="angular_2.2.js"></script>
+    <script src="angular_2.3.js"></script>
+ 
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <style>
+
     </style>
 </head>
 <body>
+
+
+<div ng-controller="OptionCtrl">
+  <select ng-model="seleted" ng-options="a.name for a in animals">
+    <option value="">请选择你的萌宠</option>
+  </select>
+
+  <select ng-model="seleted" ng-options="(a.name + '爱吃' + a.food) for a in animals">
+    <option value="">请选择你的萌宠</option>
+  </select>
+
+  <select ng-model="seleted" ng-options="(a.name + '的爱好是' + a.favor) group by a.sex for a in animals">
+    <option value="">请选择你的萌宠</option>
+  </select>
+
+  <select ng-model="seletedId" ng-options="a.id as a.name for a in animals">
+    <option value="">请选择你的萌宠</option>
+  </select>
+</div>
+
+
+
 </body>
 </html>
