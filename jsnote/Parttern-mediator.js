@@ -100,9 +100,18 @@ plane1.send('msg  ', plane2);
  * 极客学院
  * 外观模式: 封装复杂的接口
  * */
-var fuhao = {
-
+var A = function (){
+    console.log('A');
 };
+var B = function (){
+    console.log('B');
+};
+// 外观模式
+var facade = function (){
+    A();
+    B();
+};
+facade();
 
 
 
