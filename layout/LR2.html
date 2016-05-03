@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'serif';
+      text-align: center; /*IE6下让元素居中*/
+    }
+
+    /*===================================================*\
+     *                                                   *
+     *   Layout                                          *
+     *  .wrapper宽度=.sidebar宽度+间距+.main-content宽度 *
+     *                                                   *
+    \*===================================================*/
+
+    .wrapper {
+      width: 960px; /*页面总宽度*/
+      margin: 0 auto; /*水平居中*/
+      text-align: left; /*重置文本对齐方式*/
+    }
+
+    .wrapper div {
+      border: 1px solid;
+    }
+
+    .header {
+      margin-bottom: 5px; /*顶部与主内容垂直间距，可自行修改*/
+      height: 75px;
+    }
+
+    .sidebar {
+      width: 218px; /*左边栏宽度，可自行修改*/
+      height: 350px;
+      margin-right: 20px; /*边栏间距，可自行修改*/
+      display: inline; /*防止IE6双边距*/
+      float: left;
+      margin-bottom: 5px; /*边栏与footer之间的垂直间距，可自行修改*/
+    }
+
+    .main-content {
+      width: 718px; /*主内容宽度*/
+      height: 350px;
+      display: inline; /*防止IE6又边距*/
+      float: left;
+      margin-bottom: 5px; /*主内容与footer之间的垂直间距，可自行修改*/
+    }
+
+    .footer {
+      margin-bottom: 5px;
+      clear: both; /*清除浮动，非常重要，不可缺少*/
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="wrapper">
+  <div class="header">
+    <h1>Header content</h1>
+  </div>
+  <div class="aside sidebar">
+    <h2>Sidebar Content</h2>
+  </div>
+  <div class="main-content">
+    <h2>Main Content</h2>
+  </div>
+  <div class="footer">
+    <h2>Footer Content</h2>
+  </div>
+</div>
+
+<script type="javascript">
+  /**
+   * 左边固定, 右边自适应的布局
+   * */
+</script>
+</body>
+</html>

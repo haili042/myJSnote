@@ -11,6 +11,7 @@ myModule.directive('hello', function() {
 
 // angular 定义控制器, 可以由它载入数据绑定到视图
 myModule.controller("PhoneListCtrl", function($scope) {
+	
     $scope.phones = [
         {
             "name": "Nexus S",

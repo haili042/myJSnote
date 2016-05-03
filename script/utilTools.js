@@ -9,6 +9,7 @@
  * 调试日志/
  *
  */
+ /*
 (function ($){
 
     $.extend({
@@ -26,3 +27,27 @@
     });
 
 })(jQuery);
+*/
+
+
+var UtilTools = (function() {
+	
+	function dateFormate(date) {
+		var result;
+		if (!date instanceof Date) {
+			console.log('param is not date');
+			return false;
+		} else {
+			result = [
+				[date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-'),
+				[date.getHours(), date.getMinutes(), date.getSeconds()].join(':')
+			].join(' ').replace(/(?=\b\d\b)/g, '0');
+		}
+		return result;
+	}
+	
+	return {
+		dateFormate: dateFormate
+	};
+})();
+console.log(UtilTools.dateFormate(new Date()));
