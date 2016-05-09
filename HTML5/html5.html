@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<script>
+
+  // 创建一个线程来处理大计算量的操作, 避免浏览器失去响应
+  var worker = new Worker('webWorker.js');
+
+  var start = new Date();
+  worker.postMessage('msg.......');
+
+  worker.onmessage = function(e) {
+    var end = new Date();
+    console.log('worker success, cost: ' + (end - start));
+  }
+
+
+</script>
+</body>
+</html>
