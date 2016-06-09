@@ -1,0 +1,124 @@
+* {
+  font-family: 微软雅黑, arial, sans-serif;
+}
+
+.row {
+  margin: 20px 0 0 20px;
+}
+
+.col {
+  display: inline-block;
+  width: 20%;
+}
+
+/*第一种方法*/
+.hl-checkbox {
+  display: none;
+}
+
+.hl-checkbox + .hl-checkbox-label {
+  padding-top: 2px;
+  cursor: pointer;
+}
+
+.hl-checkbox:checked + .hl-checkbox-label:before {
+  background: #00B7FF;
+  color: #fff;
+}
+
+.hl-checkbox + .hl-checkbox-label:before {
+  border: 1px solid #00B7FF;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 18px;
+  width: 18px;
+  height: 18px;
+  font-size: 14px;
+  color: #fff;
+  transition: all .2s;
+  margin-right: 4px;
+}
+
+/*大版*/
+.hl-checkbox:checked + .hl-checkbox-label-lg:before {
+  background: #00B7FF;
+  color: #fff;
+}
+
+.hl-checkbox + .hl-checkbox-label-lg:before {
+  border: 1px solid #00B7FF;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 24px;
+  width: 24px;
+  height: 24px;
+  font-size: 20px;
+  color: #fff;
+  transition: all .2s;
+  margin-right: 4px;
+}
+
+/*小版*/
+.hl-checkbox:checked + .hl-checkbox-label-sm:before {
+  background: #00B7FF;
+  color: #fff;
+}
+
+.hl-checkbox + .hl-checkbox-label-sm:before {
+  border: 1px solid #00B7FF;
+  border-radius: 2px;
+  text-align: center;
+  line-height: 14px;
+  width: 14px;
+  height: 14px;
+  font-size: 12px;
+  color: #fff;
+  transition: all .2s;
+  margin-right: 4px;
+}
+
+
+/**开关**/
+.hl-switch {
+  display: none;
+}
+
+.hl-switch + .hl-switch-label {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+}
+
+.hl-switch + .hl-switch-label:before{
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  z-index: 1;
+  transition: all .2s;
+}
+
+.hl-switch + .hl-switch-label:after{
+  content: '';
+  display: block;
+  width: 40px;
+  height: 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+.hl-switch:checked + .hl-switch-label:before{
+  left: 21px;
+}
+
+.hl-switch:checked + .hl-switch-label:after{
+  border-color: #00B7FF;
+  background: #00B7FF;
+}

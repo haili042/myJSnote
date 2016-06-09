@@ -114,3 +114,13 @@ function clone2 (obj) {
 var json2 = clone2(json);
 json2.a = 2000;
 console.log(json);
+
+Function.prototype.bind = Funciton.prototype.bind || function(context) {
+    var args = Array.prototype.slice.call(arguments, 1),
+        that = this;
+    return function() {
+        var innerArgs = Array.prototype.slice.call(arguments);
+        var outerArgs = args.concat(innerArgs);
+        return that.apply(context, outerArgs);
+    };
+};

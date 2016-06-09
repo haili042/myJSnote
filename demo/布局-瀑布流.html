@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <style>
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #main {
+      margin: 4px auto;
+      width: 960px;
+      border: 1px solid #ccc;
+      position: relative;
+    }
+
+    #main:after {
+      content: '';
+      clear: both;
+      display: block;
+      width: 0;
+      height: 0;
+      visibility: hidden;
+    }
+
+    .pin {
+      float: left;
+      margin: 10px 0 0 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 0 6px #ccc;
+    }
+
+    .box {
+      padding: 8px;
+    }
+    .box img {
+      height: auto;
+    }
+
+  </style>
+</head>
+<body>
+
+<div id="main">
+</div>
+
+<script>
+
+  window.onload = function() {
+
+    var data = [],
+        colNum = 5,
+        imgWd = Math.floor(960/colNum) - 30,
+        heightArr = [0,0,0,0,0],
+        domArr = []
+    ;
+
+    for (var i = 0; i < 24; i++) {
+      data.push(i);
+      var min = Math.min(heightArr), index;
+      createPin(i, index);
+    }
+
+    function init() {
+
+    }
+
+    function createPin(id, index) {
+      var elem1 = document.createElement('div'),
+              elem2 = document.createElement('div'),
+              imgELem = document.createElement('img')
+              ;
+      elem1.className = 'pin';
+      elem2.className = 'box';
+
+      elem1.top = 1 || 0;
+      elem1.left = 1 || 0;
+      imgELem.src = './img/pubu/' + id + '.jpg';
+      imgELem.width = imgWd;
+
+      heightArr[index] += elem1.offsetHeight;
+
+      elem1.appendChild(elem2);
+      elem2.appendChild(imgELem);
+      document.getElementById('main').appendChild(elem1);
+    }
+
+    function getMin(arr) {
+      var min = arr.shift() || 0, index = 0;
+      for (var i = arr.length - 1; i >= 0; i--) {
+        if (arr[i] <= min) {
+          min = arr[i];
+          index = i + 1;
+        }
+      }
+      return {
+        index: index,
+        min: min
+      };
+    }
+
+  };
+
+</script>
+
+</body>
+</html>
