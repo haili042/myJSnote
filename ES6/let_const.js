@@ -41,5 +41,9 @@ function f() { console.log('I am outside!'); }
 
 //PI = 2; // 报错, read only
 
-
 console.log("\u0061");
+
+const arr = [];
+arr.push(1);
+// arr = []; // error
+console.log(arr);
