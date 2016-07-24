@@ -102,7 +102,7 @@
 
     // Reflect.ownKeys
     console.log('\nReflect.ownKeys');
-    Reflect.ownKeys(o).forEach(k => console.log('key=' + k + ', value=' + o[k]));
+    Reflect.ownKeys(o).forEach(k => console.log('key=' + k.toString() + ', value=' + o[k]));
 
 }
 
@@ -121,6 +121,4 @@
     });
 
 
-    let map = new Map(Object.entries(o));
-    console.log(map);
 }

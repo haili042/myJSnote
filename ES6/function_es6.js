@@ -15,14 +15,16 @@ function foo({x, y = 5}) {
 }
 
 foo({}); // undefined, 5
-foo({x: 1}) // 1, 5
-foo({x: 1, y: 2}) // 1, 2
+foo({x: 1}); // 1, 5
+foo({x: 1, y: 2}); // 1, 2
 
-
-
-function add(x, y) {
-    return x + y;
+//将所有参数相加的函数
+function add(...x) {
+    return x.reduce((m, n) => m + n);
 }
+
+console.log(add(1,3,5));
+
 
 var numbers = [4, 38];
 let nn = add(...numbers); // 42
