@@ -11,6 +11,12 @@
             return Reflect.set(target, key, value, receiver);
         }
     });
+    let obj1 = new Proxy({}, {
+        get(target, key, receiver) {
+            Reflect.get(target, key, receiver);
+        }
+    });
+
 
     obj.count = 1;
     obj.count++;
