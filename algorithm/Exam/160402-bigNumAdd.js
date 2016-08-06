@@ -1,5 +1,7 @@
 /*
-* 第二题大树相加
+* 两个大数相加
+*
+*
 * */
 
 var sum = function(num1, num2) {

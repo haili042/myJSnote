@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+
+        .div {
+            width: 100px;
+            height: 100px;
+            margin: 40px 0 0 40px;
+            background: #0000f6;
+        }
+
+        .animate1 {
+            -webkit-animation: rotation 2s linear infinite;
+            -o-animation: rotation 2s linear infinite;
+            animation: rotation 2s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {transform: rotate(180deg);}
+            100% {transform: rotate(360deg);}
+        }
+
+        .animate2 {
+            -webkit-animation: translate 2s ease alternate;
+            -o-animation: translate 2s ease alternate;
+            animation: translate 2s ease alternate;
+        }
+        
+        @keyframes translate {
+            0% {transform: translate(0px, 0px);}
+            50% {transform: translate(400px, 0px);}
+            100% {transform: translate(400px, 200px);}
+        }
+
+        .animate3 {
+            position: relative;
+        }
+        .animate3:hover {
+            -webkit-animation: hover 4s ease alternate;
+            -o-animation: hover 4s ease alternate;
+            animation: hover 4s ease alternate;
+        }
+
+        @keyframes hover {
+            0% {left:0}
+            100% {left: 400px;}
+        }
+
+        .animate4 {
+            background-color: transparent;
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            box-sizing: border-box;
+            border: 4px solid #5d9cec;
+            border-right-color: #f1c40f;
+            border-top-color: #7266ba;
+            animation: rotation2 1s linear infinite;
+        }
+
+        @keyframes rotation2 {
+            100% {transform: rotate(360deg);}
+        }
+
+        .widget-loading {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-left: 200px;;
+        }
+
+        .widget-loading .mask {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+
+            position: absolute;
+            background-color: rgba(222,222,222,0.8);
+        }
+
+        .widget-loading .icon-wrap {
+            top: 50%;
+            left: 50%;
+            margin-top: -32px;
+            margin-left: -32px;
+            position: absolute;
+        }
+        .widget-loading .icon-wrap div {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            opacity: 1;
+            box-sizing: border-box;
+            border-radius: 100%;
+            background: #569ced;
+            animation: loading 0.8s linear infinite;
+        }
+        .widget-loading .icon-wrap div:nth-child(1) {
+            left: 24px;
+            top: 0;
+        }
+        .widget-loading .icon-wrap div:nth-child(2) {
+            left: 40px;
+            top: 8px;
+            animation-delay: -0.1s;
+        }
+        .widget-loading .icon-wrap div:nth-child(3) {
+            left: 48px;
+            top: 24px;
+            animation-delay: -0.2s;
+        }
+        .widget-loading .icon-wrap div:nth-child(4) {
+            left: 40px;
+            top: 40px;
+            animation-delay: -0.3s;
+        }
+        .widget-loading .icon-wrap div:nth-child(5) {
+            left: 24px;
+            top: 48px;
+            animation-delay: -0.4s;
+        }
+        .widget-loading .icon-wrap div:nth-child(6) {
+            left: 8px;
+            top: 40px;
+            animation-delay: -0.5s;
+        }
+        .widget-loading .icon-wrap div:nth-child(7) {
+            left: 0;
+            top: 24px;
+            animation-delay: -0.6s;
+        }
+        .widget-loading .icon-wrap div:nth-child(8) {
+            left: 8px;
+            top: 8px;
+            animation-delay: -0.7s;
+        }
+        @keyframes loading {
+            100% {
+                opacity: 0.4;
+                transition: opacity 0.8s;
+                transform: scale(0.4);
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div class="div animate1">
+
+    </div>
+
+    <div class="div animate2">
+
+    </div>
+
+    <div class="div animate3">
+
+    </div>
+
+    <div class="animate4"></div>
+
+    <div class="widget-loading">
+        <div class="mask"></div>
+        <div class="icon-wrap">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+
+    <div class="div" style="background-color: #453474;">a
+        <div class="div" style="position: relative; background-color: #dddddd">
+            <div class="div" style="position: relative; background-color: #54572d">
+                <div  class="div" style="background-color: red; position: absolute">a.a</div>
+            </div>
+        </div>
+    </div>
+    <div  class="div" style="background-color: #00aacc; margin: -30px 0 0 20px">b</div>
+<script>
+
+
+</script>
+</body>
+</html>
