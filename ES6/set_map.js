@@ -5,6 +5,9 @@
     let s = new Set();
     [2, 3, 5, 4, 5, 2, 2].map(k => s.add(k));
 
+    console.log([...s]);
+    console.log(Array.from(s));
+
     for (let v of s) {
         console.log(v);
     }
@@ -20,6 +23,7 @@
     for (let [k, v] of s.entries()) {
         console.log(k, v);
     }
+
 
     // crud
     s.add(6);
