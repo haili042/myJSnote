@@ -1,0 +1,113 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Microsoft YaHei, SimHei, serif;
+  background: #f2f2f2;
+}
+
+.container-attr {
+  margin: 10px;
+  overflow: hidden;
+}
+
+.container-attr .panel {
+  float: left;
+  margin: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 4px #ccc;
+}
+
+.container-attr .panel .title {
+  padding: 10px 20px;
+  background: #b3d4dd;
+  color: #222;
+}
+
+.container-attr .panel .fa {
+  display: -webkit-flex;
+  display: flex;
+  background: #efefef;
+  width: 360px;
+  height: 200px;
+}
+
+.div {
+  width: 40px;
+  height: 40px;
+  background: #ffabb7;
+  margin: 10px;
+}
+
+/* ----------------------- 容器的属性 ----------------------- */
+
+/* fex-direction */
+.flex-direction-row { flex-direction: row; } /* default */
+.flex-direction-column { flex-direction: column }
+.flex-direction-row-reverse { flex-direction: row-reverse }
+.flex-direction-column-reverse { flex-direction: column-reverse }
+
+/* fex-wrap */
+.flex-wrap-nowrap { flex-wrap: nowrap } /* default */
+.flex-wrap-wrap { flex-wrap: wrap }
+.flex-wrap-wrap-reverse { flex-wrap: wrap-reverse }
+
+/* justify-content */
+.justify-content-flex-start { justify-content: flex-start } /* default */
+.justify-content-flex-end { justify-content: flex-end }
+.justify-content-center { justify-content: center }
+.justify-content-space-between { justify-content: space-between }
+.justify-content-space-around { justify-content: space-around }
+
+/* align-items */
+.align-items-stretch { align-items: stretch } /* default */
+.align-items-flex-start { align-items: flex-start }
+.align-items-flex-end { align-items: flex-end }
+.align-items-center { align-items: center }
+.align-items-baseline { align-items: baseline }
+
+/* align-content */
+.align-content-stretch { align-content: stretch }
+.align-content-flex-start { align-content: flex-start }
+.align-content-flex-end { align-content: flex-end }
+.align-content-center { align-content: center }
+.align-content-space-between { align-content: space-between }
+.align-content-space-around { align-content: space-around }
+
+
+/* ----------------------- 项目的属性 ----------------------- */
+/* order */
+.order--1 { order: -1 }
+.order-0 { order: 0 } /* default */
+.order-1 { order: 1 }
+.order-2 { order: 2 }
+.order-3 { order: 3 }
+.order-4 { order: 4 }
+.order-5 { order: 5 }
+.order-99 { order: 99 }
+
+/* flex-grow */
+.flex-grow-0 {  flex-grow: 0 } /* default */
+.flex-grow-1 {  flex-grow: 1 }
+.flex-grow-2 {  flex-grow: 2 }
+.flex-grow-3 {  flex-grow: 3 }
+.flex-grow-4 {  flex-grow: 4 }
+.flex-grow-5 {  flex-grow: 5 }
+.flex-grow-99 {  flex-grow: 99 }
+
+/* flex-shrink */
+.flex-shrink-0 {  flex-shrink: 0 }
+.flex-shrink-1 {  flex-shrink: 1 } /* default */
+.flex-shrink-2 {  flex-shrink: 2 }
+.flex-shrink-3 {  flex-shrink: 3 }
+.flex-shrink-4 {  flex-shrink: 4 }
+.flex-shrink-5 {  flex-shrink: 5 }
+.flex-shrink-99 {  flex-shrink: 99 }
+
+/* flex-basis */
+.flex-basis {  flex-basis: auto }
+
+/* flex-basis, same as align-items */
+.align-self { align-self: flex-start }

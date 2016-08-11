@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>flex test</title>
+
+  <link href="flex.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+  <h2>容器的属性</h2>
+  <hr/>
+  <!-- 容器的属性 flex-direction-->
+  <div class="container-attr">
+    <div class="panel">
+      <div class="title">
+        <span>flex-direction: row; //defalut</span>
+      </div>
+
+      <div class="fa flex-direction-row">
+        <div class="div">1</div>
+        <div class="div">2</div>
+        <div class="div">3</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>flex-direction: column;</span>
+      </div>
+
+      <div class="fa flex-direction-column">
+        <div class="div">1</div>
+        <div class="div">2</div>
+        <div class="div">3</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>flex-direction: row-reverse;</span>
+      </div>
+
+      <div class="fa flex-direction-row-reverse" >
+        <div class="div">1</div>
+        <div class="div">2</div>
+        <div class="div">3</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>flex-direction: column-reverse;</span>
+      </div>
+
+      <div class="fa flex-direction-column-reverse">
+        <div class="div">1</div>
+        <div class="div">2</div>
+        <div class="div">3</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 容器的属性 flex-wrap -->
+  <div class="container-attr">
+
+    <div class="panel">
+      <div class="title">
+        <span>flex-wrap: nowrap; // default</span>
+      </div>
+
+      <div class="fa flex-wrap-nowrap; // default">
+        <div class="div">1</div>
+        <div class="div">2</div>
+        <div class="div">3</div>
+        <div class="div">4</div>
+        <div class="div">5</div>
+        <div class="div">6</div>
+        <div class="div">7</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>flex-wrap: wrap;</span>
+      </div>
+
+      <div class="fa flex-wrap-wrap">
+        <div class="div">1</div>
+        <div class="div">2</div>
+        <div class="div">3</div>
+        <div class="div">4</div>
+        <div class="div">5</div>
+        <div class="div">6</div>
+        <div class="div">7</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>flex-wrap: warp-reverse;</span>
+      </div>
+
+      <div class="fa flex-wrap-wrap-reverse">
+        <div class="div">1</div>
+        <div class="div">2</div>
+        <div class="div">3</div>
+        <div class="div">4</div>
+        <div class="div">5</div>
+        <div class="div">6</div>
+        <div class="div">7</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 容器的属性 justify-content -->
+  <div class="container-attr">
+
+    <div class="panel">
+
+      <div class="title">
+        <span>justify-content: flex-start; // default</span>
+      </div>
+
+      <div class="fa justify-content-flex-start">
+        <div class="div" style="width: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px">3</div>
+      </div>
+    </div>
+
+
+    <div class="panel">
+
+      <div class="title">
+        <span>justify-content: flex-end;</span>
+      </div>
+      <div class="fa justify-content-flex-end">
+        <div class="div" style="width: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px">3</div>
+      </div>
+    </div>
+
+
+    <div class="panel">
+
+      <div class="title">
+        <span>justify-content: center;</span>
+      </div>
+      <div class="fa justify-content-center">
+        <div class="div" style="width: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px">3</div>
+      </div>
+    </div>
+
+
+    <div class="panel">
+
+      <div class="title">
+        <span>justify-content: space-between;</span>
+      </div>
+      <div class="fa justify-content-space-between">
+        <div class="div" style="width: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px">3</div>
+      </div>
+    </div>
+
+
+    <div class="panel">
+
+      <div class="title">
+        <span>justify-content: space-around;</span>
+      </div>
+      <div class="fa justify-content-space-around">
+        <div class="div" style="width: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px">3</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 容器的属性 align-item -->
+  <div class="container-attr">
+
+    <div class="panel">
+      <div class="title">
+        <span>align-items: stretch;//default</span>
+      </div>
+
+      <div class="fa align-items-stretch">
+        <div class="div" style="height: auto">1</div>
+        <div class="div" style="height: auto">2</div>
+        <div class="div" style="height: auto">3</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>align-items: flex-start;</span>
+      </div>
+      <div class="fa align-items-flex-start">
+        <div class="div" style="height: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="height: 100px">3</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>align-items: flex-end;</span>
+      </div>
+      <div class="fa align-items-flex-end">
+        <div class="div" style="height: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="height: 100px">3</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>align-items: center;</span>
+      </div>
+      <div class="fa align-items-center">
+        <div class="div" style="height: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="height: 100px">3</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>align-items: baseline;</span>
+      </div>
+      <div class="fa align-items-baseline">
+        <div class="div" style="height: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="height: 100px">3</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 容器的属性 align-content -->
+  <div class="container-attr">
+
+    <div class="panel">
+      <div class="title">
+        <span>align-content: stretch; // default</span>
+      </div>
+
+      <div class="fa flex-wrap-wrap align-content-stretch">
+        <div class="div" style="width: 60px; height: auto">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px; height: auto">3</div>
+        <div class="div" style="width: 50px; height: auto">4</div>
+        <div class="div" style="width: 30px; height: auto">5</div>
+        <div class="div" style="width: 70px; height: auto">6</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>align-content: flex-start;</span>
+      </div>
+
+      <div class="fa flex-wrap-wrap align-content-flex-start">
+        <div class="div" style="width: 60px; height: auto">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px; height: auto">3</div>
+        <div class="div" style="width: 50px; height: auto">4</div>
+        <div class="div" style="width: 30px; height: auto">5</div>
+        <div class="div" style="width: 70px; height: auto">6</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>align-content: flex-end;</span>
+      </div>
+      <div class="fa flex-wrap-wrap align-content-flex-end">
+        <div class="div" style="width: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px">3</div>
+        <div class="div" style="width: 50px">4</div>
+        <div class="div" style="width: 30px">5</div>
+        <div class="div" style="width: 70px">6</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>align-content: center;</span>
+      </div>
+      <div class="fa flex-wrap-wrap align-content-center">
+        <div class="div" style="width: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px">3</div>
+        <div class="div" style="width: 50px">4</div>
+        <div class="div" style="width: 30px">5</div>
+        <div class="div" style="width: 70px">6</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>align-content: space-between;</span>
+      </div>
+      <div class="fa flex-wrap-wrap align-content-space-between">
+        <div class="div" style="width: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px">3</div>
+        <div class="div" style="width: 50px">4</div>
+        <div class="div" style="width: 30px">5</div>
+        <div class="div" style="width: 70px">6</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="title">
+        <span>align-content: space-around;</span>
+      </div>
+      <div class="fa flex-wrap-wrap align-content-space-around">
+        <div class="div" style="width: 60px">1</div>
+        <div class="div">2</div>
+        <div class="div" style="width: 100px">3</div>
+        <div class="div" style="width: 50px">4</div>
+        <div class="div" style="width: 30px">5</div>
+        <div class="div" style="width: 70px">6</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h2>项目的属性</h2>
+  <hr/>
+
+  <!-- 项目的属性-->
+  <div class="container-attr">
+
+    <!-- order -->
+    <div class="panel">
+
+      <div class="title">
+        <span>order: 0; // default</span>
+      </div>
+
+      <div class="fa flex-wrap-wrap align-content-stretch">
+        <div class="div" style="width: 60px; height: auto">1</div>
+        <div class="div order-0">2, order=0</div>
+        <div class="div order--1" style="width: 100px; height: auto">3, order=-1</div>
+        <div class="div" style="width: 50px; height: auto">4</div>
+        <div class="div order-99" style="width: 30px; height: auto">5, order=99</div>
+        <div class="div" style="width: 70px; height: auto">6</div>
+      </div>
+    </div>
+
+    <!-- flex-grow -->
+    <div class="panel">
+      <div class="title">
+        <span>flex-grow: 1;//未设置宽度,平分填满</span>
+      </div>
+
+      <div class="fa flex-wrap-nowrap align-content-stretch">
+        <div class="div flex-grow-1" style="width: auto; height: auto">flex-grow:1</div>
+        <div class="div flex-grow-1" style="width: auto; height: auto">flex-grow:1</div>
+        <div class="div flex-grow-1" style="width: auto; height: auto">flex-grow:1</div>
+      </div>
+    </div>
+
+    <!-- flex-grow -->
+    <div class="panel">
+      <div class="title">
+        <span>设置了宽度按宽度比例填满</span>
+      </div>
+
+      <div class="fa flex-wrap-nowrap align-content-stretch">
+        <div class="div flex-grow-1" style="width: 60px; height: auto">60px</div>
+        <div class="div order-2 flex-grow-1" style="height: auto">40px</div>
+        <div class="div flex-grow-1" style="width: 100px; height: auto">100px</div>
+        <div class="div flex-grow-1" style="width: auto; height: auto">0</div>
+      </div>
+    </div>
+
+    <!-- flex-shrink -->
+    <div class="panel">
+      <div class="title">
+        <span>如果宽度不够就缩小比例,nowrap</span>
+      </div>
+
+      <div class="fa align-content-stretch">
+        <div class="div flex-shrink-1" style="width: 300px; height: auto">flex-shrink:1</div>
+        <div class="div flex-shrink-2" style="width: 300px; height: auto">flex-shrink:2</div>
+      </div>
+    </div>
+
+    <!-- flex-basis -->
+    <div class="panel">
+      <div class="title">
+        <span>flex-basis 主轴空间</span>
+      </div>
+
+      <div class="fa align-content-stretch">
+        <div class="div flex-shrink-1" style="width: 300px; height: auto; flex-basis: 100px">flex-basis=200px; width=300px; 实际只有100px</div>
+        <div class="div flex-shrink-2" style="width: 300px; height: auto; flex-basis: 100px">flex-basis=100px; width=300px; 实际只有100px</div>
+      </div>
+    </div>
+
+    <!-- flex-self -->
+    <div class="panel">
+      <div class="title">
+        <span>align-self覆盖align-items属性</span>
+      </div>
+
+      <div class="fa align-items-flex-start">
+        <div class="div">1</div>
+        <div class="div">2</div>
+        <div class="div" style="flex-basis: 200px; align-self: flex-end">3, align-self:flex-end</div>
+        <div class="div">4</div>
+        <div class="div">5</div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</body>
+</html>

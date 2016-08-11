@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>seajs 测试</title>
+
+  <link rel="stylesheet" type="text/css" href="./lib/easyui-1.4.3/easyui.css">
+
+</head>
+<body>
+
+  <div id="cbx"></div>
+  <div id="dg"></div>
+
+  <script src="lib/sea.js"></script>
+  <script>
+    // config
+    seajs.config({
+
+      // 配置基本路径
+      base: './modules',
+
+      // 配置别名
+      alias: {
+        jquery: '../lib/jquery.min.js',
+        easyui: '../lib/easyui-1.4.3/jquery.easyui.min.js'
+      }
+    });
+
+    // entries
+    seajs.use('./modules/main.js');
+  </script>
+</body>
+</html>

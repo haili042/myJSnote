@@ -5,6 +5,10 @@
 * */
 
 var sum = function(num1, num2) {
+    if (typeof num1 !== 'number' || typeof num2 !== 'number') {
+        throw TypeError('arg1, arg2 must be number');
+    }
+
     var arr1 = (num1 + '').split(''),
         arr2 = (num2 + '').split(''),
         len1 = arr1.length - 1,

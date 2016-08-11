@@ -1,0 +1,43 @@
+{
+  "name": "haili",
+  "version": "1.0.0",
+  "description": "This is my reading note on Professional JavaScript for Web Developer 3rd Edition, and i have also put some pratics code on it~",
+  "main": "gulpFile.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "browser-sync": "^2.14.0",
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "pug": "^2.0.0-beta4",
+    "requirejs": "^2.2.0"
+  },
+  "devDependencies": {
+    "css-loader": "^0.23.1",
+    "exports-loader": "^0.6.3",
+    "file-loader": "^0.9.0",
+    "imports-loader": "^0.6.5",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "source-map-loader": "^0.1.5",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haili042/myJSnote.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haili042/myJSnote/issues"
+  },
+  "homepage": "https://github.com/haili042/myJSnote#readme"
+}

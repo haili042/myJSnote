@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximun-scale=1">
+  <title>flex 布局测试</title>
+
+  <style>
+    body, header, footer, main, nav, aside {
+      padding: 0;
+      margin: 0;
+    }
+
+    .HolyGrail {
+      display: flex;
+      height: 100vh; /* 1vh == 1/100 窗口高度 */
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    header, footer {
+      flex: 1;
+      background: lightskyblue;
+    }
+
+    .HolyGrail-body {
+      display: flex;
+      flex: 6;
+    }
+
+    .HolyGrail-body > main {
+      flex: 1;
+      background: lightgoldenrodyellow;
+    }
+
+    .HolyGrail-body > aside, .HolyGrail-body > nav {
+      flex: 0 0 200px;
+      background: darkseagreen;
+    }
+
+    .HolyGrail-body > nav {
+      order: -1;
+    }
+
+    @media (max-width: 768px) {
+
+      .HolyGrail-body {
+        flex-direction: column;
+      }
+
+      .HolyGrail-body > main,
+      .HolyGrail-body > nav,
+      .HolyGrail-body > aside {
+        flex: auto;
+      }
+    }
+  </style>
+</head>
+<body class="HolyGrail">
+
+  <header>header</header>
+  <div class="HolyGrail-body">
+    <main>main</main>
+    <nav>nav</nav>
+    <aside>aside</aside>
+  </div>
+  <footer>footer</footer>
+</body>
+</html>
