@@ -1,17 +1,24 @@
-var extend = function() {
-	var src, copyIsArray, copy, name, options, clone,
+/**
+ * jQuery extend 的实现方法
+ *
+ * $.extend(true, {}. ...) // 深度拷贝
+ *
+ * */
+
+jQuery.extend = jQuery.fn.extend = function() {
+	var options, name, src, copy, copyIsArray, clone,
 		target = arguments[0] || {},
 		i = 1,
 		length = arguments.length,
 		deep = false;
 
 	// Handle a deep copy situation
+	// 深度拷贝第一个参数为 true
 	if ( typeof target === "boolean" ) {
 		deep = target;
-
+		target = arguments[1] || {};
 		// skip the boolean and the target
-		target = arguments[ i ] || {};
-		i++;
+		i = 2;
 	}
 
 	// Handle case when target is a string or something (possible in deep copy)
@@ -20,9 +27,9 @@ var extend = function() {
 	}
 
 	// extend jQuery itself if only one argument is passed
-	if ( i === length ) {
+	if ( length === i ) {
 		target = this;
-		i--;
+		--i;
 	}
 
 	for ( ; i < length; i++ ) {
@@ -38,6 +45,7 @@ var extend = function() {
 					continue;
 				}
 
+				// 如果是深克隆
 				// Recurse if we're merging plain objects or arrays
 				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
 					if ( copyIsArray ) {
@@ -48,11 +56,15 @@ var extend = function() {
 						clone = src && jQuery.isPlainObject(src) ? src : {};
 					}
 
+					// 递归实现
 					// Never move original objects, clone them
 					target[ name ] = jQuery.extend( deep, clone, copy );
 
-				// Don't bring in undefined values
+					// Don't bring in undefined values
+
 				} else if ( copy !== undefined ) {
+
+					// 如果是浅克隆
 					target[ name ] = copy;
 				}
 			}
