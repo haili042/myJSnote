@@ -97,3 +97,28 @@ function doScrollCheck() {
     // and execute any waiting functions
     jQuery.ready();
 }
+
+
+/**
+ * jquery 1.8 版本后增加了promise 的支持
+ * 所以在doScroll 里增加了绑定
+ *
+ *
+ * */
+(function doScrollCheck() {
+    if ( !jQuery.isReady ) {
+
+        try {
+            // Use the trick by Diego Perini
+            // http://javascript.nwbox.com/IEContentLoaded/
+            top.doScroll("left");
+        } catch(e) {
+            return setTimeout( doScrollCheck, 50 );
+        }
+
+        // and execute any waiting functions
+        jQuery.ready();
+    }
+})();
+
+// 在 ready 里判断  jQuery.isReady 是否为真

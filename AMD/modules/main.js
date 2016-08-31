@@ -60,3 +60,8 @@ require(['shimTest'], function(test) {
 require(['shimTest2'], function(myModule) {
     myModule.handler();
 });
+
+
+require(['noModuleId'], function() {
+    require(['a2']);
+});

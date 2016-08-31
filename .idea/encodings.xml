@@ -2,14 +2,7 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/Angular/angular_2.1.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Fencheng/cdt_cellphone.json" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Fencheng/cdt_light.json" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Fencheng/copyFormatter.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Fencheng/discount.json" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Fencheng/editableMenu.json" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Fencheng/test.json" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/myExcercise/my_menu_data.json" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/script/utilTools.js" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
