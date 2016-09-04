@@ -1,0 +1,70 @@
+@charset "UTF-8";
+body, h1, h2, h3, h4, h5, h6, span, ul, li, ol, p {
+  padding: 0;
+  margin: 0; }
+
+body {
+  font-family: "\5FAE\8F6F\96C5\9ED1", Verdana, sans-serif;
+  color: #222; }
+
+ul, li {
+  list-style: none; }
+
+a {
+  color: #222; }
+
+iframe {
+  width: 100%;
+  height: 100%; }
+
+/* 这部分没加上 */
+.header, .main {
+  position: absolute;
+  width: 100%; }
+
+.header {
+  height: 60px;
+  background: #236481; }
+
+/* main panel */
+.main {
+  /*top: 60px;*/
+  top: 0;
+  bottom: 0;
+  overflow: hidden; }
+  .main > .aside, .main > .article {
+    position: absolute;
+    min-width: 1px;
+    height: 100%; }
+  .main > .aside {
+    background: #30354c;
+    width: 220px;
+    box-sizing: border-box;
+    border-right: 1px solid #333;
+    z-index: 2; }
+  .main > .article {
+    left: 220px;
+    right: 0;
+    border-left: 1px solid #777; }
+    .main > .article > .tabs, .main > .article > .panel {
+      position: absolute;
+      width: 100%; }
+    .main > .article > .tabs {
+      height: 60px;
+      background: #fcfcfc;
+      box-shadow: 0 0 10px #ccc;
+      z-index: 1; }
+    .main > .article > .panel {
+      overflow: hidden;
+      background: #eee;
+      top: 61px;
+      bottom: 0; }
+
+#navBar ul {
+  margin-top: 10px; }
+
+#navBar a {
+  display: block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none; }

@@ -1,44 +1,40 @@
 var gulp = require('gulp');
+var path = require('path');
+var argv = require('yargs').argv;
+var plugins = require('gulp-load-plugins')();
 var browserSync = require('browser-sync').create();
+var webpack = require('webpack');
 
-const { src } = (() => {
+var webpackConf = require('./webpack.config');
 
-    let watchDir = [
-        'AMD',
-        'CMD',
-        'Angular',
-        'CSS3',
-        'HTML5',
-        'WebPack',
-    ];
+const { watchTypes, srcDir, destDir } = require('./gulpPathConf');
 
-    let files = {
-        less: '**/*.less',
-        jade: '**/*.jade',
-        js: '**/*.js',
-        css: '**/*.css',
-        html: '**/*.html',
-    };
+var isWatch = true;
+var isProduct = false;
 
-    let src = {};
+// tasks
+gulp.task('default', ['browser-sync'], () => {
 
-    for (let k in files) {
+    isProduct = argv.product;
+    isWatch = !isProduct;
+    console.log('正在处理: ' + (isProduct ? '线上' : '调试') + '环境');
 
-        if (files.hasOwnProperty(k)) {
+    gulp.start('watch');
+});
 
-            let arr = [];
-            watchDir.forEach(v => {
-                arr.push(v + '/' + files[k]);
-            });
-            src[k] = arr;
-        }
-    }
+// watch
+gulp.task('watch', () => {
 
+    gulp.watch(watchTypes.js, (e) => webpackTask(e));
+    gulp.watch(watchTypes.sass.concat(watchTypes.scss), (e) => webpackTask(e));
+});
 
-    return { src };
-})();
+// reload
+gulp.task('reload', () => {
+    browserSync.reload();
+});
 
-// Static server
+// browserSync server
 gulp.task('browser-sync', () => {
     browserSync.init({
         server: {
@@ -48,21 +44,32 @@ gulp.task('browser-sync', () => {
     });
 });
 
-// reload
-gulp.task('reload', () => {
-    browserSync.reload();
-});
+// webpack
+function webpackTask(e) {
+    let dir = getDir(e);
+    let cfg = {
+        //入口文件配置
+        entry: { 
+            'index' : path.resolve(dir, srcDir.js), // xxx/src/js/index.js
+        },
+        //输出配置
+        output: {
+            path: path.resolve(dir, destDir),
+            filename: '[name].js'
+        }
+    };
+    Object.assign(webpackConf, cfg); // extend the configure
 
+    webpack(webpackConf, (err, stats) => {
+        console.log(stats.toString());
+        gulp.start('reload');
+    });
 
-// watch
-gulp.task('watch', ['browser-sync'], () => {
-    gulp.watch(src.js, ['reload']);
-    gulp.watch(src.css, ['reload']);
-    gulp.watch(src.html, ['reload']);
-    gulp.watch(src.less, ['reload']);
-    gulp.watch(src.jade, ['reload']);
-});
+}
 
-gulp.task('default', ['watch']);
-
-
+// 获取一级目录
+function getDir(e) {
+    let rPathArr = path.relative(__dirname, e.path).split(path.sep);
+    let dir = rPathArr.length > 1 ? (rPathArr.shift() || "") : ""; // 一级目录
+    return dir;
+}

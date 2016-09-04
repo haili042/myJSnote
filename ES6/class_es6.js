@@ -28,9 +28,22 @@ class Shape {
 // child class
 class Circle extends Shape {
 
-    constructor(id, x, y, radius) {
+    constructor(id, x, y, radius, name) {
         super(id, x, y);
         this.radius = radius;
+        this.name = name;
+    }
+
+    get name() {
+        return this._name.toUpperCase();
+    }
+
+    set name(name) {
+        this._name = name;
+    }
+
+    sayName() {
+        console.log(this.name);
     }
 
     toString() {
@@ -46,6 +59,10 @@ class Circle extends Shape {
 
 // test
 Circle.foo();
-var c = new Circle('test', 20, 30, 15);
+var c = new Circle('test', 20, 30, 15, 'haili');
 c.toString();
 console.log(c.getLocation());
+
+console.log(c.name); // HAILI
+console.log(c._name); // haili
+c.sayName(); // HAILI

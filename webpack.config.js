@@ -1,86 +1,67 @@
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextWebpackPlugin = require('extract-text-webpack-plugin');
-
 var cssExporter = new ExtractTextWebpackPlugin('[name].css');
-var lessExporter = new ExtractTextWebpackPlugin('less.css');
 
-module.exports = {
+var config = {
 
-    //æ’ä»¶é¡¹
+    //²å¼şÏî
     plugins: [
-        // æä¾›å…¨å±€çš„å˜é‡, å°±ä¸ç”¨æ¯æ¬¡éƒ½ require äº†
+        // Ìá¹©È«¾ÖµÄ±äÁ¿, ¾Í²»ÓÃÃ¿´Î¶¼ require ÁË
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
         }),
 
-        // å°†å…¬å…±ä»£ç æŠ½ç¦»å‡ºæ¥åˆå¹¶ä¸ºä¸€ä¸ªæ–‡ä»¶æ’ä»¶
+        // ½«¹«¹²´úÂë³éÀë³öÀ´ºÏ²¢ÎªÒ»¸öÎÄ¼ş²å¼ş
+        //new webpack.optimize.CommonsChunkPlugin('libs', 'libs.js'),
         new webpack.optimize.CommonsChunkPlugin('common', 'common.js'),
 
 
-        // æŠŠ CSS æå–åˆ°ä¸€ä¸ªå•ç‹¬æ–‡ä»¶
+        // °Ñ CSS ÌáÈ¡µ½Ò»¸öµ¥¶ÀÎÄ¼ş
         cssExporter,
-        lessExporter,
 
     ],
 
-    //é¡µé¢å…¥å£æ–‡ä»¶é…ç½®
-    entry: {
-        'index' : path.join(__dirname, 'WebPack/src/js/index.js'),
+    //Ò³ÃæÈë¿ÚÎÄ¼şÅäÖÃ
+    // entry: {
+        // 'index' : path.join(__dirname, 'WebPack/src/js/index.js'),
 
-        // æ·»åŠ è¦æ‰“åŒ…åœ¨ common é‡Œé¢çš„åº“
-        'common' : ['jquery', 'easyui'],
-    },
+        // Ìí¼ÓÒª´ò°üÔÚ common ÀïÃæµÄ¿â
+        // 'common' : ['jquery', 'easyui'],
+    // },
 
-    //å…¥å£æ–‡ä»¶è¾“å‡ºé…ç½®
-    output: {
-        path: path.join(__dirname, 'WebPack/app'),
-        filename: '[name].js'
+    //Èë¿ÚÎÄ¼şÊä³öÅäÖÃ
+    // output: {
+    //     path: path.join(__dirname, 'WebPack/app'),
+    //     filename: '[name].js'
+    // },
+
+    // Íâ²¿ jquery Í¨¹ı script ÒıÈë
+    externals: {
+       jquery: 'jQuery'
     },
 
     module: {
 
-        //åŠ è½½å™¨é…ç½®
+        //¼ÓÔØÆ÷ÅäÖÃ
         loaders: [
-            { test: /\.css$/, loader: cssExporter.extract('style-loader', 'css-loader') },
-            { test: /\.less$/, loader: lessExporter.extract('style-loader', 'css-loader', 'less?sourceMap')},
-            { test: /\.jade$/, loader: "jade-loader" },
-            { test: /\.(png|jpg|gif)$/, loader: 'url?limit=8192'}
+            { test: /\.js?$/, exclude: /(node_modules)/, loader: 'babel?presets=es2015' },
+            // { test: /\.css$/, loader: cssExporter.extract('style', 'css') },
+            { test: /\.less$/, loader: 'style!css!less'},
+            { test: /\.json$/, loader: 'json'},
+            { test: /\.(sass|scss)$/, loader: cssExporter.extract('style', 'css!sass') },
+            // { test: /\.(sass|scss)$/, loader: 'style!css!sass'},
+            { test: /\.jpe?g$|\.gif$|\.png$|\.ico|\.svg$|\.woff$|\.ttf$/, loader: 'file?name=[path][name].[ext]'},
         ]
     },
 
-    //externals: {
-    //    jquery: 'jQuery'
-    //},
-
-    //å…¶å®ƒè§£å†³æ–¹æ¡ˆé…ç½®
+    //ÆäËü½â¾ö·½°¸ÅäÖÃ
     resolve: {
-
-        //æŸ¥æ‰¾moduleçš„è¯ä»è¿™é‡Œå¼€å§‹æŸ¥æ‰¾
-        // è·¯å¾„ä¸€å®šè¦è¿™ä¹ˆå†™.....ä¸ç„¶ä¸€å¤§æ³¢é”™è¯¯....................................
-        root: path.join(__dirname, 'WebPack/src'),
-        //root: path.resolve('WebPack/src'),
-
-        //è‡ªåŠ¨æ‰©å±•æ–‡ä»¶åç¼€åï¼Œæ„å‘³ç€æˆ‘ä»¬requireæ¨¡å—å¯ä»¥çœç•¥ä¸å†™åç¼€å
-        extensions: ['', '.js', 'css', '.json', '.less', '.jade'],
-
-        // é…ç½®åˆ«å
-        alias: {
-            'jquery' : path.join(__dirname, 'WebPack/lib/jquery.min.js'),
-            'easyui' : path.join(__dirname, 'WebPack/lib/easyui-1.4.3/jquery.easyui.min.js'),
-            'easyuiCss' : path.join(__dirname, 'WebPack/lib/easyui-1.4.3/easyui.css'),
-        }
+        //×Ô¶¯À©Õ¹ÎÄ¼şºó×ºÃû£¬ÒâÎ¶×ÅÎÒÃÇrequireÄ£¿é¿ÉÒÔÊ¡ÂÔ²»Ğ´ºó×ºÃû
+        extensions: ['', '.js', '.json', '.less', '.sass', '.scss'],
     },
 
-    // ä¸åŒ…å«åˆ—ä¿¡æ¯ï¼ŒåŒæ—¶ loader çš„ sourcemap ä¹Ÿè¢«ç®€åŒ–ä¸ºåªåŒ…å«å¯¹åº”è¡Œçš„ã€‚æœ€ç»ˆçš„ sourcemap åªæœ‰ä¸€ä»½ï¼Œå®ƒæ˜¯ webpack å¯¹ loader ç”Ÿæˆçš„ sourcemap è¿›è¡Œç®€åŒ–ï¼Œç„¶åå†æ¬¡ç”Ÿæˆçš„ã€‚
-    devtool: 'cheap-module-eval-source-map',
-
-    devServer: {
-        historyApiFallback: true,
-        hot: true,
-        inline: true,
-        progress: true,
-    },
 };
 
+module.exports = config;

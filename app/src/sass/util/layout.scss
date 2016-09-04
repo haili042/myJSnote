@@ -1,0 +1,67 @@
+$header-ht: 60px;
+$tab-ht: 60px;
+$aside-width: 220px;
+$z-index-base: 0;
+
+/* 这部分没加上 */
+.header, .main {
+  position: absolute;
+  width: 100%;
+}
+
+.header {
+  height: $header-ht;
+  background: #236481;
+}
+
+
+/* main panel */
+.main {
+  /*top: 60px;*/
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+
+  > .aside, > .article {
+    position: absolute;
+    min-width: 1px;
+    height: 100%;
+  }
+
+  > .aside {
+    background: #30354c;
+    width: $aside-width;
+    box-sizing: border-box;
+    border-right: 1px solid #333;
+    z-index: $z-index-base+2;
+  }
+
+  > .article {
+    left: $aside-width;
+    right: 0;
+    border-left: 1px solid #777;
+
+
+    > .tabs, > .panel {
+      position: absolute;
+      width: 100%;
+    }
+
+    > .tabs {
+      height: $tab-ht;
+      background: #fcfcfc;
+      box-shadow: 0 0 10px #ccc;
+      z-index: $z-index-base+1;
+
+    }
+
+    > .panel {
+      overflow: hidden;
+      background: #eee;
+      top: $tab-ht+1;
+      bottom: 0;
+    }
+  }
+}
+
+
