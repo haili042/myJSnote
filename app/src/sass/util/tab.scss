@@ -4,10 +4,29 @@
 
 	> .tab {
 		float: left;
+		position: relative;
+		margin: 1px;
+		background: #f1f1f1;
 
-		a {
+		&:hover {
+			background: #ddd;
+		}
+
+		> .tab-title {
 			display: block;
-			padding: 10px 20px;
+			padding: 10px 40px 10px 10px;
+		}
+
+		> .tab-rm {
+			position: absolute;
+			top: 8px;
+			right: 10px;
+			display: inline-block;
+			cursor: pointer;
+
+			&:hover {
+				color: red;
+			}
 		}
 	}
 
