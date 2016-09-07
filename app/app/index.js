@@ -6,18 +6,18 @@ webpackJsonp([0,1],[
 
 	var Menu = __webpack_require__(1);
 	var Panel = __webpack_require__(5);
-	var Iframe = __webpack_require__(3);
 	var data = __webpack_require__(6);
 
 	// load style
 	__webpack_require__(7);
 
-	var panel = new Panel('mainPanel');
-	var iframe = new Iframe({ title: 'test', url: './HTML5/', id: '000000' });
-	panel.addIframe(iframe);
+	var panel = new Panel('#mainPanel');
+	panel.add(data[0]);
 
-	var menu = new Menu('navBar', panel, data);
-	menu.genMenu();
+	var menu = new Menu('#navBar', data);
+	menu.proxyHandler('click', function (data, menuItem) {
+		panel.add(data);
+	});
 
 /***/ },
 /* 1 */
@@ -33,23 +33,17 @@ webpackJsonp([0,1],[
 	var Tab = __webpack_require__(4);
 
 	var Menu = function () {
-		function Menu(id, panel, data) {
+		function Menu(selector, data) {
 			_classCallCheck(this, Menu);
 
-			this.id = id;
 			this.data = data;
-			this.panel = panel;
-			this.$elem = $('#' + id);
+			this.$elem = $(selector);
+			this.init();
 		}
 
 		_createClass(Menu, [{
-			key: 'getElem',
-			value: function getElem() {
-				return this.$elem;
-			}
-		}, {
-			key: 'genMenu',
-			value: function genMenu() {
+			key: 'init',
+			value: function init(conf) {
 				var data = this.data;
 
 				if (!Array.isArray(data)) {
@@ -59,36 +53,35 @@ webpackJsonp([0,1],[
 				var $ul = $('<ul></ul>');
 				for (var i = 0; i < data.length; i++) {
 
-					var temp = '<li><a href="javascript:void(0)" data-index="' + i + '">' + data[i].title + '</a></li>';
+					var temp = '<li><a href="javascript:void(0)" id="memnu_' + data[i].id + '" data-index="' + i + '">' + data[i].title + '</a></li>';
 					var $li = $(temp);
 
-					for (var j = 0; j < data[i].children.length; j++) {}
 					$ul.append($li);
 				}
-				$ul.click(clickHandler.bind(this));
-
 				this.$elem.append($ul);
+			}
+		}, {
+			key: 'proxyHandler',
+			value: function proxyHandler(type, fn) {
+				var _this = this;
+
+				this.$elem.bind(type, function (e) {
+					e.preventDefault();
+					var target = e.target;
+
+					if (target.nodeName == 'A') {
+
+						var $target = $(target);
+						var i = $target.attr('data-index');
+
+						fn(_this.data[i], $target);
+					}
+				});
 			}
 		}]);
 
 		return Menu;
 	}();
-
-	function clickHandler(e) {
-		e.preventDefault();
-
-		var target = e.target;
-
-		if (target.nodeName == 'A') {
-
-			var i = $(target).attr('data-index');
-			console.log(i);
-
-			var iframe = new Iframe(this.data[i]);
-			var tab = new Tab(this.data[i]);
-			this.panel.addIframe(iframe);
-		}
-	}
 
 	module.exports = Menu;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
@@ -117,22 +110,28 @@ webpackJsonp([0,1],[
 
 			_classCallCheck(this, Iframe);
 
+			this.id = id;
+			this.elemId = 'iframe_' + id;
 			this.title = title;
 			this.url = url;
-			this.id = 'iframe_' + id;
-			this.template = '<iframe src="' + url + '" id="' + this.id + '" frameborder="0"></iframe>';
+			this.template = '<iframe src="' + url + '" id="' + this.id + '" class="iframe" data-id="' + id + '" frameborder="0"></iframe>';
 			this.$elem = $(this.template);
 		}
 
 		_createClass(Iframe, [{
-			key: 'hide',
-			value: function hide() {
-				this.$elem.css({ display: 'none' });
+			key: 'select',
+			value: function select() {
+				this.$elem.addClass('iframe-selected');
 			}
 		}, {
-			key: 'show',
-			value: function show() {
-				this.$elem.css({ display: 'block' });
+			key: 'unselect',
+			value: function unselect() {
+				this.$elem.removeClass('iframe-selected');
+			}
+		}, {
+			key: 'remove',
+			value: function remove() {
+				this.$elem.remove();
 			}
 		}]);
 
@@ -159,15 +158,45 @@ webpackJsonp([0,1],[
 
 			_classCallCheck(this, Tab);
 
+			this.id = id;
 			this.title = title;
-			this.id = 'tab_' + id;
-			this.template = '<div class="tab" id="' + this.id + '">\n\t\t  <span>' + this.title + '</span>\n\t\t  <i class="tab-rm"></i>\n\t\t</div>';
+			this.elemId = 'tab_' + id;
+			this.template = '<div class="tab" id="' + this.id + '" data-id="' + id + '">\n\t\t  <a href="javascript:void(0)" class="tab-title">' + this.title + '</a>\n\t\t  <i class="tab-rm">x</i>\n\t\t</div>';
 			this.$elem = $(this.template);
 		}
 
 		_createClass(Tab, [{
-			key: 'init',
-			value: function init() {}
+			key: 'select',
+			value: function select() {
+				this.$elem.addClass('tab-selected');
+			}
+		}, {
+			key: 'unselect',
+			value: function unselect() {
+				this.$elem.removeClass('tab-selected');
+			}
+		}, {
+			key: 'remove',
+			value: function remove() {
+				this.$elem.remove();
+			}
+		}, {
+			key: 'proxyHandler',
+			value: function proxyHandler(event, type, fn) {
+
+				this.$elem.bind(event, function (e) {
+					e.preventDefault();
+					var target = e.target;
+
+					if (target.nodeName == type.toUpperCase()) {
+
+						var $target = $(target);
+						var id = $target.parent().attr('data-id');
+
+						fn(id, $target);
+					}
+				});
+			}
 		}]);
 
 		return Tab;
@@ -186,44 +215,90 @@ webpackJsonp([0,1],[
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+	var Iframe = __webpack_require__(3);
+	var Tab = __webpack_require__(4);
+
 	var Panel = function () {
-		function Panel(id) {
+		function Panel(selector) {
 			_classCallCheck(this, Panel);
 
-			this.id = id;
-			this.$elem = $('#' + id);
-			this.$tab = this.$elem.children('.tab');
+			this.$elem = $(selector);
+			this.$tab = this.$elem.children('.tabs');
 			this.$panel = this.$elem.children('.panel');
-			this.iframes = [];
-			this.lastSelect = '';
+			this.data = {};
+			this.lastId = null;
+			this.tabProxyHandler('click');
 		}
 
 		_createClass(Panel, [{
-			key: 'addIframe',
-			value: function addIframe(iframe) {
-				this.iframes.forEach(function (v) {
-					return v.hide();
-				});
-				this.iframes.push(iframe);
+			key: 'add',
+			value: function add(data) {
+				var _this = this;
 
-				this.$panel.append(iframe.$elem);
+				var id = data.id;
+
+				if (this.data[id]) {
+					// 如果已经存在就刷新
+					this.select(id);
+				} else {
+					// 如果没有则新增一个tab iframe
+
+					var iframe = new Iframe(data);
+					var tab = new Tab(data);
+					this.data[id] = { iframe: iframe, tab: tab };
+
+					this.$panel.append(iframe.$elem);
+					this.$tab.append(tab.$elem);
+
+					tab.proxyHandler('click', 'i', function (e) {
+						tab.remove();
+						iframe.remove();
+						delete _this.data[id];
+
+						// 如果关了当前tab就默认选最后一个tab
+						if (id === _this.lastId) {
+							_this.lastId = _this.$tab.find('.tab:last-child').attr('data-id') || '';
+							_this.select(_this.lastId);
+						}
+					});
+					this.select(id);
+				}
 			}
 		}, {
-			key: 'getPanel',
-			value: function getPanel() {
-				return this.$panel;
-			}
-		}, {
-			key: 'getTab',
-			value: function getTab() {
-				return this.$tab;
-			}
-		}, {
-			key: 'isExist',
-			value: function isExist(id) {
-				this.iframes.filter(function (v) {
-					return id == id;
+			key: 'tabProxyHandler',
+			value: function tabProxyHandler(type) {
+				var _this2 = this;
+
+				this.$tab.bind(type, function (e) {
+					e.preventDefault();
+					var target = e.target;
+
+					if (target.nodeName == 'A') {
+
+						var $target = $(target);
+						var dataId = $target.parent().attr('data-id');
+
+						_this2.select(dataId);
+					}
 				});
+			}
+		}, {
+			key: 'select',
+			value: function select(id) {
+				if (!id) {
+					return;
+				}
+
+				// unselect last
+				this.lastId && this.lastId !== id && this.data[this.lastId].iframe.unselect();
+				this.lastId && this.lastId !== id && this.data[this.lastId].tab.unselect();
+
+				// select current
+				this.data[id].iframe.select();
+				this.data[id].tab.select();
+
+				// record last selcet
+				this.lastId = id;
 			}
 		}]);
 
@@ -282,21 +357,25 @@ webpackJsonp([0,1],[
 			"id": "030000",
 			"title": "HTML5",
 			"icon": "",
-			"url": "./HTML5/",
-			"children": [
-				{
-					"id": "030100",
-					"title": "1.1",
-					"icon": "",
-					"url": ""
-				},
-				{
-					"id": "030200",
-					"title": "1.2",
-					"icon": "",
-					"url": ""
-				}
-			]
+			"url": "./HTML5/"
+		},
+		{
+			"id": "040000",
+			"title": "AMD",
+			"icon": "",
+			"url": "./AMD/"
+		},
+		{
+			"id": "050000",
+			"title": "CMD",
+			"icon": "",
+			"url": "./CMD/"
+		},
+		{
+			"id": "060000",
+			"title": "CSS3",
+			"icon": "",
+			"url": "./CSS3/Flex/"
 		}
 	];
 

@@ -1,0 +1,10 @@
+.panel {
+
+	> .iframe {
+		display: none;
+	}
+
+	> .iframe-selected {
+		display: block;
+	}
+}

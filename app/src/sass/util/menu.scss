@@ -2,7 +2,8 @@
 #navBar {
 
 	ul {
-		margin-top: 10px;
+		background: #708096;
+		opacity: 0.8;
 		> li {
 
 		}
@@ -13,9 +14,9 @@
 		padding: 10px 20px;
 		color: #fff;
 		text-decoration: none;
-
+		transition: all .2s ease-out;
 		&:hover {
-		
+			background: #2C3542;
 		}
 	}
 

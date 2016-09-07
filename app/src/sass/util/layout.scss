@@ -1,4 +1,4 @@
-$header-ht: 60px;
+$header-ht: 50px;
 $tab-ht: 60px;
 $aside-width: 220px;
 $z-index-base: 0;
@@ -11,14 +11,14 @@ $z-index-base: 0;
 
 .header {
   height: $header-ht;
-  background: #236481;
+  background: $header-bg-color;
 }
 
 
 /* main panel */
 .main {
   /*top: 60px;*/
-  top: 0;
+  top: $header-ht;
   bottom: 0;
   overflow: hidden;
 
@@ -29,7 +29,7 @@ $z-index-base: 0;
   }
 
   > .aside {
-    background: #30354c;
+    background: $aside-bg-color;
     width: $aside-width;
     box-sizing: border-box;
     border-right: 1px solid #333;
@@ -50,17 +50,20 @@ $z-index-base: 0;
     > .tabs {
       height: $tab-ht;
       background: #fcfcfc;
-      box-shadow: 0 0 10px #ccc;
+      // box-shadow: 0 0 10px #ddd;
+      border-bottom: 1px solid #ddd;
       z-index: $z-index-base+1;
 
     }
 
     > .panel {
       overflow: hidden;
-      background: #eee;
+      background: #fff;
       top: $tab-ht+1;
       bottom: 0;
+
     }
+
   }
 }
 

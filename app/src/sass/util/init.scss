@@ -16,9 +16,14 @@ ul, li {
 
 a {
   color: $color;
+  text-decoration: none;
 }
 
 iframe {
 	width: 100%;
 	height: 100%;
+}
+
+i, em, cite {
+	font-style: normal;
 }

@@ -1,21 +1,25 @@
 class Iframe {
 
 	constructor({title, url, id}) {
+		this.id = id;
+		this.elemId = 'iframe_' + id;
 		this.title = title;
 		this.url = url;
-		this.id = 'iframe_' + id;
-		this.template = `<iframe src="${url}" id="${this.id}" frameborder="0"></iframe>`;
+		this.template = `<iframe src="${url}" id="${this.id}" class="iframe" data-id="${id}" frameborder="0"></iframe>`;
 		this.$elem = $(this.template);
 	}
 
-	hide() {
-		this.$elem.css({display: 'none'});
+	select() {
+		this.$elem.addClass('iframe-selected');
 	}
 
-	show() {
-		this.$elem.css({display: 'block'});
+	unselect() {
+		this.$elem.removeClass('iframe-selected');
 	}
 
+	remove() {
+		this.$elem.remove();
+	}
 }
 
 module.exports = Iframe; 

@@ -1,62 +1,53 @@
-[
-  {
-    "id": "010000",
-    "title": "React",
+[{
+  "id": "010000",
+  "title": "React",
+  "icon": "",
+  "url": "./React/",
+  "children": [{
+    "id": "010100",
+    "title": "1.1",
     "icon": "",
-    "url": "./React/",
-    "children": [
-      {
-        "id": "010100",
-        "title": "1.1",
-        "icon": "",
-        "url": ""
-      },
-      {
-        "id": "010200",
-        "title": "1.2",
-        "icon": "",
-        "url": ""
-      }
-    ]
-  },
-  {
-    "id": "020000",
-    "title": "Angular",
+    "url": ""
+  }, {
+    "id": "010200",
+    "title": "1.2",
     "icon": "",
-    "url": "./Angular/",
-    "children": [
-      {
-        "id": "020100",
-        "title": "1.1",
-        "icon": "",
-        "url": ""
-      },
-      {
-        "id": "020200",
-        "title": "1.2",
-        "icon": "",
-        "url": ""
-      }
-    ]
-  },
-  {
-    "id": "030000",
-    "title": "HTML5",
+    "url": ""
+  }]
+}, {
+  "id": "020000",
+  "title": "Angular",
+  "icon": "",
+  "url": "./Angular/",
+  "children": [{
+    "id": "020100",
+    "title": "1.1",
     "icon": "",
-    "url": "./HTML5/",
-    "children": [
-      {
-        "id": "030100",
-        "title": "1.1",
-        "icon": "",
-        "url": ""
-      },
-      {
-        "id": "030200",
-        "title": "1.2",
-        "icon": "",
-        "url": ""
-      }
-    ]
-  }
-]
+    "url": ""
+  }, {
+    "id": "020200",
+    "title": "1.2",
+    "icon": "",
+    "url": ""
+  }]
+}, {
+  "id": "030000",
+  "title": "HTML5",
+  "icon": "",
+  "url": "./HTML5/"
+}, {
+  "id": "040000",
+  "title": "AMD",
+  "icon": "",
+  "url": "./AMD/"
+}, {
+  "id": "050000",
+  "title": "CMD",
+  "icon": "",
+  "url": "./CMD/"
+}, {
+  "id": "060000",
+  "title": "CSS3",
+  "icon": "",
+  "url": "./CSS3/Flex/"
+}]

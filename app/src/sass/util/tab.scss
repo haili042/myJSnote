@@ -1,0 +1,17 @@
+.tabs {
+	
+	overflow: hidden;
+
+	> .tab {
+		float: left;
+
+		a {
+			display: block;
+			padding: 10px 20px;
+		}
+	}
+
+	> .tab-selected {
+		background: #ddd;
+	}
+}
