@@ -5,20 +5,26 @@
 		background: #708096;
 		opacity: 0.8;
 		> li {
-
+			ul li {
+				padding-left: 20px;
+			}
 		}
 	}
 
-	a {
+	.menu-item {
+		box-sizing: border-box;
 		display: block;
 		padding: 10px 20px;
 		color: #fff;
 		text-decoration: none;
-		transition: all .2s ease-out;
+		transition: padding-left .5s ease-out;
+		width: 100%;
+		position: relative;
+
 		&:hover {
+			padding-left: 30px;
 			background: #2C3542;
 		}
 	}
-
 
 }

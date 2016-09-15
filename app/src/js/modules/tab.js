@@ -1,14 +1,19 @@
-class Tab {
-	constructor({title, id}) {
+var Component = require('./component.js');
+
+class Tab extends Component {
+	constructor({
+		title, 
+		id,
+		template = 
+			`<div class="tab" id="tab_${id}" data-id="${id}">
+			  <a href="javascript:void(0)" class="tab-title">${title}</a>
+			  <i class="tab-rm">x</i>
+			</div>`
+	}) {
+
+		super({template});
 		this.id = id;
 		this.title = title;
-		this.elemId = 'tab_' + id;
-		this.template = 
-		`<div class="tab" id="${this.id}" data-id="${id}">
-		  <a href="javascript:void(0)" class="tab-title">${this.title}</a>
-		  <i class="tab-rm">x</i>
-		</div>`;
-		this.$elem = $(this.template);
 	}
 
 	select() {
@@ -17,10 +22,6 @@ class Tab {
 
 	unselect() {
 		this.$elem.removeClass('tab-selected');
-	}
-
-	remove() {
-		this.$elem.remove();
 	}
 
 	proxyHandler(event, type, fn) {

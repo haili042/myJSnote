@@ -55,7 +55,8 @@ function webpackTask(e) {
         //输出配置
         output: {
             path: path.resolve(dir, destDir),
-            filename: '[name].js'
+            // filename: '[name].[hash:5].js'// hash这个参数就防止缓存
+            filename: '[name].js'// hash这个参数就防止缓存
         }
     };
     Object.assign(webpackConf, cfg); // extend the configure

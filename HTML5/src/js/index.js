@@ -1,3 +1,10 @@
-import {name} from './test';
+let Component = require('../../../App/src/js/modules/component.js');
+let TextBox = require('../../../App/src/js/modules/textbox.js');
 
-setTimeout(() => console.log(name), 500);
+
+
+for (var i = 0; i < 5; i++) {
+	let textBox = new TextBox({});
+	$('#a').append(textBox.$elem);
+}
+

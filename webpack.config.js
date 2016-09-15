@@ -20,7 +20,6 @@ var config = {
 
         // 把 CSS 提取到一个单独文件
         cssExporter,
-
     ],
 
     //页面入口文件配置

@@ -52,11 +52,10 @@ $z-index-base: 0;
       background: #fcfcfc;
       // box-shadow: 0 0 10px #ddd;
       border-bottom: 1px solid #ddd;
-      z-index: $z-index-base+1;
-
     }
 
     > .panel {
+      z-index: $z-index-base+1;
       overflow: hidden;
       background: #fff;
       top: $tab-ht+1;

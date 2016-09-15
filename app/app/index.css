@@ -56,9 +56,9 @@ i, em, cite {
     .main > .article > .tabs {
       height: 60px;
       background: #fcfcfc;
-      border-bottom: 1px solid #ddd;
-      z-index: 1; }
+      border-bottom: 1px solid #ddd; }
     .main > .article > .panel {
+      z-index: 1;
       overflow: hidden;
       background: #fff;
       top: 61px;
@@ -67,20 +67,28 @@ i, em, cite {
 #navBar ul {
   background: #708096;
   opacity: 0.8; }
+  #navBar ul > li ul li {
+    padding-left: 20px; }
 
-#navBar a {
+#navBar .menu-item {
+  box-sizing: border-box;
   display: block;
   padding: 10px 20px;
   color: #fff;
   text-decoration: none;
-  transition: all .2s ease-out; }
-  #navBar a:hover {
+  transition: padding-left .5s ease-out;
+  width: 100%;
+  position: relative; }
+  #navBar .menu-item:hover {
+    padding-left: 30px;
     background: #2C3542; }
 
 .tabs {
-  overflow: hidden; }
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap; }
   .tabs > .tab {
-    float: left;
+    display: inline-block;
     position: relative;
     margin: 1px;
     background: #f1f1f1; }
@@ -101,7 +109,11 @@ i, em, cite {
     background: #ddd; }
 
 .panel > .iframe {
-  display: none; }
+  display: block;
+  transition: all 1s ease-out;
+  opacity: 0;
+  transform: translateY(20px); }
 
 .panel > .iframe-selected {
-  display: block; }
+  opacity: 1;
+  transform: translateY(0); }

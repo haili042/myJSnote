@@ -1,25 +1,29 @@
-class Iframe {
+var Component = require('./component.js');
 
-	constructor({title, url, id}) {
+
+class Iframe extends Component {
+
+	constructor({
+		url, 
+		id,
+		template = `<iframe src="${url}" id="iframe_${id}" class="iframe" data-id="${id}" frameborder="0"></iframe>`
+	}) {
+
+		super({template});
 		this.id = id;
-		this.elemId = 'iframe_' + id;
-		this.title = title;
 		this.url = url;
-		this.template = `<iframe src="${url}" id="${this.id}" class="iframe" data-id="${id}" frameborder="0"></iframe>`;
-		this.$elem = $(this.template);
 	}
 
 	select() {
-		this.$elem.addClass('iframe-selected');
+		this.$elem.show();
+		setTimeout(() => this.$elem.addClass('iframe-selected'), 0);
 	}
 
 	unselect() {
-		this.$elem.removeClass('iframe-selected');
+		this.$elem.hide();
+		setTimeout(() => this.$elem.removeClass('iframe-selected'), 0);
 	}
 
-	remove() {
-		this.$elem.remove();
-	}
 }
 
 module.exports = Iframe; 

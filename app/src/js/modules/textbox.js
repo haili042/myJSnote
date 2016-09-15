@@ -1,3 +1,13 @@
-const template = 'test.genMenu';
+var Component = require('./component.js');
 
-module.exports = template;
+class TextBox extends Component {
+
+	constructor({
+		template = 
+			`<input type="text" />`
+	}) {
+		super({template});
+	}
+}
+
+module.exports = TextBox;
